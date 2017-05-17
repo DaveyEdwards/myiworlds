@@ -20,8 +20,12 @@ Before you start, take a moment to see how the project structure looks like:
 │   ├── /components/            # React components
 │   ├── /data/                  # GraphQL server schema and data models
 │   ├── /routes/                # Page/screen components along with the routing information
+│   ├── /ApiClient.js           # Universal HTTP client for working with REST and/or GraphQL API
 │   ├── /client.js              # Client-side startup script
 │   ├── /config.js              # Global application settings
+│   ├── /history.js             # A wrapper around HTML5 history API used for client-side navigation
+│   ├── /router.js              # Universal application router
+│   ├── /schema.graphql         # GraphQL schema to be used by Relay Compiler
 │   ├── /server.js              # Server-side startup script
 │   └── ...                     # Other core framework modules
 ├── /test/                      # Unit and end-to-end tests
@@ -69,7 +73,9 @@ or by using [Yeoman generator](https://www.npmjs.com/package/generator-react-ful
 This will install both run-time project dependencies and developer tools listed
 in [package.json](../package.json) file.
 
-#### 3. Run `yarn start`
+#### 3. Run `yarn run relay -- --watch`
+
+#### 4. Run `yarn start`
 
 This command will build the app from the source files (`/src`) into the output
 `/build` folder. As soon as the initial build completes, it will start the
