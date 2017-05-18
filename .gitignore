@@ -5,6 +5,7 @@ __generated__
 build
 coverage
 .nyc_output
+database.sqlite
 
 # Node.js
 node_modules
