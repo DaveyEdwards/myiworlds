@@ -7,17 +7,15 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import {
-  GraphQLObjectType as ObjectType,
-  GraphQLString as StringType,
-} from 'graphql';
+@import '../../components/variables.css';
 
-const CategoryType = new ObjectType({
-  name: 'Category',
-  fields: {
-    type: { type: StringType },
-    image: { type: StringType },
-  },
-});
+.root {
+  padding-left: 20px;
+  padding-right: 20px;
+}
 
-export default CategoryType;
+.container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: var(--max-content-width);
+}

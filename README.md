@@ -1,3 +1,16 @@
+![2017-05-18_16-12-08](https://cloud.githubusercontent.com/assets/15203899/26227424/449040d4-3be7-11e7-8c4d-e2a06add11e9.gif)
+
+### Things I have done
+- Google Cloud Datastore Backend that is queryable by GraphQL
+- Have /src/data/seed that seeds the Google Datastore with data
+- Frontend is working with rendering data with Relay-Modern
+
+To get this to work you need to create a Google Cloud Platform account (dont worry this is not enough data to get charged, unless you literally spam seed/query your db).  If this is your first time you will also have to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) to you computer. Then create a Datastore project, go to your IAM & Admin section, then on the left side of the tabs go to "Service accounts" find the project you made and click the 3 dots on the right side of that line and select "Create key" then select json.  This file you want to keep secure.  Make a duplicate of the google_api_service_key_EXAMPLE.json inside the [src/]{https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/tree/master/src} folder and delete the "_EXAMPLE.json" part (this file will is hidden from your pushes to Github inside your [.gitignore](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/blob/master/.gitignore) file)
+
+For the process of adding things to the react-starter-kit check the [git commit](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/commits/master) history
+
+For things still needing to be done I have created [Issues](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/issues)
+
 ## React Starter Kit — "[isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)" web app boilerplate &nbsp; <a href="https://github.com/kriasoft/react-starter-kit/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-starter-kit.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
 
 [React Starter Kit](https://www.reactstarterkit.com) is an opinionated boilerplate for web

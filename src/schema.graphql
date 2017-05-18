@@ -6,9 +6,15 @@ type NewsItem {
   content: String
 }
 
+type Category {
+  type: String
+  image: String
+}
+
 type Query {
   me: User
   news: [NewsItem]
+  categories: [Category]
 }
 
 type User {
