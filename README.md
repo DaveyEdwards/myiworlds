@@ -9,29 +9,29 @@ To get this to work you need to create a Google Cloud Platform account (dont wor
 
 After doing
 ```
-$ yarn install
+yarn install
 OR
-$ npm intall
+npm intall
 
 Then
 
-$ yarn start
+yarn start
 OR
-$ npm start
+npm start
 ```
 
 you will have to have the Relay Compiler running by doing the following command in a new console window
 ```
-$ yarn run relay -- --watch
+yarn run relay -- --watch
 OR
-$ npm run relay -- --watch
+npm run relay -- --watch
 ```
 
 Then you will want to seed your Datastore by running
 ```
 yarn seed.datastore
 OR
-$ npm run seed.datastore
+npm run seed.datastore
 ```
 You should be able to see all the data in Datastore if you refresh your Admin Console tab.
 
