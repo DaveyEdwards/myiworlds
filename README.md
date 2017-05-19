@@ -5,9 +5,35 @@
 - Have /src/data/seed that seeds the Google Datastore with data
 - Frontend is working with rendering data with Relay-Modern
 
-To get this to work you need to create a Google Cloud Platform account (dont worry this is not enough data to get charged, unless you literally spam seed/query your db).  If this is your first time you will also have to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) to your computer. Then create a Datastore project, go to your IAM & Admin section, then on the left side of the tabs go to "Service accounts" find the project you made and click the 3 dots on the right side of that line and select "Create key" then select json.  This file you want to keep secure.  Make a duplicate of the google_api_service_key_EXAMPLE.json inside the [src]{https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/tree/master/src} folder and delete the "_EXAMPLE.json" part (this file will is hidden from your pushes to Github inside your [.gitignore](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/blob/master/.gitignore) file)
+To get this to work you need to create a Google Cloud Platform account (dont worry this is not enough data to get charged, unless you literally spam seed/query your db).  If this is your first time you will also have to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) to your computer. Then create a Datastore project, go to your IAM & Admin section, then on the left side of the tabs go to "Service accounts" find the project you made and click the 3 dots on the right side of that line and select "Create key" then select json.  This file you want to keep secure.  Make a duplicate of the google_api_service_key_EXAMPLE.json inside the [src](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/tree/master/src) folder and delete the underscore and EXAMPLE.json part (this file will is hidden from your pushes to Github inside your [.gitignore](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/blob/master/.gitignore) file)
 
-After doing yarn install + yarn start + (having another console doing yarn run relay -- --watch) you may run "yarn seed.datastore" or "npm run seed.datastore".  You should be able to see all the data in Datastore if you refresh your Admin Console tab.
+After doing
+```
+$ yarn install
+OR
+$ npm intall
+
+Then
+
+$ yarn start
+OR
+$ npm start
+```
+
+you will have to have the Relay Compiler running by doing the following command in a new console window
+```
+$ yarn run relay -- --watch
+OR
+$ npm run relay -- --watch
+```
+
+Then you will want to seed your Datastore by running
+```
+yarn seed.datastore
+OR
+$ npm run seed.datastore
+```
+You should be able to see all the data in Datastore if you refresh your Admin Console tab.
 
 For the process of adding things to the react-starter-kit check the [git commit](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/commits/master) history
 
