@@ -1,2 +1,2 @@
-import { generateFakeFeed } from './feeds'
-generateFakeFeed();
+import { generateUsers } from './users';
+generateUsers();

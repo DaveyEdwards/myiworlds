@@ -12,12 +12,12 @@ import {
   GraphQLString as StringType,
 } from 'graphql';
 
-const CategoryType = new ObjectType({
-  name: 'Category',
+const PageType = new ObjectType({
+  name: 'Page',
   fields: {
-    type: { type: StringType },
+    title: { type: StringType },
     image: { type: StringType },
   },
 });
 
-export default CategoryType;
+export default PageType;

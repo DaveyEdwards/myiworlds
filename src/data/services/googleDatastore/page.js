@@ -9,10 +9,10 @@ import {
 } from './api';
 import Constants from './constant';
 
-const KEY = 'AA_PROTO_CATEGORIES';
-const LIMIT = Constants.LIMIT_CATEGORY;
+const KEY = 'AA_PROTO_PAGES';
+const LIMIT = Constants.LIMIT_PAGE;
 
-export async function saveCategory(item) {
+export async function savePage(item) {
   let ret = null;
   try {
     const entity = {
@@ -21,27 +21,27 @@ export async function saveCategory(item) {
     };
     ret = await save(entity);
   } catch (err) {
-    console.info('saveCategory err', err);
+    console.info('savePage err', err);
   }
   return ret;
 }
 
-export async function saveCategories(items) {
+export async function savePages(items) {
   let ret = null;
   try {
     const entities = items.map(item => ({
       key: [KEY, item.type],
       data: item,
     }));
-    console.log('saveCategories', entities);
+    console.log('savePages', entities);
     ret = await batchSave(entities);
   } catch (err) {
-    console.info('saveCategories err', err);
+    console.info('savePages err', err);
   }
   return ret;
 }
 
-export async function runCategoryQuery(filters = [], offset = 0, _limit = LIMIT) {
+export async function runPageQuery(filters = [], offset = 0, _limit = LIMIT) {
   let ret = [];
   try {
     let limit = _limit;
@@ -50,12 +50,12 @@ export async function runCategoryQuery(filters = [], offset = 0, _limit = LIMIT)
     }
     ret = await runQuery(KEY, filters, offset, limit);
   } catch (err) {
-    console.log('runCategoryQuery err', err);
+    console.log('runPageQuery err', err);
   }
   return ret;
 }
 
-export async function getCategories(types) {
+export async function getPages(types) {
   let ret = [];
   try {
     const keys = types.map(type => ([KEY, type]));
@@ -63,27 +63,26 @@ export async function getCategories(types) {
       ret = await lookupEntities(keys);
     }
   } catch (err) {
-    console.info('getCategories err', err);
+    console.info('getPages err', err);
   }
   return ret;
 }
-export async function getCategoryByType(type) {
+export async function getPageByType(type) {
   let ret = null;
   try {
     ret = await getEntity([KEY, type]);
   } catch (err) {
-    console.info('getCategoryByType err', err);
+    console.info('getPageByType err', err);
   }
   return ret;
 }
 
-export async function getTotalCategoryCount(query = []) {
+export async function getTotalPageCount(query = []) {
   let ret = 0;
   try {
     ret = await getCountWithQuery(KEY, query);
   } catch (err) {
-    console.info('getTotalCategoryCount err', err);
+    console.info('getTotalPageCount err', err);
   }
   return ret;
 }
-

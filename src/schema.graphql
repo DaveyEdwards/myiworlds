@@ -6,15 +6,15 @@ type NewsItem {
   content: String
 }
 
-type Category {
-  type: String
+type Page {
+  title: String
   image: String
 }
 
 type Query {
   me: User
   news: [NewsItem]
-  categories: [Category]
+  pages: [Page]
 }
 
 type User {

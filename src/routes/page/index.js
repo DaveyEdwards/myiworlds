@@ -9,23 +9,23 @@
 
 import React from 'react';
 import { graphql } from 'relay-runtime';
-import Category from './Category';
+import Page from './Page';
 import Layout from '../../components/Layout';
 
-const title = 'Categories Page';
+const title = 'List of Pages';
 
 export default {
 
-  path: '/category',
+  path: '/pages',
 
   async action({ api }) {
-    const data = await api.fetchQuery(graphql`query indexCategoryQuery {
+    const data = await api.fetchQuery(graphql`query indexPageQuery {
       me { ...Layout_me }
-      categories { ...Category_categories }
+      pages { ...Page_pages }
     }`);
     return {
       title,
-      component: <Layout me={data.me}><Category categories={data.categories} /></Layout>,
+      component: <Layout me={data.me}><Page pages={data.pages} /></Layout>,
     };
   },
 

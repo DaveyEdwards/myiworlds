@@ -14,9 +14,7 @@ import {
 
 import me from './queries/me';
 import news from './queries/news';
-// import dsUser from './queries/dsUser';
-// import feeds from './queries/feeds';
-import categories from './queries/categories';
+import pages from './queries/pages';
 
 const schema = new Schema({
   query: new ObjectType({
@@ -24,7 +22,7 @@ const schema = new Schema({
     fields: {
       me,
       news,
-      categories
+      pages
     },
   }),
 });
