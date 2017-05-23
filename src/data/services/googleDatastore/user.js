@@ -25,6 +25,7 @@ export async function registerUser(user) {
   }
   return ret;
 }
+
 export async function getUserByID(id) {
   let ret = null;
   try {

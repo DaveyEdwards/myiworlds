@@ -21,8 +21,12 @@ class Page extends React.Component {
         <div className={s.container}>
           { this.props.pages.map((edge, index) =>
             <div key={index} >
+              <p>{edge._id}</p>
               <h3>{edge.title}</h3>
-              <img src={edge.image} />
+              <h5>{edge.path}</h5>
+              <p>{edge.type}</p>
+              <p>{edge.tags}</p>
+              <p>{edge.public}</p>
             </div>
             )
           }
@@ -34,7 +38,10 @@ class Page extends React.Component {
 
 export default createFragmentContainer(withStyles(s)(Page), graphql`
   fragment Page_pages on Page @relay(plural: true) {
+    _id
     title
-    image
+    type
+    path
+    public
   }
 `);

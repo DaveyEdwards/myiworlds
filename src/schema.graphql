@@ -7,8 +7,24 @@ type NewsItem {
 }
 
 type Page {
+  _id: ID!
+  path: String
+  public: Boolean
+  # viewers: [User]
+  type: String
+  # tags: [Page]
+  # order: Int
   title: String
-  image: String
+  # subtitle: String
+  # description: String
+  # image: Page
+  # creators: [User]
+  # created: String
+  # lastUpdated: String
+  # value: String
+  # blob: String
+  # page: Page
+  pages: [Page]
 }
 
 type Query {

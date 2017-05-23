@@ -14,7 +14,7 @@ import {
 
 import me from './queries/me';
 import news from './queries/news';
-import pages from './queries/pages';
+import pages from './queries/PagesByIDQuery';
 
 const schema = new Schema({
   query: new ObjectType({

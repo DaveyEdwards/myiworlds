@@ -9,14 +9,45 @@
 
 import {
   GraphQLObjectType as ObjectType,
+  GraphQLID as ID,
   GraphQLString as StringType,
+  GraphQLNonNull as NonNull,
+  GraphQLBoolean as BooleanType,
+  GraphQLInt as NumberType,
+  GraphQLList as List,
 } from 'graphql';
+
+import {
+  globalIdField,
+  toGlobalId
+} from 'graphql-relay';
+
+import UserType from './UserType';
+// import pages from '../queries/PagesByIDQuery';
+// import { getPages } from '../services/googleDatastore/Page';
 
 const PageType = new ObjectType({
   name: 'Page',
+  description: 'Everything you see can be placed inside a page.',
   fields: {
+    _id: { type: new NonNull(ID) },
+    path: { type: StringType },
+    public: { type: BooleanType },
+    // viewers: { type: new List(UserType) },
+    type: { type: StringType },
+    // tags: { type: new List(PageType) },
+    order: { type: NumberType },
     title: { type: StringType },
-    image: { type: StringType },
+    subtitle: { type: StringType },
+    description: { type: StringType },
+    // image: { type: StringType, resolve: page => toGlobalId('Page', page.image) },
+    // creators: { type: new List(UserType) },
+    created: { type: StringType },
+    lastUpdated: { type: StringType },
+    value: { type: StringType },
+    blob: { type: StringType },
+    // page: { type: StringType, resolve: page => toGlobalId('Page', page.page) },
+    // pages,
   },
 });
 

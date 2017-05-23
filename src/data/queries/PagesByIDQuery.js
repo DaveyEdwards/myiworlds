@@ -24,7 +24,7 @@ const pages = {
       console.log('PageQuery err', err);
     }
     console.log('PageQuery', pages);
-    pages = pages.map(Page => ({ ...Page, id: Page.type }));
+    pages = pages.map(Page => ({ ...Page, id: Page._id }));
     return pages;
   }
 };
