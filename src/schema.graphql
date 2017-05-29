@@ -13,18 +13,18 @@ type Page {
   # viewers: [User]
   type: String
   # tags: [Page]
-  # order: Int
+  order: Int
   title: String
-  # subtitle: String
-  # description: String
+  subtitle: String
+  description: String
   # image: Page
   # creators: [User]
-  # created: String
-  # lastUpdated: String
-  # value: String
-  # blob: String
-  # page: Page
-  pages: [Page]
+  created: String
+  lastUpdated: String
+  value: String
+  blob: String
+  page: Page
+  pageList: [Page]
 }
 
 type Query {

@@ -12,25 +12,33 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { graphql, createFragmentContainer } from 'react-relay';
 import s from './Page.css';
+import Text from '../../containers/Text/Text';
+import Image from '../../containers/Image/Image';
+import Video from '../../containers/Video/Video';
 
 class Page extends React.Component {
 
   render() {
     return (
-      <div className={s.root}>
-        <div className={s.container}>
-          { this.props.pages.map((edge, index) =>
-            <div key={index} >
-              <p>{edge._id}</p>
-              <h3>{edge.title}</h3>
-              <h5>{edge.path}</h5>
-              <p>{edge.type}</p>
-              <p>{edge.tags}</p>
-              <p>{edge.public}</p>
+      <div>
+        {
+          this.props.pages.map((page) =>
+            <div key={page._id}>
+              {(() => {
+                switch (page.type) {
+                  case 'video':
+                    return <Video page={page} />;
+                  case 'text':
+                    return <Text page={page}  />;
+                  case 'image':
+                    return <Image mode='fill' height='150px' position={'center center'} page={page} />;
+                  default:
+                    return `Page Component got: ${page.type}`;
+                }
+              })()}
             </div>
-            )
-          }
-        </div>
+          )
+        }
       </div>
     );
   }
@@ -43,5 +51,8 @@ export default createFragmentContainer(withStyles(s)(Page), graphql`
     type
     path
     public
+    ...Text_page
+    ...Image_page
+    ...Video_page
   }
 `);

@@ -23,19 +23,30 @@ import {
 } from 'graphql-relay';
 
 import UserType from './UserType';
-// import pages from '../queries/PagesByIDQuery';
-// import { getPages } from '../services/googleDatastore/Page';
+
+import {
+  getPagesBy_id,
+  getPageBy_id
+} from '../services/googleDatastore/Page';
 
 const PageType = new ObjectType({
   name: 'Page',
   description: 'Everything you see can be placed inside a page.',
-  fields: {
-    _id: { type: new NonNull(ID) },
+  fields: () => ({
+    _id: {
+      type: new NonNull( ID ) },
     path: { type: StringType },
     public: { type: BooleanType },
     // viewers: { type: new List(UserType) },
     type: { type: StringType },
-    // tags: { type: new List(PageType) },
+    tags: {
+      type: new List( PageType ),
+      resolve: ( page ) => {
+        if ( page.pageList ) {
+          return getPagesBy_id( page.pageList );
+        }
+      }
+    },
     order: { type: NumberType },
     title: { type: StringType },
     subtitle: { type: StringType },
@@ -46,9 +57,37 @@ const PageType = new ObjectType({
     lastUpdated: { type: StringType },
     value: { type: StringType },
     blob: { type: StringType },
-    // page: { type: StringType, resolve: page => toGlobalId('Page', page.page) },
-    // pages,
-  },
+    page: {
+      type: PageType,
+      resolve: ( page ) => {
+        if ( page.page ) {
+          return getPageBy_id( page.page );
+        }
+      },
+    },
+    pageList: {
+      type: new List( PageType ),
+      resolve: ( page ) => {
+        if ( page.pageList ) {
+          return getPagesBy_id( page.pageList );
+        }
+      },
+    }
+    // pageEdge:
+  }),
 });
+
+// const PagesType = new ObjectType({
+//   name: 'Pages',
+//   description: 'List of pageList',
+//   fields: () => ({
+//     id: NonNull('Pages'),
+//     pageList: {
+//       type: new List(PageType),
+//       description: 'all pageList list',
+//       resolve: result => result.pageList
+//     }
+//   }),
+// });
 
 export default PageType;

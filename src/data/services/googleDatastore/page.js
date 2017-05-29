@@ -55,7 +55,7 @@ export async function runPageQuery(filters = [], offset = 0, _limit = LIMIT) {
   return ret;
 }
 
-export async function getPages(_ids) {
+export async function getPagesBy_id(_ids) {
   let ret = [];
   try {
     const keys = _ids.map(_id => ([KEY, _id]));
@@ -63,30 +63,17 @@ export async function getPages(_ids) {
       ret = await lookupEntities(keys);
     }
   } catch (err) {
-    console.info('getPages err', err);
+    console.info('getPagesBy_Id err', err);
   }
   return ret;
 }
 
-export async function getPagesByID(ids) {
-  let ret = [];
-  try {
-    const keys = ids.map(id => ([KEY, id]));
-    if (keys.length > 0) {
-      ret = await lookupEntities(keys);
-    }
-  } catch (err) {
-    console.info('getPages err', err);
-  }
-  return ret;
-}
-
-export async function getPageByID(id) {
+export async function getPageBy_id(_id) {
   let ret = null;
   try {
-    ret = await getEntity([KEY, id]);
+    ret = await getEntity([KEY, _id]);
   } catch (err) {
-    console.info('getPageByID err', err);
+    console.info('getPageBy_ID err', err);
   }
   return ret;
 }

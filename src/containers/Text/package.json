@@ -1,0 +1,6 @@
+{
+  "name": "Text",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Text.js"
+}
