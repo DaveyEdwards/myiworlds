@@ -27,7 +27,7 @@ import UserType from './UserType';
 import {
   getPagesBy_id,
   getPageBy_id
-} from '../services/googleDatastore/Page';
+} from '../queries/googleDatastore/Page';
 
 const PageType = new ObjectType({
   name: 'Page',

@@ -29,6 +29,7 @@ import models from './data/models';
 import schema from './data/schema';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
+import { ServerStyleSheet } from 'styled-components';
 
 const app = express();
 
@@ -141,8 +142,10 @@ app.get('*', async (req, res, next) => {
       return;
     }
 
+    const sheet = new ServerStyleSheet();
     const data = { ...route };
-    data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
+    data.children = ReactDOM.renderToString(sheet.collectStyles(<App context={context}>{route.component}</App>));
+    const cssStyled = sheet.getStyleTags()
     data.styles = [
       { id: 'css', cssText: [...css].join('') },
     ];

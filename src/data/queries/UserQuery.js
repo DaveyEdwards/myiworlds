@@ -2,8 +2,8 @@ import { fromGlobalId } from 'graphql-relay';
 import { GraphQLString } from 'graphql';
 import UserType from '../types/UserType';
 import { getAccessTokenFromHeader } from '../services/token';
-import { getUserByID } from '../../services/googleDatastore/user';
-import { runFollowingQuery } from '../../services/googleDatastore/followUser';
+import { getUserByID } from '../../queries/googleDatastore/user';
+import { runFollowingQuery } from '../../queries/googleDatastore/followUser';
 
 const UserQuery = {
   description: 'Get User information',

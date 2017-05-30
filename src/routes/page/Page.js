@@ -16,34 +16,46 @@ import Text from '../../containers/Text/Text';
 import Image from '../../containers/Image/Image';
 import Video from '../../containers/Video/Video';
 import Svg from '../../containers/Svg/Svg';
+import List from '../../containers/List/List';
+import Card from '../../styledComponents/Card';
+// import styled from 'styled-components';
+//
+// const Card = styled.div`
+//   background: black;
+// `;
 
 class Page extends React.Component {
 
   render() {
     return (
       <div>
-        {
-          this.props.pages.map((page) =>
-            <div key={page._id}>
-              {(() => {
-                switch (page.type) {
-                  case 'video':
-                    return <Video page={page} />;
-                  case 'text':
-                    return <Text page={page} />;
-                  case 'image_svg':
-                    return <Svg page={page} />;
-                  case 'image':
-                    return <Image mode='fill' height='150px' position={'center center'} page={page} />;
-                  // case 'list':
-                    // return <List page={page} />;
-                  default:
-                    return `Page Component got: ${page.type}`;
+        <Card>
+          {
+            this.props.pages.map((page, index) =>
+              <Card key={page._id + index} >
+                {
+                  page.public ?
+                  (() => {
+                    switch (page.type) {
+                      case 'video':
+                        return <Video page={page} />;
+                      case 'text':
+                        return <Text page={page} />;
+                      case 'image_svg':
+                        return <Svg page={page} />;
+                      case 'image':
+                        return <Image mode='fill' height='150px' position={'center center'} page={page} />;
+                      case 'list':
+                        return <List page={page} />;
+                      default:
+                        return <h1>Page Component got: {page.type}</h1>;
+                    }
+                  })() : <h2>This is a private page.</h2>
                 }
-              })()}
-            </div>
-          )
-        }
+              </Card>
+            )
+          }
+        </Card>
       </div>
     );
   }
@@ -52,13 +64,12 @@ class Page extends React.Component {
 export default createFragmentContainer(withStyles(s)(Page), graphql`
   fragment Page_pages on Page @relay(plural: true) {
     _id
-    title
     type
-    path
     public
     ...Text_page
     ...Image_page
     ...Svg_page
     ...Video_page
+    ...List_page
   }
 `);

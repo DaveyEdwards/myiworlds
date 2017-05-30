@@ -124,13 +124,6 @@ export function generatePages() {
       },
     }
   }, {
-    _id: 'image_png000010000000000000000000001',
-    path: 'examples/image_svg/default',
-    public: true,
-    type: 'image_png',
-    title: 'Alt text of this png',
-    value: 'http://www.pngall.com/wp-content/uploads/2016/03/Illuminati-Transparent.png'
-  }, {
     _id: 'image_gif000010000000000000000000001',
     path: 'examples/image_gif/default',
     public: true,

@@ -1,7 +1,7 @@
 import faker from 'faker';
 import uuidV4 from 'uuid/v4';
-import { registerUser } from '../services/googleDataStore/user';
-import { savePages } from '../services/googleDatastore/page';
+import { registerUser } from '../queries/googleDatastore/user';
+import { savePages } from '../queries/googleDatastore/page';
 import { generatePages } from './pages';
 
 export async function generateUsers() {

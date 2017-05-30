@@ -9,7 +9,7 @@
 
 import { GraphQLList as List } from 'graphql';
 import PageType from '../types/PageType';
-import { runPageQuery } from '../services/googleDatastore/Page';
+import { runPageQuery } from '../queries/googleDatastore/Page';
 
 const pages = {
   type: new List(PageType),
