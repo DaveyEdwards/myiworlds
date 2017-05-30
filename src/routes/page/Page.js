@@ -15,6 +15,7 @@ import s from './Page.css';
 import Text from '../../containers/Text/Text';
 import Image from '../../containers/Image/Image';
 import Video from '../../containers/Video/Video';
+import Svg from '../../containers/Svg/Svg';
 
 class Page extends React.Component {
 
@@ -29,9 +30,13 @@ class Page extends React.Component {
                   case 'video':
                     return <Video page={page} />;
                   case 'text':
-                    return <Text page={page}  />;
+                    return <Text page={page} />;
+                  case 'image_svg':
+                    return <Svg page={page} />;
                   case 'image':
                     return <Image mode='fill' height='150px' position={'center center'} page={page} />;
+                  // case 'list':
+                    // return <List page={page} />;
                   default:
                     return `Page Component got: ${page.type}`;
                 }
@@ -53,6 +58,7 @@ export default createFragmentContainer(withStyles(s)(Page), graphql`
     public
     ...Text_page
     ...Image_page
+    ...Svg_page
     ...Video_page
   }
 `);
