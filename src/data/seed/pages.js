@@ -81,6 +81,26 @@ export function generatePages() {
       'image0000100000000000000000000000001',
       'list00001000000000000000000000000001',
     ]
+  },{
+    path: 'examples/edge/default',
+    public: true,
+    type: 'edge',
+    title: 'Title of this edge',
+    description: 'Description of this edge',
+    image: 'PAGEID(img/svg/gif)',
+    pageEdge: [
+      'project00001000000000000000000000001',
+      'page00001000000000000000000000000001',
+      'interface000010000000000000000000001',
+      'interface000010000000000000000000002',
+      'text00001000000000000000000000000001',
+      'image0000100000000000000000000000001',
+      'list00001000000000000000000000000001',
+      'contentlist0000100000000000000000001',
+      'video0000100000000000000000000000001',
+      'image_svg000010000000000000000000001',
+      'hero00001000000000000000000000000001'
+    ]
   }, {
     _id: 'contentlist0000100000000000000000001',
     path: 'examples/content_list/default',
@@ -123,13 +143,6 @@ export function generatePages() {
         d: 'M 12 2 C 6.48 2 2 6.48 2 12 s 4.48 10 10 10 s 10 -4.48 10 -10 S 17.52 2 12 2 Z m 0 3 c 1.66 0 3 1.34 3 3 s -1.34 3 -3 3 s -3 -1.34 -3 -3 s 1.34 -3 3 -3 Z m 0 14.2 c -2.5 0 -4.71 -1.28 -6 -3.22 c 0.03 -1.99 4 -3.08 6 -3.08 c 1.99 0 5.97 1.09 6 3.08 c -1.29 1.94 -3.5 3.22 -6 3.22 Z'
       },
     }
-  }, {
-    _id: 'image_gif000010000000000000000000001',
-    path: 'examples/image_gif/default',
-    public: true,
-    type: 'image_gif',
-    title: 'ALT_TEXT',
-    value: 'https://media.giphy.com/media/SDogLD4FOZMM8/giphy.gif'
   }, {
     _id: 'hero00001000000000000000000000000001',
     path: 'examples/hero/default',

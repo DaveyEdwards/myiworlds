@@ -15,15 +15,28 @@ import {
 import me from './queries/me';
 import news from './queries/news';
 import pages from './queries/PagesByIDQuery';
+import pageType from './types/PageType';
+
+import {
+  fromGlobalId,
+  nodeDefinitions,
+} from 'graphql-relay';
+
+import {
+  getPageBy_id
+} from './queries/googleDatastore/Page';
+
+import { nodeField } from './nodeInterface';
 
 const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
-    fields: {
+    fields: () => ({
+      node: nodeField,
       me,
       news,
       pages
-    },
+    }),
   }),
 });
 
