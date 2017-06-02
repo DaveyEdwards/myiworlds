@@ -82,6 +82,7 @@ export function generatePages() {
       'list00001000000000000000000000000001',
     ]
   },{
+    _id: 'edge00001000000000000000000000000001',
     path: 'examples/edge/default',
     public: true,
     type: 'edge',

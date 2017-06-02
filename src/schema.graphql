@@ -16,22 +16,22 @@ type Page implements Node {
   _id: ID!
   path: String
   public: Boolean
-  # viewers: [User]
+  viewers: [User]
   type: String
-  # tags: [Page]
+  tags: [Page]
   order: Int
   title: String
   subtitle: String
   description: String
-  # image: Page
-  # creators: [User]
+  image: Page
+  creators: [User]
   created: String
   lastUpdated: String
   value: String
   blob: String
   page: Page
   pageList: [Page]
-  pageEdge: [PageEdge]
+  pageEdge (after: String, first: Int, before: String, last: Int): PageConnection
 }
 
 # A connection to a list of items.

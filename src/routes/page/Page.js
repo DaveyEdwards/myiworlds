@@ -17,12 +17,8 @@ import Image from '../../containers/Image/Image';
 import Video from '../../containers/Video/Video';
 import Svg from '../../containers/Svg/Svg';
 import List from '../../containers/List/List';
+import Edge from '../../containers/Edge/Edge';
 import Card from '../../styledComponents/Card';
-// import styled from 'styled-components';
-//
-// const Card = styled.div`
-//   background: black;
-// `;
 
 class Page extends React.Component {
 
@@ -47,6 +43,8 @@ class Page extends React.Component {
                         return <Image mode='fill' height='150px' position={'center center'} page={page} />;
                       case 'list':
                         return <List page={page} />;
+                      case 'edge':
+                        return <Edge page={page} />;
                       default:
                         return <h1>Page Component got: {page.type}</h1>;
                     }
@@ -71,5 +69,6 @@ export default createFragmentContainer(withStyles(s)(Page), graphql`
     ...Svg_page
     ...Video_page
     ...List_page
+    ...Edge_page
   }
 `);

@@ -127,3 +127,37 @@ export async function getCount(namespace) {
   }
   return ret;
 }
+
+
+// TESTING: This is to use cursors with Datastore
+export async function runPageQuery(pageCursor) {
+  // By default, google-cloud-node will automatically paginate through all of
+  // the results that match a query. However, this sample implements manual
+  // pagination using limits and cursor tokens.
+  let query = datastore.createQuery('AA_PROTO_PAGES')
+    .limit(pageSize);
+
+  if (pageCursor) {
+    query = query.start(pageCursor);
+  }
+
+  return datastore.runQuery(query)
+    .then((results) => {
+      const entities = results[0];
+      const info = results[1];
+
+      if (info.moreResults !== Datastore.NO_MORE_RESULTS) {
+        // If there are more results to retrieve, the end cursor is
+        // automatically set on `info`. To get this value directly, access
+        // the `endCursor` property.
+        return runPageQuery(info.endCursor)
+          .then((results) => {
+            // Concatenate entities
+            results[0] = entities.concat(results[0]);
+            return results;
+          });
+      }
+
+      return [entities, info];
+    });
+}

@@ -11,9 +11,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { graphql, createFragmentContainer } from 'react-relay';
-import s from './List.css';
+import s from './Edge.css';
+import Card from '../../styledComponents/Card';
 
-class List extends React.Component {
+class Edge extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
     page: PropTypes.object,
@@ -22,11 +23,15 @@ class List extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          <h2>{this.props.page.title}</h2>
+          <p>{this.props.page.description}</p>
+        </div>
         <ul>
           {
-            this.props.page.pageList.map((page, index) =>
-              <li key={page.title + index}>
-                <h1>{page.title}</h1>
+            this.props.page.pageEdge.edges.map((edge) =>
+              <li key={edge.node.id}>
+                <h3>{edge.node.title}</h3>
               </li>
             )
           }
@@ -36,12 +41,18 @@ class List extends React.Component {
   }
 }
 
-export default createFragmentContainer(withStyles(s)(List), graphql`
-  fragment List_page on Page {
+export default createFragmentContainer(withStyles(s)(Edge), graphql`
+  fragment Edge_page on Page {
     title
     description
-    pageList {
-      title
+    pageEdge {
+      edges {
+        node {
+          id
+          _id
+          title
+        }
+      }
     }
   }
 `);

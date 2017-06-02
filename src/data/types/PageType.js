@@ -18,20 +18,10 @@ import {
 } from 'graphql';
 
 import {
-  // fromGlobalId,
-  // globalIdField,
-  // toGlobalId,
-  //
-  // connectionDefinitions,
-  // connectionFromArray
   connectionArgs,
   connectionDefinitions,
   connectionFromArray,
-  cursorForObjectInConnection,
-  fromGlobalId,
   globalIdField,
-  mutationWithClientMutationId,
-  nodeDefinitions,
   toGlobalId,
 } from 'graphql-relay';
 
@@ -42,34 +32,81 @@ import {
   getPageBy_id
 } from '../queries/googleDatastore/Page';
 
-// import nodeField from '../schema';
 import { nodeInterface } from '../nodeInterface';
+
+// import PageConnection from './connections/PageConnection';
 
 const PageType = new ObjectType({
   name: 'Page',
   description: 'Everything you see can be placed inside a page.',
+  // isTypeOf: object => object instanceof Page,
   fields: () => ({
-    id: globalIdField('Page'),
+    id: globalIdField('Page', page => page._id),
     _id: {
-      type: new NonNull( ID ) },
-    path: { type: StringType },
+      type: new NonNull( ID ),
+      description: 'A unique id used to instantly locate this page inside the database'
+    },
+    path: {
+      type: StringType,
+      description: 'A direct path (url) to this page'
+    },
     public: { type: BooleanType },
-    // viewers: { type: new List(UserType) },
-    type: { type: StringType },
-    tags: {
+    viewers: {
+      description: 'Profiles that can view this page',
       type: new List( PageType ),
       resolve: ( page ) => {
-        if ( page.pageList ) {
-          return getPagesBy_id( page.pageList );
+        if ( page.viewers ) {
+          return getPagesBy_id( page.viewers );
         }
       }
     },
-    order: { type: NumberType },
+    type: { type: StringType },
+    // tags: {
+    //   type: PageConnection,
+    //   description: 'All tags related to this page',
+    //   args: connectionArgs,
+    //   resolve: async ( page, args ) => {
+    //     if ( page.tags ) {
+    //       let tags = await getPagesBy_id( page.tags );
+    //       let connection = connectionFromArray(tags, args);
+    //       return connection;
+    //     }
+    //   }
+    // },
+    order: {
+      type: NumberType,
+      description: 'The order number this is to display in a list'
+    },
     title: { type: StringType },
     subtitle: { type: StringType },
     description: { type: StringType },
-    // image: { type: StringType, resolve: page => toGlobalId('Page', page.image) },
-    // creators: { type: new List(UserType) },
+    // image: {
+    //   type: new List( PageType ),
+    //   resolve: ( page ) => {
+    //     if ( page.pageList ) {
+    //       return getPagesBy_id( page.pageList );
+    //     }
+    //   },
+    // },
+    creator: {
+      type: PageType,
+      resolve: ( page ) => {
+        if ( page.creator ) {
+          return getPageBy_id( page.creator );
+        }
+      }
+    },
+    editors: {
+      type: PageConnection,
+      args: connectionArgs,
+      resolve: async ( page, args ) => {
+        if ( page.editors ) {
+          let editors = await getPagesBy_id( page.editors );
+          let connection = connectionFromArray(editors, args);
+          return connection;
+        }
+      }
+    },
     created: { type: StringType },
     lastUpdated: { type: StringType },
     value: { type: StringType },
@@ -84,21 +121,21 @@ const PageType = new ObjectType({
     },
     pageList: {
       type: new List( PageType ),
-      resolve: ( page ) => {
+      resolve: async ( page ) => {
         if ( page.pageList ) {
-          return getPagesBy_id( page.pageList );
+          let pageList = await getPagesBy_id( page.pageList );
+          return pageList;
         }
       },
     },
     pageEdge: {
-      type: PagesConnection,
-      args: {
-      ...connectionArgs,
-      query: { type: StringType }
-      },
-      resolve: ( page, args ) => {
+      type: PageConnection,
+      args: connectionArgs,
+      resolve: async ( page, args ) => {
         if ( page.pageEdge ) {
-            return connectionFromArray(getPagesBy_id( page.pageEdge ), args)
+          let pageEdge = await getPagesBy_id( page.pageEdge );
+          let connection = connectionFromArray(pageEdge, args);
+          return connection;
         }
       }
     },
@@ -106,10 +143,7 @@ const PageType = new ObjectType({
   interfaces: [nodeInterface],
 });
 
-const {
-  connectionType: PagesConnection,
-  edgeType: GraphQLPageEdge,
-} = connectionDefinitions({
+const { connectionType: PageConnection } = connectionDefinitions({
   name: 'Page',
   nodeType: PageType,
 });
