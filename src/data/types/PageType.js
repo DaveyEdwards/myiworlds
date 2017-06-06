@@ -25,23 +25,16 @@ import {
   toGlobalId,
 } from 'graphql-relay';
 
-import UserType from './UserType';
-
 import {
-  getPagesBy_id,
-
-} from '../queries/googleDatastore/Page';
-
-import { getPageBy_id } from '../queries/googleDatastore/pageQueries';
+  getPageBy_id,
+  getPagesBy_id
+} from '../queries/googleDatastore/pageQueries';
 
 import { nodeInterface } from '../nodeInterface';
-
-// import PageConnection from './connections/PageConnection';
 
 const PageType = new ObjectType({
   name: 'Page',
   description: 'Everything you see can be placed inside a page.',
-  // isTypeOf: object => object instanceof Page,
   fields: () => ({
     id: globalIdField('Page', page => page._id),
     _id: {
@@ -143,13 +136,6 @@ const PageType = new ObjectType({
            return loaders.page.loadMany( page.pageList );
          }
        },
-
-      // resolve: async ( page ) => {
-      //   if ( page.pageList ) {
-      //     let pageList = await getPagesBy_id( page.pageList );
-      //     return pageList;
-      //   }
-      // },
     },
     pageEdge: {
       type: PageConnection,

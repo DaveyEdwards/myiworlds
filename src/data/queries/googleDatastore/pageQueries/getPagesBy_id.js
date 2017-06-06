@@ -8,8 +8,9 @@ import Page from '../../../models/googleDatastore/pageModel';
   ]);
 */
 export async function getPagesBy_id(_ids) {
+  let response = null;
   try {
-    const response = await Page.get(_ids, null, null, null, { preserveOrder: true });
+    response = await Page.get(_ids, null, null, null, { preserveOrder: true });
   } catch (err) {
     return {
         status: 'ERROR',
