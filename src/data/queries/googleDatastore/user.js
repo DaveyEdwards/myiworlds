@@ -8,7 +8,7 @@ import {
 } from './api';
 import Constants from './constant';
 
-const KEY = 'AA_PROTO_USERS';
+const KEY = 'DS_USERS';
 const LIMIT = Constants.LIMIT_USER;
 
 export async function registerUser(user) {

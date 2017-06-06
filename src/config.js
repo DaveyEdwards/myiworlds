@@ -56,4 +56,10 @@ module.exports = {
       secret: process.env.TWITTER_CONSUMER_SECRET || 'KTZ6cxoKnEakQCeSpZlaUCJWGAlTEBJj0y2EMkUBujA7zWSvaQ',
     },
   },
+
+  // Google Datastore config
+  datastore: {
+    projectId: 'myiworlds-164603',
+    googleApiServiceKey: './src/google_api_service_key.json'
+  },
 };

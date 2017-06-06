@@ -29,8 +29,10 @@ import UserType from './UserType';
 
 import {
   getPagesBy_id,
-  getPageBy_id
+
 } from '../queries/googleDatastore/Page';
+
+import { getPageBy_id } from '../queries/googleDatastore/pageQueries';
 
 import { nodeInterface } from '../nodeInterface';
 
@@ -50,7 +52,10 @@ const PageType = new ObjectType({
       type: StringType,
       description: 'A direct path (url) to this page'
     },
-    public: { type: BooleanType },
+    public: {
+      description: 'Is this page visable to the public?',
+      type: BooleanType,
+    },
     viewers: {
       description: 'Profiles that can view this page',
       type: new List( PageType ),
@@ -61,18 +66,30 @@ const PageType = new ObjectType({
       }
     },
     type: { type: StringType },
-    // tags: {
-    //   type: PageConnection,
-    //   description: 'All tags related to this page',
-    //   args: connectionArgs,
-    //   resolve: async ( page, args ) => {
-    //     if ( page.tags ) {
-    //       let tags = await getPagesBy_id( page.tags );
-    //       let connection = connectionFromArray(tags, args);
-    //       return connection;
-    //     }
-    //   }
-    // },
+    tags: {
+      type: PageConnection,
+      description: 'All tags related to this page',
+      args: connectionArgs,
+      resolve: async ( page, args ) => {
+        if ( page.tags ) {
+          let tags = await getPagesBy_id( page.tags );
+          let connection = connectionFromArray(tags, args);
+          return connection;
+        }
+      }
+    },
+    categories: {
+      type: PageConnection,
+      description: 'All categories related to this page',
+      args: connectionArgs,
+      resolve: async ( page, args ) => {
+        if ( page.categories ) {
+          let categories = await getPagesBy_id( page.categories );
+          let connection = connectionFromArray(categories, args);
+          return connection;
+        }
+      }
+    },
     order: {
       type: NumberType,
       description: 'The order number this is to display in a list'
@@ -80,14 +97,14 @@ const PageType = new ObjectType({
     title: { type: StringType },
     subtitle: { type: StringType },
     description: { type: StringType },
-    // image: {
-    //   type: new List( PageType ),
-    //   resolve: ( page ) => {
-    //     if ( page.pageList ) {
-    //       return getPagesBy_id( page.pageList );
-    //     }
-    //   },
-    // },
+    image: {
+      type: PageType,
+      resolve: ( page ) => {
+        if ( page.image ) {
+          return getPageBy_id( page.image );
+        }
+      }
+    },
     creator: {
       type: PageType,
       resolve: ( page ) => {
@@ -121,12 +138,18 @@ const PageType = new ObjectType({
     },
     pageList: {
       type: new List( PageType ),
-      resolve: async ( page ) => {
-        if ( page.pageList ) {
-          let pageList = await getPagesBy_id( page.pageList );
-          return pageList;
-        }
-      },
+      resolve: (page, args, { loaders }) => {
+         if ( page.pageList ) {
+           return loaders.page.loadMany( page.pageList );
+         }
+       },
+
+      // resolve: async ( page ) => {
+      //   if ( page.pageList ) {
+      //     let pageList = await getPagesBy_id( page.pageList );
+      //     return pageList;
+      //   }
+      // },
     },
     pageEdge: {
       type: PageConnection,

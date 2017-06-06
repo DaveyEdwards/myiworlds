@@ -1,8 +1,15 @@
 import faker from 'faker';
-import uuidV4 from 'uuid/v4';
+import { createPage } from '../queries/googleDatastore/pageQueries/controller';
 
-export function generatePages() {
-  return [{
+export async function generatePages() {
+  pages.map((page) => {
+    createPage(page);
+    console.log('\n', '__PAGE__',  '\n',  page );
+  })
+}
+
+const pages = [
+  {
     _id: 'project00001000000000000000000000001',
     path: 'examples/project/default',
     public: true,
@@ -42,6 +49,7 @@ export function generatePages() {
     public: true,
     path: 'examples/project/default2',
     type: 'interface_navigation',
+    order: 1,
     title: 'Top Navigation',
     styles: 'PAGEID',
     pageList: [
@@ -56,6 +64,7 @@ export function generatePages() {
     path: 'examples/text/default',
     public: true,
     type: 'text',
+    order: 2,
     title: 'Title of this text box',
     description: 'Description of this text box',
     image: 'PAGEID()',
@@ -65,6 +74,7 @@ export function generatePages() {
     path: 'examples/image/default',
     public: true,
     type: 'image',
+    order: 3,
     title: 'ALT_TEXT_FOR_IMAGE',
     value: faker.image.technics(),
   }, {
@@ -72,6 +82,7 @@ export function generatePages() {
     path: 'examples/list/default',
     public: true,
     type: 'list',
+    order: 4,
     title: 'Title of this list',
     description: 'Description of this list',
     image: 'PAGEID(img/svg/gif)',
@@ -203,5 +214,4 @@ export function generatePages() {
     image: 'PAGEID()',
     value: 'www.twitter.com'
   }
-  ];
-}
+];

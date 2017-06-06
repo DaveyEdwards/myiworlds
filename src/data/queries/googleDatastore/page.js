@@ -9,7 +9,7 @@ import {
 } from './api';
 import Constants from './constant';
 
-const KEY = 'AA_PROTO_PAGES';
+const KEY = 'Page';
 const LIMIT = Constants.LIMIT_PAGE;
 
 export async function savePage(item) {
