@@ -31,8 +31,7 @@ import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
 import { ServerStyleSheet } from 'styled-components';
 import gstore from 'gstore-node';
-import DataLoader from 'dataloader';
-import { getPageBy_id } from './data/queries/googleDatastore/pageQueries';
+import loaders from './data/loaders';
 
 const app = express();
 
@@ -43,11 +42,6 @@ const datastore = require('@google-cloud/datastore')({
 
 gstore.connect(datastore);
 
-const pageLoader = new DataLoader(_ids => Promise.all(_ids.map(_id => getPageBy_id(_id)) ))
-
-const loaders = {
-  page: pageLoader
-};
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
@@ -114,7 +108,9 @@ app.use('/graphql', expressGraphQL(req => ({
   graphiql: __DEV__,
   rootValue: { request: req },
   pretty: __DEV__,
-  context: { loaders }
+  context: {
+    loaders: loaders()
+  }
 })));
 
 //

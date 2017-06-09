@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { createPage } from '../queries/googleDatastore/pageQueries/controller';
+import { createPage } from '../queries/googleDatastore/pageQueries';
 
 export async function generatePages() {
   pages.map((page) => {

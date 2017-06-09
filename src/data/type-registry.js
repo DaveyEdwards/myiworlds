@@ -1,5 +1,4 @@
 import { fromGlobalId } from 'graphql-relay';
-import { getPageBy_id } from './queries/googleDatastore/Page';
 require('babel-polyfill');
 
 const types = {};

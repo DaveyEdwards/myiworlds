@@ -30,6 +30,7 @@ import {
   getPagesBy_id
 } from '../queries/googleDatastore/pageQueries';
 
+// import {PageConnection} from './connections/PageConnection';
 import { nodeInterface } from '../nodeInterface';
 
 const PageType = new ObjectType({
@@ -52,20 +53,20 @@ const PageType = new ObjectType({
     viewers: {
       description: 'Profiles that can view this page',
       type: new List( PageType ),
-      resolve: ( page ) => {
-        if ( page.viewers ) {
-          return getPagesBy_id( page.viewers );
-        }
-      }
+      resolve: async (page, args, { loaders }) => {
+         if ( page.viewers ) {
+           return await loaders.pageLoader.loadMany( page.viewers );
+         }
+       }
     },
     type: { type: StringType },
     tags: {
       type: PageConnection,
       description: 'All tags related to this page',
       args: connectionArgs,
-      resolve: async ( page, args ) => {
+      resolve: async ( page, args, { loaders }) => {
         if ( page.tags ) {
-          let tags = await getPagesBy_id( page.tags );
+          let tags = await loaders.pageLoader.loadMany( page.tags );
           let connection = connectionFromArray(tags, args);
           return connection;
         }
@@ -75,9 +76,9 @@ const PageType = new ObjectType({
       type: PageConnection,
       description: 'All categories related to this page',
       args: connectionArgs,
-      resolve: async ( page, args ) => {
+      resolve: async ( page, args, { loaders }) => {
         if ( page.categories ) {
-          let categories = await getPagesBy_id( page.categories );
+          let categories = await loaders.pageLoader.loadMany( page.categories );
           let connection = connectionFromArray(categories, args);
           return connection;
         }
@@ -92,26 +93,26 @@ const PageType = new ObjectType({
     description: { type: StringType },
     image: {
       type: PageType,
-      resolve: ( page ) => {
+      resolve: async( page, args, { loaders }) => {
         if ( page.image ) {
-          return getPageBy_id( page.image );
+          return await loaders.pageLoader.load( page.image );
         }
       }
     },
     creator: {
       type: PageType,
-      resolve: ( page ) => {
+      resolve: async( page, args, { loaders }) => {
         if ( page.creator ) {
-          return getPageBy_id( page.creator );
+          return await loaders.pageLoader.load( page.creator );
         }
       }
     },
     editors: {
       type: PageConnection,
       args: connectionArgs,
-      resolve: async ( page, args ) => {
+      resolve: async ( page, args, { loaders }) => {
         if ( page.editors ) {
-          let editors = await getPagesBy_id( page.editors );
+          let editors = await loaders.pageLoader.loadMany( page.editors );
           let connection = connectionFromArray(editors, args);
           return connection;
         }
@@ -123,31 +124,31 @@ const PageType = new ObjectType({
     blob: { type: StringType },
     page: {
       type: PageType,
-      resolve: ( page ) => {
+      resolve: async( page, args, { loaders }) => {
         if ( page.page ) {
-          return getPageBy_id( page.page );
+          return await loaders.pageLoader.load( page.page );
         }
-      },
+      }
     },
     pageList: {
       type: new List( PageType ),
-      resolve: (page, args, { loaders }) => {
+      resolve: async (page, args, { loaders }) => {
          if ( page.pageList ) {
-           return loaders.page.loadMany( page.pageList );
+           return await loaders.pageLoader.loadMany( page.pageList );
          }
-       },
+       }
     },
     pageEdge: {
       type: PageConnection,
       args: connectionArgs,
-      resolve: async ( page, args ) => {
+      resolve: async ( page, args, { loaders }) => {
         if ( page.pageEdge ) {
-          let pageEdge = await getPagesBy_id( page.pageEdge );
+          let pageEdge = await loaders.pageLoader.loadMany( page.pageEdge );
           let connection = connectionFromArray(pageEdge, args);
           return connection;
         }
       }
-    },
+    }
   }),
   interfaces: [nodeInterface],
 });

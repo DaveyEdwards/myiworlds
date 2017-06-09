@@ -1,23 +1,27 @@
+// Cursor NOT WORKING
+//  Cursor is not passed in. Not sure if it helps to have cursors on DB side + Relay
+
 import Page from '../../../models/googleDatastore/pageModel';
 
 /* Example use
   getPageList();
 */
 export async function getPageList(request) {
-  let response = null;
+  let response = [];
 
   try {
     // const pageCursor = request.cursor; // Breaks when run without cursor, cursor generator has to run first then
+    // Page.list(start: pageCursor)
     response = await Page.list()
-      .then((listObject) => {
-        return console.log(listObject);
+      .then((response) => {
+        return response.entities;
       });
 
   } catch (err) {
     console.log('getPage err', err);
   }
 
-  return console.log(response);
+  return response;
 };
 
 /* Example response * Note the cursor at the end

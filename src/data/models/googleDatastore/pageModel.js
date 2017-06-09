@@ -111,8 +111,8 @@ const pageSchema = new Schema({
 });
 
 const listSettings = {
-  limit: 5,
-  order: { property: 'order' },
+  limit: 50,
+  order: { property: '_id' },
 };
 
 

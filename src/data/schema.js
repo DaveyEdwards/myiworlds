@@ -10,23 +10,19 @@
 import {
   GraphQLSchema as Schema,
   GraphQLObjectType as ObjectType,
+  GraphQLList as List,
 } from 'graphql';
-
-import me from './queries/me';
-import news from './queries/news';
-import pages from './queries/PagesByIDQuery';
-import pageType from './types/PageType';
-
 import {
   fromGlobalId,
   nodeDefinitions,
 } from 'graphql-relay';
-
-import {
-  getPageBy_id
-} from './queries/googleDatastore/Page';
-
+import me from './queries/me';
+import news from './queries/news';
+import PageType from './types/PageType';
 import { nodeField } from './nodeInterface';
+
+import { getPageList } from './queries/googleDatastore/pageQueries'
+
 
 const schema = new Schema({
   query: new ObjectType({
@@ -35,7 +31,12 @@ const schema = new Schema({
       node: nodeField,
       me,
       news,
-      pages
+      pages: {
+        type: new List( PageType ),
+        resolve: async (args) => {
+          return await getPageList();
+        }
+      },
     }),
   }),
 });
