@@ -1,10 +1,10 @@
 import pageLoader from './pageLoader';
 
 // All your dataloaders
-const rootLoaders = {
+const allLoaders = {
   ...pageLoader
 }
 
 export default function loaders () {
-  return rootLoaders
+  return allLoaders
 }
