@@ -30,7 +30,7 @@ import {
   getPagesBy_id
 } from '../queries/googleDatastore/pageQueries';
 
-// import {PageConnection} from './connections/PageConnection';
+// import PageConnection from './connections/PageConnection';
 import { nodeInterface } from '../nodeInterface';
 
 const PageType = new ObjectType({
@@ -59,12 +59,29 @@ const PageType = new ObjectType({
          }
        }
     },
+    userInterfaces: {
+      description: 'Profiles that can view this page',
+      type: new List( PageType ),
+      resolve: async (page, args, { loaders }) => {
+         if ( page.userInterfaces ) {
+           return await loaders.pageLoader.loadMany( page.userInterfaces );
+         }
+       }
+    },
     type: { type: StringType },
+    styles: {
+      type: PageType,
+      resolve: async( page, args, { loaders }) => {
+        if ( page.styles ) {
+          return await loaders.pageLoader.load( page.styles );
+        }
+      }
+    },
     tags: {
       type: PageConnection,
       description: 'All tags related to this page',
-      args: connectionArgs,
-      resolve: async ( page, args, { loaders }) => {
+      args: { ...connectionArgs },
+      resolve: async ( page, { ...args }, { loaders }) => {
         if ( page.tags ) {
           let tags = await loaders.pageLoader.loadMany( page.tags );
           let connection = connectionFromArray(tags, args);
@@ -75,8 +92,8 @@ const PageType = new ObjectType({
     categories: {
       type: PageConnection,
       description: 'All categories related to this page',
-      args: connectionArgs,
-      resolve: async ( page, args, { loaders }) => {
+      args: { ...connectionArgs },
+      resolve: async ( page, { ...args }, { loaders }) => {
         if ( page.categories ) {
           let categories = await loaders.pageLoader.loadMany( page.categories );
           let connection = connectionFromArray(categories, args);
@@ -109,8 +126,8 @@ const PageType = new ObjectType({
     },
     editors: {
       type: PageConnection,
-      args: connectionArgs,
-      resolve: async ( page, args, { loaders }) => {
+      args: { ...connectionArgs },
+      resolve: async ( page, { ...args }, { loaders }) => {
         if ( page.editors ) {
           let editors = await loaders.pageLoader.loadMany( page.editors );
           let connection = connectionFromArray(editors, args);
@@ -140,8 +157,8 @@ const PageType = new ObjectType({
     },
     pageEdge: {
       type: PageConnection,
-      args: connectionArgs,
-      resolve: async ( page, args, { loaders }) => {
+      args: { ...connectionArgs },
+      resolve: async ( page, { ...args }, { loaders }) => {
         if ( page.pageEdge ) {
           let pageEdge = await loaders.pageLoader.loadMany( page.pageEdge );
           let connection = connectionFromArray(pageEdge, args);

@@ -1,12 +1,12 @@
 import Page from '../../../models/googleDatastore/pageModel';
 
 /* Example use
-updatePage({
+editPage({
   _id: 'contentlist0000100000000000000000001',
   title: 'A new title',
 });
 */
-export async function updatePage(page) {
+export async function editPage(page) {
   let response = null;
 
   try {
@@ -19,7 +19,7 @@ export async function updatePage(page) {
       });
 
   } catch (err) {
-    console.info('updatePage err', err)
+    console.info('editPage err', err)
   }
   return response;
 }

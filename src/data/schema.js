@@ -9,36 +9,31 @@
 
 import {
   GraphQLSchema as Schema,
-  GraphQLObjectType as ObjectType,
-  GraphQLList as List,
 } from 'graphql';
-import {
-  fromGlobalId,
-  nodeDefinitions,
-} from 'graphql-relay';
-import me from './queries/me';
-import news from './queries/news';
-import PageType from './types/PageType';
-import { nodeField } from './nodeInterface';
-
-import { getPageList } from './queries/googleDatastore/pageQueries'
+import Query from './types/QueryType.js';
+import Mutation from './mutations/Mutation.js';
+// import me from './queries/me';
+// import news from './queries/news';
+// import PageType from './types/PageType';
+// import { nodeField } from './nodeInterface';
+// import { getPageList } from './queries/googleDatastore/pageQueries'
 
 
 const schema = new Schema({
-  query: new ObjectType({
-    name: 'Query',
-    fields: () => ({
-      node: nodeField,
-      me,
-      news,
-      pages: {
-        type: new List( PageType ),
-        resolve: async (args) => {
-          return await getPageList();
-        }
-      },
-    }),
-  }),
+  query: Query,
+  mutation: Mutation,
+  // query: new ObjectType({
+  //   name: 'Query',
+  //   fields: () => ({
+  //     node: nodeField,
+  //     pages: {
+  //       type: new List( PageType ),
+  //       resolve: async (args) => {
+  //         return await getPageList();
+  //       }
+  //     },
+  //   }),
+  // }),
 });
 
 export default schema;
