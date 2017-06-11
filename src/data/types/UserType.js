@@ -48,7 +48,7 @@ const UserType = new ObjectType({
         if ( user.home ) {
           return getPageBy_id( user.home );
         }
-      },
+      }
     },
     profiles: {
       type: new List( ProfileType ),
