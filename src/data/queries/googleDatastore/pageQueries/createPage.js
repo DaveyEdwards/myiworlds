@@ -15,13 +15,9 @@ export async function createPage(page) {
 
     const pageEntity = new Page(entityData, entityData._id);
 
-    response = await pageEntity.save()
-      .then((entity) => {
-        return entity.plain();
-      });
-
+    response = await pageEntity.save().then(entity => entity.plain());
   } catch (err) {
-    console.info('savePage err', err)
+    console.info('savePage err', err);
   }
   return response;
 }

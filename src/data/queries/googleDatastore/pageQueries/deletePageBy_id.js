@@ -13,7 +13,7 @@ export async function deletePageBy_id(_id) {
   try {
     response = await Page.delete(_id).then((res) => {
       if(!res.success) {
-        console.log('No entity deleted. There is not Page Entity with the _id provided');
+        console.log('No entity deleted. There is no Page Entity with the _id provided');
       }
       return res;
     });

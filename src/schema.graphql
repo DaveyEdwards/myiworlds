@@ -1,14 +1,18 @@
-type NewsItem {
-  title: String!
-  link: String!
-  author: String
-  pubDate: String!
-  content: String
-}
-
 # An object with an ID
 interface Node {
   id: ID!
+}
+
+
+type User implements Node {
+  id: ID!
+  _id: ID!
+  username: String!
+  email: String!
+  emailConfirmed: Boolean!
+  styles: [Page]
+  home: Page
+  pagesCreated: Page
 }
 
 type Page implements Node {
@@ -68,12 +72,9 @@ type Query {
     # The ID of an object
     id: ID!
   ): Node
-  me: User
-  news: [NewsItem]
-  pages: [Page]
-}
+  user( _id: String ): User
+  pageByPath( path: String ): Page
+  users: [User]
+  pages (after: String, first: Int, before: String, last: Int): PageConnection
 
-type User {
-  id: ID!
-  email: String
 }

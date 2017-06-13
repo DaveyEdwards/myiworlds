@@ -7,33 +7,37 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import {
-  GraphQLSchema as Schema,
-} from 'graphql';
+import { GraphQLSchema as Schema } from 'graphql';
 import Query from './types/QueryType.js';
-import Mutation from './mutations/Mutation.js';
+// import Mutation from './mutations';
 // import me from './queries/me';
 // import news from './queries/news';
 // import PageType from './types/PageType';
-// import { nodeField } from './nodeInterface';
-// import { getPageList } from './queries/googleDatastore/pageQueries'
-
+// import UserType from './types/UserType';
+// import { getPageList } from './queries/googleDatastore/pageQueries';
+// import { getUserList } from './queries/googleDatastore/userQueries';
 
 const schema = new Schema({
   query: Query,
-  mutation: Mutation,
+  // mutation: Mutation,
   // query: new ObjectType({
   //   name: 'Query',
   //   fields: () => ({
   //     node: nodeField,
-  //     pages: {
-  //       type: new List( PageType ),
-  //       resolve: async (args) => {
-  //         return await getPageList();
+  //     users: {
+  //       type: new List(UserType),
+  //       resolve: async args => {
+  //         return await getUserList();
   //       }
   //     },
-  //   }),
-  // }),
+  //     pages: {
+  //       type: new List(PageType),
+  //       resolve: async args => {
+  //         return await getPageList();
+  //       }
+  //     }
+  //   })
+  // })
 });
 
 export default schema;

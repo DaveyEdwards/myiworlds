@@ -2,16 +2,16 @@ import {
   GraphQLObjectType as ObjectType,
 } from 'graphql';
 
-import CreatePageMutation from './CreatePageMutation';
-import EditPageMutation from './EditPageMutation';
-import DeletePageMutation from './DeletePageMutation';
+import createPageMutation from './createPageMutation';
+import editPageMutation from './editPageMutation';
+import deletePageMutation from './deletePageMutation';
 
 const Mutation = new ObjectType({
   name: 'Mutation',
   fields: {
-    createPage: CreatePageMutation,
-    editPage: EditPageMutation,
-    deletePage: DeletePageMutation,
+    createPage: createPageMutation,
+    editPage: editPageMutation,
+    deletePage: deletePageMutation,
   },
 });
 

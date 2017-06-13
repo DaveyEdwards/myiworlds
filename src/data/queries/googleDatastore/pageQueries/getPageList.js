@@ -12,17 +12,13 @@ export async function getPageList(request) {
   try {
     // const pageCursor = request.cursor; // Breaks when run without cursor, cursor generator has to run first then
     // Page.list(start: pageCursor)
-    response = await Page.list()
-      .then((response) => {
-        return response.entities;
-      });
-
+    response = await Page.list().then(response => response.entities);
   } catch (err) {
     console.log('getPage err', err);
   }
 
   return response;
-};
+}
 
 /* Example response * Note the cursor at the end
 {

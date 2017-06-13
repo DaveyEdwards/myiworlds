@@ -1,3 +1,25 @@
+import {
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLInt,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLString,
+} from 'graphql';
+import {
+  connectionArgs,
+  connectionDefinitions,
+  connectionFromArray,
+  cursorForObjectInConnection,
+  fromGlobalId,
+  globalIdField,
+  mutationWithClientMutationId,
+  nodeDefinitions,
+  toGlobalId,
+} from 'graphql-relay';
+
 export const GraphQLAddTodoMutation = mutationWithClientMutationId({
   name: 'CreatePage',
   inputFields: {
@@ -6,7 +28,7 @@ export const GraphQLAddTodoMutation = mutationWithClientMutationId({
   outputFields: {
     todoEdge: {
       type: GraphQLTodoEdge,
-      resolve: ({localTodoId}) => {
+      resolve: ({ localTodoId }) => {
         const todo = getTodo(localTodoId);
         return {
           cursor: cursorForObjectInConnection(getTodos(), todo),
@@ -19,8 +41,8 @@ export const GraphQLAddTodoMutation = mutationWithClientMutationId({
       resolve: () => getViewer(),
     },
   },
-  mutateAndGetPayload: ({text}) => {
+  mutateAndGetPayload: ({ text }) => {
     const localTodoId = addTodo(text);
-    return {localTodoId};
+    return { localTodoId };
   },
 });

@@ -17,58 +17,53 @@ import {
   GraphQLList as List,
 } from 'graphql';
 
-import {
-  connectionArgs,
-  connectionDefinitions,
-  connectionFromArray,
-  globalIdField,
-  toGlobalId,
-} from 'graphql-relay';
+import { globalIdField } from 'graphql-relay';
 
 import PageType from './PageType';
 
-import {
-  getPagesBy_id,
-  getPageBy_id
-} from '../queries/googleDatastore/Page';
+import { getPagesBy_id, getPageBy_id } from '../queries/googleDatastore/pageQueries';
 
 import { nodeInterface } from '../nodeInterface';
 
 const UserType = new ObjectType({
   name: 'User',
-  description: 'Everything you see can be placed inside a page.',
+  description: 'User who can create and interact with pages.',
   fields: () => ({
     id: globalIdField('User', user => user._id),
-    _id: { type: new NonNull( ID ) },
-    email: { type: StringType },
+    _id: { type: new NonNull(ID) },
+    username: { type: new NonNull(StringType) },
+    email: { type: new NonNull(StringType) },
+    emailConfirmed: { type: BooleanType },
+    styles: {
+      type: new List(PageType),
+      description: 'Styles a user wants to override specific content types',
+      resolve: async (user, args, { loaders }) => {
+        if (user.styles) {
+          return await loaders.pageLoader.loadMany(user.styles);
+        }
+      },
+    },
     home: {
       type: PageType,
-      description: 'A users home page, this is a actual person and not a company entity.',
-      resolve: ( user ) => {
-        if ( user.home ) {
-          return getPageBy_id( user.home );
+      description: 'The homepage of myiworlds.com/user/userName.',
+      resolve: (user) => {
+        if (user.page) {
+          return getPageBy_id(user.page);
         }
-      }
-    },
-    profiles: {
-      type: new List( ProfileType ),
-      resolve: async (user, args, { loaders }) => {
-        if ( user.profiles ) {
-          return await loaders.pageLoader.loadMany( user.profiles );
-        }
-      }
+      },
     },
     pagesCreated: {
-      type: new List( PageType ),
-      description: 'All pages created by this user',
-      resolve: async (user, args, { loaders }) => {
-        if ( user.pagesCreated ) {
-          return await loaders.pageLoader.loadMany( user.pagesCreated );
+      type: PageType,
+      description:
+        'All pages created by this user, they are not stored on the user object but its own node in the graph to prevent to much data.',
+      resolve: (user) => {
+        if (user.page) {
+          return getPageBy_id(user.page);
         }
-      }
+      },
     },
   }),
-  interfaces: [nodeInterface],
+  interfaces: () => [nodeInterface],
 });
 
 export default UserType;

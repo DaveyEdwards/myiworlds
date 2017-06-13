@@ -3,27 +3,23 @@ import User from '../../../models/googleDatastore/userModel';
 /* Example use
 
 */
-export async function editUser(user) {
+export async function getUserBy_id(_id) {
   let response = null;
 
   try {
-    const user_id = user._id;
-    const entityData = User.sanitize(user);
-
-    response = await User.update(user_id, entityData)
+    response = await User.get(_id)
       .then((entity) => {
         return entity.plain();
-      });
-
+    });
   } catch (err) {
-    console.info('editUser err', err)
+    console.log('getUserBy_id err', err);
   }
+
   return response;
-}
+};
 
 /* Example Response
 {
 
 }
-
 */

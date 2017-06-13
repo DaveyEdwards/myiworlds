@@ -16,22 +16,10 @@ import {
   GraphQLInt as NumberType,
   GraphQLList as List,
 } from 'graphql';
-
-import {
-  connectionArgs,
-  connectionDefinitions,
-  connectionFromArray,
-  globalIdField,
-  toGlobalId,
-} from 'graphql-relay';
-
-import {
-  getPageBy_id,
-  getPagesBy_id
-} from '../queries/googleDatastore/pageQueries';
-
-// import PageConnection from './connections/PageConnection';
+import { connectionArgs, connectionFromArray, globalIdField } from 'graphql-relay';
 import { nodeInterface } from '../nodeInterface';
+import PageConnection from './connections/PageConnection';
+import UserType from './UserType';
 
 const PageType = new ObjectType({
   name: 'Page',
@@ -39,140 +27,140 @@ const PageType = new ObjectType({
   fields: () => ({
     id: globalIdField('Page', page => page._id),
     _id: {
-      type: new NonNull( ID ),
-      description: 'A unique id used to instantly locate this page inside the database'
+      type: new NonNull(ID),
+      description: 'A unique id used to instantly locate this page inside the database',
     },
     path: {
       type: StringType,
-      description: 'A direct path (url) to this page'
+      description: 'A direct path (url) to this page',
     },
     public: {
       description: 'Is this page visable to the public?',
       type: BooleanType,
     },
     viewers: {
-      description: 'Profiles that can view this page',
-      type: new List( PageType ),
+      description: 'Users that can view this page',
+      type: new List(PageType),
       resolve: async (page, args, { loaders }) => {
-         if ( page.viewers ) {
-           return await loaders.pageLoader.loadMany( page.viewers );
-         }
-       }
+        if (page.viewers) {
+          return await loaders.pageLoader.loadMany(page.viewers);
+        }
+      },
     },
     userInterfaces: {
-      description: 'Profiles that can view this page',
-      type: new List( PageType ),
+      description: 'Users that can view this page',
+      type: new List(PageType),
       resolve: async (page, args, { loaders }) => {
-         if ( page.userInterfaces ) {
-           return await loaders.pageLoader.loadMany( page.userInterfaces );
-         }
-       }
+        if (page.userInterfaces) {
+          return await loaders.pageLoader.loadMany(page.userInterfaces);
+        }
+      },
     },
     type: { type: StringType },
     styles: {
       type: PageType,
-      resolve: async( page, args, { loaders }) => {
-        if ( page.styles ) {
-          return await loaders.pageLoader.load( page.styles );
+      resolve: async (page, args, { loaders }) => {
+        if (page.styles) {
+          return await loaders.pageLoader.load(page.styles);
         }
-      }
+      },
     },
-    tags: {
-      type: PageConnection,
-      description: 'All tags related to this page',
-      args: { ...connectionArgs },
-      resolve: async ( page, { ...args }, { loaders }) => {
-        if ( page.tags ) {
-          let tags = await loaders.pageLoader.loadMany( page.tags );
-          let connection = connectionFromArray(tags, args);
-          return connection;
-        }
-      }
-    },
-    categories: {
-      type: PageConnection,
-      description: 'All categories related to this page',
-      args: { ...connectionArgs },
-      resolve: async ( page, { ...args }, { loaders }) => {
-        if ( page.categories ) {
-          let categories = await loaders.pageLoader.loadMany( page.categories );
-          let connection = connectionFromArray(categories, args);
-          return connection;
-        }
-      }
-    },
+    // tags: {
+    //   type: PageConnection,
+    //   description: 'All tags related to this page',
+    //   args: { ...connectionArgs },
+    //   resolve: async (page, { ...args }, { loaders }) => {
+    //     if (page.tags) {
+    //       const tags = await loaders.pageLoader.loadMany(page.tags);
+    //       const connection = connectionFromArray(tags, args);
+    //       return connection;
+    //     }
+    //   },
+    // },
+    // categories: {
+    //   type: PageConnection,
+    //   description: 'All categories related to this page',
+    //   args: { ...connectionArgs },
+    //   resolve: async (page, { ...args }, { loaders }) => {
+    //     if (page.categories) {
+    //       const categories = await loaders.pageLoader.loadMany(page.categories);
+    //       const connection = connectionFromArray(categories, args);
+    //       return connection;
+    //     }
+    //   },
+    // },
     order: {
       type: NumberType,
-      description: 'The order number this is to display in a list'
+      description: 'The order number this is to display in a list',
     },
     title: { type: StringType },
     subtitle: { type: StringType },
     description: { type: StringType },
     image: {
       type: PageType,
-      resolve: async( page, args, { loaders }) => {
-        if ( page.image ) {
-          return await loaders.pageLoader.load( page.image );
+      resolve: async (page, args, { loaders }) => {
+        if (page.image) {
+          return await loaders.pageLoader.load(page.image);
         }
-      }
+      },
     },
     creator: {
-      type: PageType,
-      resolve: async( page, args, { loaders }) => {
-        if ( page.creator ) {
-          return await loaders.pageLoader.load( page.creator );
+      type: UserType,
+      resolve: async (page, args, { loaders }) => {
+        if (page.creator) {
+          return await loaders.pageLoader.load(page.creator);
         }
-      }
+      },
     },
-    editors: {
-      type: PageConnection,
-      args: { ...connectionArgs },
-      resolve: async ( page, { ...args }, { loaders }) => {
-        if ( page.editors ) {
-          let editors = await loaders.pageLoader.loadMany( page.editors );
-          let connection = connectionFromArray(editors, args);
-          return connection;
-        }
-      }
-    },
+    // editors: {
+    //   type: PageConnection,
+    //   args: { ...connectionArgs },
+    //   resolve: async (page, { ...args }, { loaders }) => {
+    //     if (page.editors) {
+    //       const editors = await loaders.pageLoader.loadMany(page.editors);
+    //       const connection = connectionFromArray(editors, args);
+    //       return connection;
+    //     }
+    //   },
+    // },
     created: { type: StringType },
     lastUpdated: { type: StringType },
     value: { type: StringType },
     blob: { type: StringType },
     page: {
       type: PageType,
-      resolve: async( page, args, { loaders }) => {
-        if ( page.page ) {
-          return await loaders.pageLoader.load( page.page );
+      resolve: async (page, args, { loaders }) => {
+        if (page.page) {
+          return await loaders.pageLoader.load(page.page);
         }
-      }
+      },
     },
     pageList: {
-      type: new List( PageType ),
+      type: new List(PageType),
       resolve: async (page, args, { loaders }) => {
-         if ( page.pageList ) {
-           return await loaders.pageLoader.loadMany( page.pageList );
-         }
-       }
+        if (page.pageList) {
+          return await loaders.pageLoader.loadMany(page.pageList);
+        }
+      },
     },
     pageEdge: {
       type: PageConnection,
-      args: { ...connectionArgs },
-      resolve: async ( page, { ...args }, { loaders }) => {
-        if ( page.pageEdge ) {
-          let pageEdge = await loaders.pageLoader.loadMany( page.pageEdge );
-          let connection = connectionFromArray(pageEdge, args);
+      args: connectionArgs,
+      resolve: async (page, { args }, { loaders }) => {
+        if (page.pageEdge) {
+          const pageEdge = await loaders.pageLoader.loadMany(page.pageEdge);
+          const connection = connectionFromArray(pageEdge, args);
           return connection;
         }
-      }
-    }
+      },
+    },
   }),
-  interfaces: [nodeInterface],
+  interfaces: () => [nodeInterface],
 });
 
-const { connectionType: PageConnection } = connectionDefinitions({
-  name: 'Page',
-  nodeType: PageType,
-});
+// const { connectionType: PageConnection } = connectionDefinitions({
+//   name: 'Page',
+//   nodeType: PageType,
+// });
 
 export default PageType;
