@@ -31,3 +31,4 @@ yarn-error.log*
 
 src/google_api_service_key.json
 # Google Cloud account info
+yarn\.lock

@@ -51,9 +51,4 @@ const QueryType = new ObjectType({
   }),
 });
 
-// const { connectionType: PageConnection } = connectionDefinitions({
-//   name: 'Page',
-//   nodeType: PageType,
-// });
-
 export default QueryType;

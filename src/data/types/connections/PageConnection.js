@@ -8,8 +8,3 @@ const { connectionType: PageConnection } = connectionDefinitions({
 });
 
 export default PageConnection;
-
-// export default connectionDefinitions({
-//   name: 'Page',
-//   nodeType: PageType,
-// });

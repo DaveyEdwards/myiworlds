@@ -16,14 +16,10 @@ import {
   GraphQLInt as NumberType,
   GraphQLList as List,
 } from 'graphql';
-
 import { globalIdField } from 'graphql-relay';
-
-import PageType from './PageType';
-
 import { getPagesBy_id, getPageBy_id } from '../queries/googleDatastore/pageQueries';
-
 import { nodeInterface } from '../nodeInterface';
+import PageType from './PageType';
 
 const UserType = new ObjectType({
   name: 'User',
@@ -63,7 +59,7 @@ const UserType = new ObjectType({
       },
     },
   }),
-  interfaces: () => [nodeInterface],
+  interfaces: [nodeInterface],
 });
 
 export default UserType;

@@ -18,7 +18,6 @@ import {
 } from 'graphql';
 import { connectionArgs, connectionFromArray, globalIdField } from 'graphql-relay';
 import { nodeInterface } from '../nodeInterface';
-import PageConnection from './connections/PageConnection';
 import UserType from './UserType';
 
 const PageType = new ObjectType({
@@ -65,30 +64,30 @@ const PageType = new ObjectType({
         }
       },
     },
-    // tags: {
-    //   type: PageConnection,
-    //   description: 'All tags related to this page',
-    //   args: { ...connectionArgs },
-    //   resolve: async (page, { ...args }, { loaders }) => {
-    //     if (page.tags) {
-    //       const tags = await loaders.pageLoader.loadMany(page.tags);
-    //       const connection = connectionFromArray(tags, args);
-    //       return connection;
-    //     }
-    //   },
-    // },
-    // categories: {
-    //   type: PageConnection,
-    //   description: 'All categories related to this page',
-    //   args: { ...connectionArgs },
-    //   resolve: async (page, { ...args }, { loaders }) => {
-    //     if (page.categories) {
-    //       const categories = await loaders.pageLoader.loadMany(page.categories);
-    //       const connection = connectionFromArray(categories, args);
-    //       return connection;
-    //     }
-    //   },
-    // },
+    tags: {
+      type: require('./connections/PageConnection').default,
+      description: 'All tags related to this page',
+      args: connectionArgs,
+      resolve: async (page, { ...args }, { loaders }) => {
+        if (page.tags) {
+          const tags = await loaders.pageLoader.loadMany(page.tags);
+          const connection = connectionFromArray(tags, args);
+          return connection;
+        }
+      },
+    },
+    categories: {
+      type: require('./connections/PageConnection').default,
+      description: 'All categories related to this page',
+      args: connectionArgs,
+      resolve: async (page, { ...args }, { loaders }) => {
+        if (page.categories) {
+          const categories = await loaders.pageLoader.loadMany(page.categories);
+          const connection = connectionFromArray(categories, args);
+          return connection;
+        }
+      },
+    },
     order: {
       type: NumberType,
       description: 'The order number this is to display in a list',
@@ -112,17 +111,17 @@ const PageType = new ObjectType({
         }
       },
     },
-    // editors: {
-    //   type: PageConnection,
-    //   args: { ...connectionArgs },
-    //   resolve: async (page, { ...args }, { loaders }) => {
-    //     if (page.editors) {
-    //       const editors = await loaders.pageLoader.loadMany(page.editors);
-    //       const connection = connectionFromArray(editors, args);
-    //       return connection;
-    //     }
-    //   },
-    // },
+    editors: {
+      type: require('./connections/PageConnection').default,
+      args: connectionArgs,
+      resolve: async (page, { ...args }, { loaders }) => {
+        if (page.editors) {
+          const editors = await loaders.pageLoader.loadMany(page.editors);
+          const connection = connectionFromArray(editors, args);
+          return connection;
+        }
+      },
+    },
     created: { type: StringType },
     lastUpdated: { type: StringType },
     value: { type: StringType },
@@ -144,9 +143,9 @@ const PageType = new ObjectType({
       },
     },
     pageEdge: {
-      type: PageConnection,
+      type: require('./connections/PageConnection').default,
       args: connectionArgs,
-      resolve: async (page, { args }, { loaders }) => {
+      resolve: async (page, { ...args }, { loaders }) => {
         if (page.pageEdge) {
           const pageEdge = await loaders.pageLoader.loadMany(page.pageEdge);
           const connection = connectionFromArray(pageEdge, args);
@@ -155,12 +154,7 @@ const PageType = new ObjectType({
       },
     },
   }),
-  interfaces: () => [nodeInterface],
+  interfaces: [nodeInterface],
 });
-
-// const { connectionType: PageConnection } = connectionDefinitions({
-//   name: 'Page',
-//   nodeType: PageType,
-// });
 
 export default PageType;

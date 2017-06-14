@@ -8,7 +8,6 @@
  */
 
 import React from 'react';
-import { graphql } from 'relay-runtime';
 import Home from './Home';
 import Layout from '../../components/Layout';
 
