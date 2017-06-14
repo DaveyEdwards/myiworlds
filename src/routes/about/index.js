@@ -11,24 +11,14 @@ import React from 'react';
 import { graphql } from 'relay-runtime';
 import Layout from '../../components/Layout';
 import Page from '../../components/Page';
+import about from './about.md';
 
-export default {
+function action() {
+  return {
+    chunks: ['about'],
+    title: about.title,
+    component: <Layout><Page {...about} /></Layout>,
+  };
+}
 
-  path: '/about',
-
-  async action({ api }) {
-    const [data, page] = await Promise.all([
-      api.fetchQuery(graphql`query indexAboutQuery {
-        me { ...Layout_me }
-      }`),
-      require.ensure([], require => require('./about.md'), 'about'),
-    ]);
-
-    return {
-      title: page.title,
-      chunk: 'about',
-      component: <Layout me={data.me}><Page {...page} /></Layout>,
-    };
-  },
-
-};
+export default action;

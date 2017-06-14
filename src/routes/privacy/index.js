@@ -11,24 +11,14 @@ import React from 'react';
 import { graphql } from 'relay-runtime';
 import Layout from '../../components/Layout';
 import Page from '../../components/Page';
+import privacy from './privacy.md';
 
-export default {
+function action() {
+  return {
+    chunks: ['privacy'],
+    title: privacy.title,
+    component: <Layout><Page {...privacy} /></Layout>,
+  };
+}
 
-  path: '/privacy',
-
-  async action({ api }) {
-    const [data, page] = await Promise.all([
-      api.fetchQuery(graphql`query indexPrivacyQuery {
-        me { ...Layout_me }
-      }`),
-      require.ensure([], require => require('./privacy.md'), 'privacy'),
-    ]);
-
-    return {
-      title: page.title,
-      chunk: 'privacy',
-      component: <Layout me={data.me}><Page {...page} /></Layout>,
-    };
-  },
-
-};
+export default action;

@@ -10,31 +10,21 @@
 import React from 'react';
 import { graphql } from 'relay-runtime';
 import Layout from '../../components/Layout';
+import Admin from './Admin';
 
 const title = 'Admin Page';
 const isAdmin = false;
 
-export default {
+function action() {
+  if (!isAdmin) {
+    return { redirect: '/login' };
+  }
 
-  path: '/admin',
+  return {
+    chunks: ['admin'],
+    title,
+    component: <Layout><Admin title={title} /></Layout>,
+  };
+}
 
-  async action({ api }) {
-    if (!isAdmin) {
-      return { redirect: '/login' };
-    }
-
-    const [data, Admin] = await Promise.all([
-      api.fetchQuery(graphql`query indexAdminQuery {
-        me { ...Layout_me }
-      }`),
-      require.ensure([], require => require('./Admin').default, 'admin'),
-    ]);
-
-    return {
-      title,
-      chunk: 'admin',
-      component: <Layout me={data.me}><Admin title={title} /></Layout>,
-    };
-  },
-
-};
+export default action;
