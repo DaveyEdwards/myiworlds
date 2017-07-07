@@ -7,6 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import deepForceUpdate from 'react-deep-force-update';
@@ -16,6 +17,7 @@ import App from './components/App';
 import ApiClient from './ApiClient';
 import history from './history';
 import { updateMeta } from './DOMUtils';
+import router from './router';
 
 /* eslint-disable global-require */
 
@@ -29,8 +31,8 @@ const context = {
     const removeCss = styles.map(x => x._insertCss());
     return () => { removeCss.forEach(f => f()); };
   },
-  // Universal API client
-  api: ApiClient.create({
+  // Universal HTTP client
+  fetch: createFetch({
     baseUrl: window.App.apiUrl,
   }),
 };
@@ -94,7 +96,6 @@ let onRenderComplete = function initialRenderComplete() {
 const container = document.getElementById('app');
 let appInstance;
 let currentLocation = history.location;
-let router = require('./router').default;
 
 // Re-render the app when window.location changes
 async function onLocationChange(location, action) {
@@ -156,8 +157,6 @@ onLocationChange(currentLocation);
 // Enable Hot Module Replacement (HMR)
 if (module.hot) {
   module.hot.accept('./router', () => {
-    router = require('./router').default;
-
     if (appInstance) {
       // Force-update the whole tree, including components that refuse to update
       deepForceUpdate(appInstance);
