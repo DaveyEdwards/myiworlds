@@ -14,12 +14,25 @@ import Login from './Login';
 
 const title = 'Log In';
 
-function action() {
-  return {
-    chunks: ['login'],
-    title,
-    component: <Layout><Login title={title} /></Layout>,
-  };
-}
+export default {
+  path: '/login',
 
-export default action;
+  async action({ api }) {
+    const data = await api.fetchQuery(graphql`
+      query loginQuery {
+        me {
+          ...Layout_me
+        }
+      }
+    `);
+
+    return {
+      title,
+      component: (
+        <Layout me={data.me}>
+          <Login title={title} />
+        </Layout>
+      ),
+    };
+  },
+};

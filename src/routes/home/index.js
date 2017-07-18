@@ -8,22 +8,32 @@
  */
 
 import React from 'react';
+import { graphql } from 'relay-runtime';
 import Home from './Home';
 import Layout from '../../components/Layout';
 
-async function action({ fetch }) {
-  const resp = await fetch('/graphql', {
-    body: JSON.stringify({
-      query: '{news{title,link,content}}',
-    }),
-  });
-  const { data } = await resp.json();
-  if (!data || !data.news) throw new Error('Failed to load the news feed.');
-  return {
-    chunks: ['home'],
-    title: 'React Starter Kit',
-    component: <Layout><Home news={data.news} /></Layout>,
-  };
-}
+export default {
+  path: '/',
 
-export default action;
+  async action({ api }) {
+    const data = await api.fetchQuery(graphql`
+      query homeQuery {
+        me {
+          ...Layout_me
+        }
+        news {
+          ...Home_news
+        }
+      }
+    `);
+    if (!data.news) throw new Error('Failed to load the news feed.');
+    return {
+      title: 'React Starter Kit',
+      component: (
+        <Layout me={data.me}>
+          <Home news={data.news} />
+        </Layout>
+      ),
+    };
+  },
+};

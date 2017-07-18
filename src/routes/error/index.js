@@ -10,11 +10,17 @@
 import React from 'react';
 import ErrorPage from './ErrorPage';
 
-function action() {
-  return {
-    title: 'Demo Error',
-    component: <ErrorPage />,
-  };
-}
+export default {
 
-export default action;
+  path: '/error',
+
+  action({ error }) {
+    return {
+      title: error.name,
+      description: error.message,
+      component: <ErrorPage error={error} />,
+      status: error.status || 500,
+    };
+  },
+
+};

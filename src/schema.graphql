@@ -3,78 +3,57 @@ interface Node {
   id: ID!
 }
 
-
-type User implements Node {
-  id: ID!
-  _id: ID!
-  username: String!
-  email: String!
-  emailConfirmed: Boolean!
-  styles: [Page]
-  home: Page
-  pagesCreated: Page
+type NewsItem {
+  title: String!
+  link: String!
+  author: String
+  pubDate: String!
+  content: String
 }
 
-type Page implements Node {
+type Query {
+  me: User
+  news: [NewsItem]
+  things (after: String, first: Int, before: String, last: Int): ThingConnection
+}
+
+type User {
+  id: ID!
+  email: String
+}
+
+
+
+type Thing implements Node {
   id: ID!
   _id: ID!
-  path: String
-  public: Boolean
-  viewers: [User]
-  type: String
-  tags: [Page]
-  order: Int
   title: String
-  subtitle: String
-  description: String
-  image: Page
-  creators: [User]
-  created: String
-  lastUpdated: String
-  value: String
-  blob: String
-  page: Page
-  pageList: [Page]
-  pageEdge (after: String, first: Int, before: String, last: Int): PageConnection
 }
 
 # A connection to a list of items.
-type PageConnection {
+type ThingConnection {
   # Information to aid in pagination.
-  pageInfo: PageInfo!
+  pageInfo: ThingInfo!
   # A list of edges.
-  edges: [PageEdge]
+  edges: [ThingEdge]
 }
 
 # An edge in a connection.
-type PageEdge {
+type ThingEdge {
   # The item at the end of the edge
-  node: Page
+  node: Thing
   # A cursor for use in pagination
   cursor: String!
 }
 
 # Information about pagination in a connection.
-type PageInfo {
+type ThingInfo {
   # When paginating forwards, are there more items?
-  hasNextPage: Boolean!
+  hasNextThing: Boolean!
   # When paginating backwards, are there more items?
-  hasPreviousPage: Boolean!
+  hasPreviousThing: Boolean!
   # When paginating backwards, the cursor to continue.
   startCursor: String
   # When paginating forwards, the cursor to continue.
   endCursor: String
-}
-
-
-type Query {
-  node(
-    # The ID of an object
-    id: ID!
-  ): Node
-  user( _id: String ): User
-  pageByPath( path: String ): Page
-  users: [User]
-  pages (after: String, first: Int, before: String, last: Int): PageConnection
-
 }

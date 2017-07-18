@@ -1,21 +1,16 @@
 import gstore from 'gstore-node';
 import config from '../../config';
-import { generatePages } from './pagesSeed';
-import { generateUsers } from './usersSeed';
+import { generateThings } from './thingsSeed';
+import { generatePersons } from './personsSeed';
 
 // Connect the application to Google Datastore
+// This shouldn't have to be here and should be able to be in a file the server calls.
 const datastore = require('@google-cloud/datastore')({
-  projectId: config.datastore.projectId,
-  keyFilename: config.datastore.googleApiServiceKey,
+  projectId: config.datastore.project_id,
+  keyFilename: config.datastore.gcpApiServiceKeyPathFromRoot,
 });
 
 gstore.connect(datastore);
 
-// generatePages();
-// generateUsers();
-import { getUserBy_id } from '../queries/googleDatastore/userQueries';
-import { getPageByPath } from '../queries/googleDatastore/pageQueries';
-
-// getPageByPath('examples/project/default');
-getUserBy_id('user00000000000000000000000000000001');
-// getPageBy_id('project00001000000000000000000000001');
+generateThings();
+generatePersons();

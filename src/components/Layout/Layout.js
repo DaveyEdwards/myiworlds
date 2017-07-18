@@ -10,8 +10,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-// external-global styles must be imported in your JS.
-import normalizeCss from 'normalize.css';
 import { graphql, createFragmentContainer } from 'react-relay';
 import s from './Layout.css';
 import Header from '../Header';
@@ -37,7 +35,7 @@ class Layout extends React.Component {
   }
 }
 
-export default createFragmentContainer(withStyles(normalizeCss, s)(Layout), graphql`
+export default createFragmentContainer(withStyles(s)(Layout), graphql`
   fragment Layout_me on User {
     ...Header_me
   }

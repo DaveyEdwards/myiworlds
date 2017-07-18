@@ -18,19 +18,17 @@ class ErrorPage extends React.Component {
       name: PropTypes.string.isRequired,
       message: PropTypes.string.isRequired,
       stack: PropTypes.string.isRequired,
-    }),
-  };
-
-  static defaultProps = {
-    error: null,
+    }).isRequired,
   };
 
   render() {
-    if (__DEV__ && this.props.error) {
+    if (__DEV__) {
+      const { error } = this.props;
       return (
         <div>
-          <h1>{this.props.error.name}</h1>
-          <pre>{this.props.error.stack}</pre>
+          <h1>{error.name}</h1>
+          <p>{error.message}</p>
+          <pre>{error.stack}</pre>
         </div>
       );
     }

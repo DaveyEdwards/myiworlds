@@ -8,8 +8,9 @@
  */
 
 import { GraphQLSchema as Schema } from 'graphql';
-import Query from './types/QueryType.js';
-// import Mutation from './mutations';
+
+import Query from './types/QueryType';
+// import Mutation from './types/MutationType';
 
 const schema = new Schema({
   query: Query,

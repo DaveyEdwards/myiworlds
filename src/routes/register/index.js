@@ -14,12 +14,25 @@ import Register from './Register';
 
 const title = 'New User Registration';
 
-function action() {
-  return {
-    chunks: ['register'],
-    title,
-    component: <Layout><Register title={title} /></Layout>,
-  };
-}
+export default {
+  path: '/register',
 
-export default action;
+  async action({ api }) {
+    const data = await api.fetchQuery(graphql`
+      query registerQuery {
+        me {
+          ...Layout_me
+        }
+      }
+    `);
+
+    return {
+      title,
+      component: (
+        <Layout me={data.me}>
+          <Register title={title} />
+        </Layout>
+      ),
+    };
+  },
+};

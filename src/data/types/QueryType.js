@@ -5,48 +5,57 @@ import {
 } from 'graphql';
 import { connectionArgs, connectionFromArray, connectionDefinitions } from 'graphql-relay';
 import { nodeField } from '../nodeInterface';
-import PageType from './PageType';
-import UserType from './UserType';
-import { getPageList, getPageByPath } from '../queries/googleDatastore/pageQueries';
-import { getUserList, getUserBy_id } from '../queries/googleDatastore/userQueries';
-import PageConnection from './connections/PageConnection';
+import ThingType from './ThingType';
+import PersonType from './PersonType';
+import { getThingList, getThingByPath } from '../queries/gcpDatastore/thingQueries';
+import { getPersonList, getPersonBy_id } from '../queries/gcpDatastore/personQueries';
+import ThingConnection from './connections/ThingConnection';
+import me from '../queries/me';
+import news from '../queries/news';
 
 const QueryType = new ObjectType({
   name: 'QueryType',
   fields: () => ({
-    user: {
-      type: UserType,
+    me,
+    news,
+
+    person: {
+      type: PersonType,
       args: {
         _id: { type: StringType },
       },
-      resolve: (query, { _id }) => getUserBy_id(_id),
+      resolve: (query, { _id }) => getPersonBy_id(_id),
     },
-    pageByPath: {
-      type: PageType,
+
+    thingByPath: {
+      type: ThingType,
       args: {
         path: { type: StringType },
       },
-      resolve: (query, { path }) => getPageByPath(path),
+      resolve: (query, { path }) => getThingByPath(path),
     },
-    users: {
-      type: new List(UserType),
-      resolve: async args => await getUserList(),
+
+    persons: {
+      type: new List(PersonType),
+      resolve: async args => await getPersonList(),
     },
-    pages: {
-      type: PageConnection,
+
+    things: {
+      type: ThingConnection,
       args: connectionArgs,
       resolve: async (obj, args) => {
         const response = [];
         try {
-          const pageEdge = await getPageList();
-          const connection = connectionFromArray(pageEdge, args);
+          const thingEdge = await getThingList();
+          const connection = connectionFromArray(thingEdge, args);
           return connection;
         } catch (err) {
-          console.log('pages err', err);
+          console.log('things err', err);
         }
         return response;
       },
     },
+
     node: nodeField,
   }),
 });

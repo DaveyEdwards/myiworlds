@@ -14,7 +14,6 @@ import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
-import fetch from 'node-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
@@ -30,15 +29,15 @@ import models from './data/models';
 import schema from './data/schema';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
-import { ServerStyleSheet } from 'styled-components';
 import gstore from 'gstore-node';
 import loaders from './data/loaders';
 
 const app = express();
 
+// Setting up Google Cloud Platform Datastore
 const datastore = require('@google-cloud/datastore')({
-  projectId: 'myiworlds-164603',
-  keyFilename: './src/google_api_service_key.json'
+  projectId: config.datastore.project_id,
+  keyFilename: config.datastore.gcpApiServiceKeyPathFromRoot,
 });
 
 gstore.connect(datastore);
@@ -53,7 +52,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
-app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -61,19 +60,23 @@ app.use(bodyParser.json());
 //
 // Authentication
 // -----------------------------------------------------------------------------
-app.use(expressJwt({
-  secret: config.auth.jwt.secret,
-  credentialsRequired: false,
-  getToken: req => req.cookies.id_token,
-}));
+app.use(
+  expressJwt({
+    secret: config.auth.jwt.secret,
+    credentialsRequired: false,
+    getToken: req => req.cookies.id_token,
+  }),
+);
 // Error handler for express-jwt
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+app.use((err, req, res, next) => {
+  // eslint-disable-line no-unused-vars
   if (err instanceof Jwt401Error) {
     console.error('[express-jwt-error]', req.cookies.id_token);
     // `clearCookie`, otherwise user can't use web-app until cookie expires
     res.clearCookie('id_token');
+  } else {
+    next(err);
   }
-  next(err);
 });
 
 app.use(passport.initialize());
@@ -81,10 +84,12 @@ app.use(passport.initialize());
 if (__DEV__) {
   app.enable('trust proxy');
 }
-app.get('/login/facebook',
+app.get(
+  '/login/facebook',
   passport.authenticate('facebook', { scope: ['email', 'user_location'], session: false }),
 );
-app.get('/login/facebook/return',
+app.get(
+  '/login/facebook/return',
   passport.authenticate('facebook', { failureRedirect: '/login', session: false }),
   (req, res) => {
     const expiresIn = 60 * 60 * 24 * 180; // 180 days
@@ -104,15 +109,18 @@ app.post('/logout', (req, res) => {
 app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
-app.use('/graphql', expressGraphQL(req => ({
-  schema,
-  graphiql: __DEV__,
-  rootValue: { request: req },
-  pretty: __DEV__,
-  context: {
-    loaders: loaders()
-  }
-})));
+app.use(
+  '/graphql',
+  expressGraphQL(req => ({
+    schema,
+    graphiql: __DEV__,
+    rootValue: { request: req },
+    pretty: __DEV__,
+    context: {
+      loaders: loaders(),
+    },
+  })),
+);
 
 //
 // Register server-side rendering middleware
@@ -130,8 +138,8 @@ app.get('*', async (req, res, next) => {
         // eslint-disable-next-line no-underscore-dangle
         styles.forEach(style => css.add(style._getCss()));
       },
-      // Universal HTTP client
-      fetch: createFetch({
+      // Universal API client
+      api: ApiClient.create({
         baseUrl: config.api.serverUrl,
         headers: req.headers,
       }),
@@ -144,9 +152,9 @@ app.get('*', async (req, res, next) => {
     };
 
     const route = await router.resolve({
-      ...context,
       path: req.path,
       query: req.query,
+      api: context.api,
     });
 
     if (route.redirect) {
@@ -154,18 +162,17 @@ app.get('*', async (req, res, next) => {
       return;
     }
 
-    const sheet = new ServerStyleSheet();
     const data = { ...route };
-    data.children = ReactDOM.renderToString(sheet.collectStyles(<App context={context}>{route.component}</App>));
-    const cssStyled = sheet.getStyleTags()
-    data.styles = [
-      { id: 'css', cssText: [...css].join('') },
-    ];
-    data.scripts = [assets.vendor.js];
-    if (route.chunks) {
-      data.scripts.push(...route.chunks.map(chunk => assets[chunk].js));
+    data.children = ReactDOM.renderToString(
+      <App context={context}>
+        {route.component}
+      </App>,
+    );
+    data.styles = [{ id: 'css', cssText: [...css].join('') }];
+    data.scripts = [assets.vendor.js, assets.client.js];
+    if (assets[route.chunk]) {
+      data.scripts.push(assets[route.chunk].js);
     }
-    data.scripts.push(assets.client.js);
     data.app = {
       apiUrl: config.api.clientUrl,
     };
@@ -185,7 +192,8 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+app.use((err, req, res, next) => {
+  // eslint-disable-line no-unused-vars
   console.error(pe.render(err));
   const html = ReactDOM.renderToStaticMarkup(
     <Html
@@ -203,21 +211,8 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-const promise = models.sync().catch(err => console.error(err.stack));
-if (!module.hot) {
-  promise.then(() => {
-    app.listen(config.port, () => {
-      console.info(`The server is running at http://localhost:${config.port}/`);
-    });
+models.sync().catch(err => console.error(err.stack)).then(() => {
+  app.listen(config.port, () => {
+    console.info(`The server is running at http://localhost:${config.port}/`);
   });
-}
-
-//
-// Hot Module Replacement
-// -----------------------------------------------------------------------------
-if (module.hot) {
-  app.hot = module.hot;
-  module.hot.accept('./router');
-}
-
-export default app;
+});

@@ -28,6 +28,12 @@ module.exports = {
   // Database
   databaseUrl: process.env.DATABASE_URL || 'sqlite:database.sqlite',
 
+  // Google Cloud Platform Datastore
+  datastore: {
+    project_id: 'myiworlds-164603',
+    gcpApiServiceKeyPathFromRoot: './src/config/GoogleCloudPlatform/google_api_service_key.json',
+  },
+
   // Web analytics
   analytics: {
     // https://analytics.google.com/
@@ -46,20 +52,17 @@ module.exports = {
 
     // https://cloud.google.com/console/project
     google: {
-      id: process.env.GOOGLE_CLIENT_ID || '251410730550-ahcg0ou5mgfhl8hlui1urru7jn5s12km.apps.googleusercontent.com',
+      id:
+        process.env.GOOGLE_CLIENT_ID ||
+        '251410730550-ahcg0ou5mgfhl8hlui1urru7jn5s12km.apps.googleusercontent.com',
       secret: process.env.GOOGLE_CLIENT_SECRET || 'Y8yR9yZAhm9jQ8FKAL8QIEcd',
     },
 
     // https://apps.twitter.com/
     twitter: {
       key: process.env.TWITTER_CONSUMER_KEY || 'Ie20AZvLJI2lQD5Dsgxgjauns',
-      secret: process.env.TWITTER_CONSUMER_SECRET || 'KTZ6cxoKnEakQCeSpZlaUCJWGAlTEBJj0y2EMkUBujA7zWSvaQ',
+      secret:
+        process.env.TWITTER_CONSUMER_SECRET || 'KTZ6cxoKnEakQCeSpZlaUCJWGAlTEBJj0y2EMkUBujA7zWSvaQ',
     },
-  },
-
-  // Google Datastore config
-  datastore: {
-    projectId: 'myiworlds-164603',
-    googleApiServiceKey: './src/google_api_service_key.json'
   },
 };

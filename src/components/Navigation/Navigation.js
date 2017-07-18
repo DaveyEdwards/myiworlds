@@ -43,7 +43,6 @@ class Navigation extends React.Component {
       <div className={s.root} role="navigation">
         <Link className={s.link} to="/about">About</Link>
         <Link className={s.link} to="/contact">Contact</Link>
-        <Link className={s.link} to="/pages">Pages</Link>
         <span className={s.spacer}> | </span>
         {this.props.me ? [
           <span key="i1" className={s.link}>Welcome, {this.props.me.email}!</span>,

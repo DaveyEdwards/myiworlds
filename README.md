@@ -1,44 +1,3 @@
-![2017-06-01_17-51-37](https://cloud.githubusercontent.com/assets/15203899/26706559/4104fa60-46f3-11e7-8d75-c27ec66744f7.gif)
-
-### Things I have done
-- Google Cloud Datastore Backend that is queryable by GraphQL
-- Have /src/data/seed that seeds the Google Datastore with data
-- Frontend is working with rendering data with Relay-Modern
-
-To get this to work you need to create a Google Cloud Platform account (dont worry this is not enough data to get charged, unless you literally spam seed/query your db).  If this is your first time you will also have to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) to your computer. Then create a Datastore project, go to your IAM & Admin section, then on the left side of the tabs go to "Service accounts" find the project you made and click the 3 dots on the right side of that line and select "Create key" then select json.  This file you want to keep secure.  Make a duplicate of the google_api_service_key_EXAMPLE.json inside the [src](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/tree/master/src) folder and delete the underscore and EXAMPLE.json part (this file will is hidden from your pushes to Github inside your [.gitignore](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/blob/master/.gitignore) file)
-
-After doing
-```
-yarn install
-OR
-npm intall
-
-Then
-
-yarn start
-OR
-npm start
-```
-
-you will have to have the Relay Compiler running by doing the following command in a new console window
-```
-yarn run relay -- --watch
-OR
-npm run relay -- --watch
-```
-
-Then you will want to seed your Datastore by running
-```
-yarn seed.datastore
-OR
-npm run seed.datastore
-```
-You should be able to see all the data in Datastore if you refresh your Admin Console tab.
-
-For the process of adding things to the react-starter-kit check the [git commit](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/commits/master) history
-
-For things still needing to be done I have created [Issues](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/issues)
-
 ## React Starter Kit — "[isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)" web app boilerplate &nbsp; <a href="https://github.com/kriasoft/react-starter-kit/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-starter-kit.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
 
 [React Starter Kit](https://www.reactstarterkit.com) is an opinionated boilerplate for web
@@ -56,11 +15,8 @@ and newcomers to the industry.
 **Join** [#react-starter-kit][chat] chat room on Gitter &nbsp;|&nbsp;
 **Visit our sponsors**:<br><br>
 
-<p align="center" align="top">
-  <a href="https://rollbar.com/?utm_source=reactstartkit(github)&amp;utm_medium=link&amp;utm_campaign=reactstartkit(github)"><img src="https://koistya.github.io/files/rollbar-362x72.png" height="36" align="top" /></a>
-  <a href="https://x-team.com/hire-react-developers/?utm_source=reactstarterkit&amp;utm_medium=github-link&amp;utm_campaign=reactstarterkit-june"><img src="https://koistya.github.io/files/xteam-255x72.png" height="36" align="top" /></a>
-  <sup><a href="https://x-team.com/join/?utm_source=reactstarterkit&utm_medium=github-link&utm_campaign=reactstarterkit-june">Hiring</a></sup>
-</p>
+[![Rollbar - Full-stack error tracking for all apps in any language](https://koistya.github.io/files/rsk/rollbar.png)](https://rollbar.com/?utm_source=reactstartkit(github)&utm_medium=link&utm_campaign=reactstartkit(github)) &nbsp;&nbsp;
+[![Localize - Translate your web app in minutes](https://koistya.github.io/files/rsk/localize.png)](https://localizejs.com/?cid=802&utm_source=rsk)
 
 
 ### Getting Started
@@ -76,15 +32,18 @@ The `master` branch of React Starter Kit doesn't include a Flux implementation o
 advanced integrations. Nevertheless, we have some integrations available to you in *feature*
 branches that you can use either as a reference or merge into your project:
 
-  * [feature/redux](https://github.com/kriasoft/react-starter-kit/tree/feature/redux) ([PR](https://github.com/kriasoft/react-starter-kit/pull/1084))
-    — isomorphic Redux by [Pavel Lang](https://github.com/langpavel)
+  * [feature/redux](https://github.com/kriasoft/react-starter-kit/tree/feature/redux) — isomorphic
+    Redux by [Pavel Lang](https://github.com/langpavel)
     (see [how to integrate Redux](./docs/recipes/how-to-integrate-redux.md)) (based on `master`)
-  * [feature/apollo](https://github.com/kriasoft/react-starter-kit/tree/feature/apollo) ([PR](https://github.com/kriasoft/react-starter-kit/pull/1147))
-    — isomorphic Apollo Client by [Pavel Lang](https://github.com/langpavel)
+  * [feature/apollo](https://github.com/kriasoft/react-starter-kit/tree/feature/apollo) — isomorphic
+    Apollo Client by [Pavel Lang](https://github.com/langpavel)
     (see [Tracking PR #1147](https://github.com/kriasoft/react-starter-kit/pull/1147)) (based on `feature/redux`)
-  * [feature/react-intl](https://github.com/kriasoft/react-starter-kit/tree/feature/react-intl) ([PR](https://github.com/kriasoft/react-starter-kit/pull/1135))
-    — isomorphic Redux and React Intl by [Pavel Lang](https://github.com/langpavel)
-    (see [how to integrate React Intl](./docs/recipes/how-to-integrate-react-intl.md)) (based on `feature/apollo`)
+  * [feature/react-intl](https://github.com/kriasoft/react-starter-kit/tree/feature/react-intl) —
+    isomorphic Redux and React Intl by [Pavel Lang](https://github.com/langpavel)
+    (see [how to integrate React Intl](./docs/recipes/how-to-integrate-react-intl.md)) (based on `feature/redux`)
+  * [feature/bootstrap3](https://github.com/kriasoft/react-starter-kit/tree/feature/bootstrap3) ***unmaintained*** —
+    Simplest possible integration of [react-bootstrap](https://react-bootstrap.github.io/)
+    by [Pavel Lang](https://github.com/langpavel) (based on `master`)
 
 You can see status of most reasonable merge combination as [PRs labeled as `TRACKING`](https://github.com/kriasoft/react-starter-kit/labels/TRACKING)
 

@@ -9,11 +9,7 @@
 
 @import '../variables.css';
 
-/*
- * normalize.css is imported in JS file.
- * If you import external CSS file from your internal CSS
- * then it will be inlined and processed with CSS modules.
- */
+@global-import 'normalize.css' ;
 
 /*
  * Base styles
