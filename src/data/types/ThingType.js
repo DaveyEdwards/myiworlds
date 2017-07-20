@@ -17,7 +17,7 @@ import {
   GraphQLList as List,
 } from 'graphql';
 import { connectionArgs, connectionFromArray, globalIdField } from 'graphql-relay';
-import { nodeInterface } from '../nodeInterface';
+import { nodeInterface } from './nodeInterface';
 import PersonType from './PersonType';
 
 const ThingType = new ObjectType({

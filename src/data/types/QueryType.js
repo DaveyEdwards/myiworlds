@@ -4,7 +4,7 @@ import {
   GraphQLString as StringType,
 } from 'graphql';
 import { connectionArgs, connectionFromArray, connectionDefinitions } from 'graphql-relay';
-import { nodeField } from '../nodeInterface';
+import { nodeField } from './nodeInterface';
 import ThingType from './ThingType';
 import PersonType from './PersonType';
 import { getThingList, getThingByPath } from '../queries/gcpDatastore/thingQueries';

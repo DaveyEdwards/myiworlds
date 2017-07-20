@@ -18,7 +18,7 @@ import {
 } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 import { getThingsBy_id, getThingBy_id } from '../queries/gcpDatastore/thingQueries';
-import { nodeInterface } from '../nodeInterface';
+import { nodeInterface } from './nodeInterface';
 import ThingType from './ThingType';
 
 const PersonType = new ObjectType({

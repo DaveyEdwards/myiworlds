@@ -1,13 +1,14 @@
+import { nodeDefinitions } from 'graphql-relay';
 import { fromGlobalId } from 'graphql-relay';
 require('babel-polyfill');
 
 const types = {};
 
-export const registerType = (model, type, lookupFn) => {
+const registerType = (model, type, lookupFn) => {
   types[type.name] = { model, type, lookupFn };
 };
 
-export const getNode = async (globalId) => {
+const getNode = async (globalId) => {
   const { type: typeName, id } = fromGlobalId(globalId);
   console.log('getNode', globalId, typeName, id);
 
@@ -22,7 +23,7 @@ export const getNode = async (globalId) => {
   return null;
 };
 
-export const getNodeType = (obj) => {
+const getNodeType = (obj) => {
   const keys = Object.keys(types);
   let ret = null;
   keys.map((typeName) => {
@@ -33,3 +34,5 @@ export const getNodeType = (obj) => {
   });
   return ret;
 };
+
+export const { nodeInterface, nodeField } = nodeDefinitions(getNode, getNodeType);
