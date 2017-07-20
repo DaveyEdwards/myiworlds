@@ -1,5 +1,4 @@
-import { nodeDefinitions } from 'graphql-relay';
-import { fromGlobalId } from 'graphql-relay';
+import { nodeDefinitions, fromGlobalId } from 'graphql-relay';
 require('babel-polyfill');
 
 const types = {};
