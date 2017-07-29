@@ -1,10 +1,10 @@
-import thingLoader from './thingLoader';
+import n0deLoader from './n0deLoader';
 
 // All your dataloaders
 const allLoaders = {
-  ...thingLoader,
+	...n0deLoader,
 };
 
 export default function loaders() {
-  return allLoaders;
+	return allLoaders;
 }

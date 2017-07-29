@@ -1,13 +1,13 @@
 # Google Cloud Platform Queries Resources
-In the following examples I will be using the model 'Thing', you can think of it as being any model type (ex. User, Article, News, Profile, etc...)
+In the following examples I will be using the model 'N0de', you can think of it as being any model type (ex. User, Article, News, Profile, etc...)
 
 
-## createThing
-Create's a thing in Datastore.  You can store anything in here.  Besides the required types any field that is not added to the database is not forced on so you don't have to worry filling your database's up with nulls.
+## createN0de
+Create's a n0de in Datastore.  You can store anything in here.  Besides the required types any field that is not added to the database is not forced on so you don't have to worry filling your database's up with nulls.
 
 ### Example use
 ```js
-createThing({
+createN0de({
   _id: 'TVSTvnflist0000100000000000000000001',
   type: 'a_content_type',
   title: 'A  Great Title',
@@ -29,15 +29,15 @@ createThing({
 ```
 
 
-## deleteThingBy
-You can pass in either a single "_id" of the thing you want to delete or and array of "_ids".
+## deleteN0deBy
+You can pass in either a single "_id" of the n0de you want to delete or and array of "_ids".
 
 ### Example use
 ```js
-deleteThingBy_id('TVSTvnflist0000100000000000000000001');
+deleteN0deBy_id('TVSTvnflist0000100000000000000000001');
 
 // Can also pass array of _ids
-deleteThingBy_id(['button_path0000100000000000000000001', 'button_path0000100000000000000000002']);
+deleteN0deBy_id(['button_path0000100000000000000000001', 'button_path0000100000000000000000002']);
 ```
 
 ### Example response
@@ -57,7 +57,7 @@ Take note of how Datastore returns an object
   Key {
     namespace: undefined,
     name: 'TVSTvnflist0000100000000000000000001',
-    kind: 'Thing',
+    kind: 'N0de',
     path: [Getter]
   },
   success: true
@@ -65,12 +65,12 @@ Take note of how Datastore returns an object
 ```
 
 
-## getThingBy_id
+## getN0deBy_id
 The _id was made to be the key on the Datastore Entity node which is the fastest way to access it.
 
 ### Example use
 ```js
-getThingBy_id('form_text_email000010000000000000001' );
+getN0deBy_id('form_text_email000010000000000000001' );
 ```
 
 ### Example response
@@ -84,12 +84,12 @@ getThingBy_id('form_text_email000010000000000000001' );
 ```
 
 
-## getThingByPath
+## getN0deByPath
 This Query is will find a specific Entity inside a Google Datastore Kind's list by a indexed field.  This means a property on your model you want Datastore to memorize to find in the stack of billions.  Only works on indexed property.  Example for using "path" is think of the URL path to a specific website page if you wanted it to be readable text myiworlds.com/DaveysWorlds/Tutorials/Queries (note that this path has to be unique as well)
 
 ### Example use
 ```js
-getThingByPath('examples/project/default' );
+getN0deByPath('examples/project/default' );
 ```
 
 ### Example response
@@ -105,18 +105,18 @@ getThingByPath('examples/project/default' );
 ```
 
 
-## getThingList
+## getN0deList
 This is a list of a certain type, and should be used for smaller lists where you will be displaying all of the data you are fetching.  There is no pagination with this.
-__Currently cursors are not working on this inside Google Datastore (the thing that does the Database queries has this built in)__
+__Currently cursors are not working on this inside Google Datastore (the n0de that does the Database queries has this built in)__
 __The cursor is currently left in the code and commented out__
 
 ### Example use
 ```js
-getThingList();
+getN0deList();
 ```
 
 ### Example response
-__Note the "nextThingCursor" at the end of the response (currently not being used, but could use help)__
+__Note the "nextN0deCursor" at the end of the response (currently not being used, but could use help)__
 ```js
 {
   entities: [
@@ -138,18 +138,18 @@ __Note the "nextThingCursor" at the end of the response (currently not being use
       // ... rest of fields
     }
   ],
-  nextThingCursor: 'a_long_complex_string_DAwMRJEahJzfm15DAwMRJEahJzfm15DAwMRJEahJzfm15'
+  nextN0deCursor: 'a_long_complex_string_DAwMRJEahJzfm15DAwMRJEahJzfm15DAwMRJEahJzfm15'
 }
 ```
 
 
-## getThingsBy_id
-You give this query a list of _ids to get for you and it will return the whole Entity (all of its properties).  Relay will take this response and put its own connections/cursors ontop of it.  
+## getN0desBy_id
+You give this query a list of _ids to get for you and it will return the whole Entity (all of its properties).  Relay will take this response and put its own connections/cursors ontop of it.
 __So in reality you are still asking the database for alot more data then you will actually used and can be improved by putting Datastore connections into the function call.__
 __URL to example of where its used for a getUsers
 ### Example use
 ```js
-getThingsBy_id([
+getN0desBy_id([
   'interface000010000000000000000000002',
   'text00001000000000000000000000000001',
   'image0000100000000000000000000000001'
@@ -182,12 +182,12 @@ getThingsBy_id([
 
 
 
-## updateThing
+## updateN0de
 You pass in a object (including its _id so Datastore can find it) and then it will return the whole newly updated Entity.
 
 ### Example use
 ```js
-editThing({
+editN0de({
   _id: 'contentlist0000100000000000000000001',
   title: 'A new title',
 });

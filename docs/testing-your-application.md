@@ -11,7 +11,7 @@ RSK comes with the following libraries for testing purposes:
 You may also want to take a look at the following related packages:
 
 - [jsdom](https://github.com/tmpvar/jsdom)
-- [react-addons-test-utils](https://www.npmjs.com/package/react-addons-test-utils)
+- [react-dom/test-utils](https://www.npmjs.com/package/react-dom/test-utils)
 
 ### Running tests
 
@@ -85,7 +85,7 @@ describe('A test suite for <Header />', () => {
 });
 ```
 
-Please note that  NOT using IntlProvider will produce the following error: 
+Please note that  NOT using IntlProvider will produce the following error:
 
 > Invariant Violation: [React Intl] Could not find required `intl` object. <IntlProvider>
 > needs to exist in the component ancestry.

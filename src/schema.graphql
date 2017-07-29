@@ -14,7 +14,7 @@ type NewsItem {
 type Query {
   me: User
   news: [NewsItem]
-  things (after: String, first: Int, before: String, last: Int): ThingConnection
+  n0deEdge (after: String, first: Int, before: String, last: Int): N0deConnection
 }
 
 type User {
@@ -22,36 +22,56 @@ type User {
   email: String
 }
 
-
-
-type Thing implements Node {
+type N0de implements Node {
   id: ID!
   _id: ID!
   title: String
+	path: String
+	type: String
+	public: Boolean
+	viewers: [Person]
+	styles: N0de
+	tags (after: String, first: Int, before: String, last: Int): N0deConnection
+	categories (after: String, first: Int, before: String, last: Int): N0deConnection
+	order: Int
+	subtitle: String
+	description: String
+	media: N0de
+	creator: Person
+}
+
+type Person implements Node {
+	id: ID!
+	_id: ID!
+	username: String!
+	email: String!
+	emailConfirmed: String
+	styles: [N0de]
+	home: N0de
 }
 
 # A connection to a list of items.
-type ThingConnection {
+type N0deConnection {
   # Information to aid in pagination.
-  pageInfo: ThingInfo!
+  pageInfo: PageInfo!
   # A list of edges.
-  edges: [ThingEdge]
+  edges: [N0deEdge]
 }
 
 # An edge in a connection.
-type ThingEdge {
+type N0deEdge {
   # The item at the end of the edge
-  node: Thing
+  node: N0de
   # A cursor for use in pagination
   cursor: String!
 }
 
 # Information about pagination in a connection.
-type ThingInfo {
+type PageInfo {
   # When paginating forwards, are there more items?
-  hasNextThing: Boolean!
+  hasNextPage: Boolean!
   # When paginating backwards, are there more items?
-  hasPreviousThing: Boolean!
+  hasPreviousPage: Boolean!
   # When paginating backwards, the cursor to continue.
   startCursor: String
   # When paginating forwards, the cursor to continue.

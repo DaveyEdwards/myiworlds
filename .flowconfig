@@ -5,3 +5,4 @@
 .*/public
 
 [include]
+./src/flow-libdefs.js

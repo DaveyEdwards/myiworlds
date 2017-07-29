@@ -17,22 +17,22 @@ import Feedback from '../Feedback';
 import Footer from '../Footer';
 
 class Layout extends React.Component {
-  static propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-    me: PropTypes.object,
-    children: PropTypes.node.isRequired,
-  };
+	static propTypes = {
+		// eslint-disable-next-line react/forbid-prop-types, react/require-default-props
+		me: PropTypes.object,
+		children: PropTypes.node.isRequired,
+	};
 
-  render() {
-    return (
-      <div>
-        <Header me={this.props.me} />
-        {this.props.children}
-        <Feedback />
-        <Footer />
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				<Header me={this.props.me} />
+				{this.props.children}
+				<Feedback />
+				<Footer />
+			</div>
+		);
+	}
 }
 
 export default createFragmentContainer(withStyles(s)(Layout), graphql`
