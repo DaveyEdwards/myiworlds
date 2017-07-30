@@ -18,15 +18,15 @@ import Layout from './Layout';
 
 describe('Layout', () => {
 
-  it('renders children correctly', () => {
-    const wrapper = render(
-      <App context={{ insertCss: () => {} }}>
-        <Layout>
-          <div className="child" />
-        </Layout>
-      </App>,
-    );
-    expect(wrapper.find('div.child').length).to.eq(1);
-  });
+	it('renders children correctly', () => {
+		const wrapper = render(
+			<App context={{ insertCss: () => { } }}>
+				<Layout>
+					<div className="child" />
+				</Layout>
+			</App>,
+		);
+		expect(wrapper.find('div.child').length).to.eq(1);
+	});
 
 });

@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { graphql, createFragmentContainer } from 'react-relay';
 import s from './MyiWorlds.css';
+
 // import Header from '../../components/MyiWorlds/Header';
 // {/* case 'HEADER':
 // 										return <Header title={node.title} />; */}
@@ -30,8 +31,8 @@ class MyiWorlds extends React.Component {
 								{(() => {
 									switch (node.type) {
 
-										default:
-											return `Page Component got: ${node.type}`;
+									default:
+										return `Page Component got: ${node.type}`;
 									}
 								})()}
 							</li>,
