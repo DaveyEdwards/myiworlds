@@ -17,7 +17,7 @@ import {
 	GraphQLList as List,
 } from 'graphql';
 import { globalIdField } from 'graphql-relay';
-import { getN0desBy_id, getN0deBy_id } from '../queries/gcpDatastore/n0deQueries';
+import { getN0desBy_id, getN0deBy_id } from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/Queries/';
 import { nodeInterface } from './nodeInterface';
 import N0deType from './N0deType';
 
@@ -54,7 +54,7 @@ const PersonType = new ObjectType({
 		// 	'All n0des created by this person, they are not stored on the person object but its own node in the graph to prevent to much data.',
 		// 	resolve: (person) => {
 		// 		if (person.n0de) {
-		// 			return getN0deBy_id(person.n0de);
+		// 			return getN0desBy_id(person.n0de);
 		// 		}
 		// 	},
 		// },

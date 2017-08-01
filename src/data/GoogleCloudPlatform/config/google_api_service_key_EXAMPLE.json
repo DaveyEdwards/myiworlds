@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "PROJECTNAME-PROJECTID",
+  "private_key_id": "asdfjklasasdvplkasnd12341plksjdaf",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQI81DxLr294\nLGsGLs1Xb6kT3N5IMfyHa1iScLr2XXJFNg1ClFdb0MQU/NNUa3BoMPyChZeTRwBZ\nzAwWWxPD4brBVAetMOn/WZDmISXnPUuhtQurHR1fIdD8eDsUKHkDPGTPWUbBFzqf\nw4MJNojngY8x6tTzUKsI5gM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "PROJECTNAME@PROJECTNAME-PROJECTID.iam.gserviceaccount.com",
+  "client_id": "1781293047109283746",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/PROJECTNAME%40PROJECTNAME-PROJECTID.iam.gserviceaccount.com"
+}

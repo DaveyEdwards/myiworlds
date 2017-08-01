@@ -12,8 +12,8 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
-import N0de from './gcpDatastore/N0de';
-import Person from './gcpDatastore/Person';
+import N0de from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/n0deModel';
+import Person from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Person/personModel';
 
 User.hasMany(UserLogin, {
 	foreignKey: 'userId',
@@ -41,4 +41,11 @@ function sync(...args) {
 }
 
 export default { sync };
-export { User, UserLogin, UserClaim, UserProfile, N0de, Person };
+export {
+	User,
+	UserLogin,
+	UserClaim,
+	UserProfile,
+	N0de,
+	Person,
+};

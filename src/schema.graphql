@@ -15,6 +15,7 @@ type Query {
   me: User
   news: [NewsItem]
   n0deEdge (after: String, first: Int, before: String, last: Int): N0deConnection
+	n0deByPath (path: String): N0de
 }
 
 type User {
@@ -38,6 +39,15 @@ type N0de implements Node {
 	description: String
 	media: N0de
 	creator: Person
+	editors: [Person]
+	created: String
+	lastUpdated: String
+	value: String
+	blob: String
+	boolean: Boolean
+	n0de: N0de
+	n0deList: [N0de]
+	n0deEdge (after: String, first: Int, before: String, last: Int): N0deConnection
 }
 
 type Person implements Node {

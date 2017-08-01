@@ -42,7 +42,7 @@ const N0deType = new ObjectType({
 			type: new List(PersonType),
 			resolve: async (n0de, args, { loaders }) => {
 				if (n0de.viewers) {
-					return await loaders.n0deLoader.loadMany(n0de.viewers);
+					return await loaders.personLoader.loadMany(n0de.viewers);
 				}
 			},
 		},
@@ -107,7 +107,7 @@ const N0deType = new ObjectType({
 			type: new List(PersonType),
 			resolve: async (n0de, args, { loaders }) => {
 				if (n0de.viewers) {
-					return await loaders.n0deLoader.loadMany(n0de.viewers);
+					return await loaders.personLoader.loadMany(n0de.viewers);
 				}
 			},
 		},
@@ -115,6 +115,8 @@ const N0deType = new ObjectType({
 		lastUpdated: { type: StringType },
 		value: { type: StringType },
 		blob: { type: StringType },
+		number: { type: NumberType },
+		boolean: { type: BooleanType },
 		n0de: {
 			type: N0deType,
 			resolve: async (n0de, args, { loaders }) => {

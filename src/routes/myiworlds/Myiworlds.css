@@ -9,41 +9,27 @@
 
 @import '../../components/variables.css';
 
+body {
+  margin: 0;
+}
+
 .root {
-	padding-left: 20px;
-	padding-right: 20px;
+	box-sizing: border-box;
+	display: flex;
+	height: 100%;
+	width: 100%;
+	background: #fafafa;
 }
 
-.container {
-	margin: 0 auto;
-	padding: 0 0 40px;
-	max-width: var(--max-content-width);
+.page {
+	margin: 50px 0px 200px 0px;
 }
-
-.newsItem {
-	margin: 0 0 2rem;
-}
-
-.newsTitle {
-	font-size: 1.5rem;
-}
-
-.newsDesc {
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-size: 1.125rem;
+@media screen and (min-width: 600px) {
+	.page {
+		margin: 50px 5% 200px 10%;
+		overflow: hidden;
 	}
+}
+@media screen and (min-width: 800px) {
 
-	pre {
-		white-space: pre-wrap;
-		font-size: 0.875rem;
-	}
-
-	img {
-		max-width: 100%;
-	}
 }

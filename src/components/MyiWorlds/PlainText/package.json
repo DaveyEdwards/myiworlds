@@ -1,0 +1,6 @@
+{
+	"name": "PlainText",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./PlainText.js"
+}

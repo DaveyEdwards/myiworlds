@@ -31,14 +31,17 @@ import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
 import gstore from 'gstore-node';
 import loaders from './data/loaders';
+import GCPConfig from './data/GoogleCloudPlatform/config/settings';
 
 const app = express();
 
+//
 // KOISTYA QUESTION - Better place to put database connection like this?
 // Setting up Google Cloud Platform Datastore
+// -----------------------------------------------------------------------------
 const datastore = require('@google-cloud/datastore')({
-	projectId: config.datastore.project_id,
-	keyFilename: config.datastore.gcpApiServiceKeyPathFromRoot,
+	projectId: GCPConfig.project_id,
+	keyFilename: GCPConfig.gcpApiServiceKeyPathFromRoot,
 });
 
 gstore.connect(datastore);

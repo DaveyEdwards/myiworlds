@@ -3,12 +3,21 @@ import {
 	GraphQLList as List,
 	GraphQLString as StringType,
 } from 'graphql';
-import { connectionArgs, connectionFromArray, connectionDefinitions } from 'graphql-relay';
+import {
+	connectionArgs,
+	connectionFromArray,
+} from 'graphql-relay';
 import { nodeField } from './nodeInterface';
 import N0deType from './N0deType';
 import PersonType from './PersonType';
-import { getN0deList, getN0deByPath } from '../queries/gcpDatastore/n0deQueries';
-import { getPersonList, getPersonBy_id } from '../queries/gcpDatastore/personQueries';
+import {
+	getN0deList,
+	getN0deByPath,
+} from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/Queries';
+import {
+	getPersonList,
+	getPersonBy_id, // eslint-disable-line camelcase
+} from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Person/Queries'; // eslint-disable-line camelcase
 import N0deConnection from './connections/N0deConnection';
 import me from '../queries/me';
 import news from '../queries/news';

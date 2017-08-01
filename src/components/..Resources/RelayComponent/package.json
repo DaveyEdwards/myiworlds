@@ -1,0 +1,6 @@
+{
+	"name": "RelayComponent",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./RelayComponent.js"
+}

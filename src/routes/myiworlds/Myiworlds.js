@@ -11,34 +11,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { graphql, createFragmentContainer } from 'react-relay';
+import Paper from 'material-ui/Paper';
 import s from './MyiWorlds.css';
+import ComponentMapperLevel1 from '../../components/MyiWorlds/ComponentMapperLevel1/ComponentMapperLevel1';
 
-// import Header from '../../components/MyiWorlds/Header';
-// {/* case 'HEADER':
-// 										return <Header title={node.title} />; */}
+
 class MyiWorlds extends React.Component {
 	static propTypes = {
-		n0deEdge: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+		n0deEdge: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+	};
+
+	static defaultProps = {
+		n0deEdge: null,
 	};
 
 	render() {
 		return (
 			<div className={s.root}>
-				<div className={s.container}>
-					{
-						this.props.n0deEdge.edges.map(({ node }) =>
-							<li key={node._id}>
-								{(() => {
-									switch (node.type) {
-
-									default:
-										return `Page Component got: ${node.type}`;
-									}
-								})()}
-							</li>,
-						)
-					}
-				</div>
+				<Paper className={s.page} elevation={4}>
+					{this.props.n0deEdge.edges.map(({ node }) =>
+						<ComponentMapperLevel1 key={node._id} n0de={node} />,
+					)}
+				</Paper>
 			</div>
 		);
 	}
@@ -47,14 +41,13 @@ class MyiWorlds extends React.Component {
 export default createFragmentContainer(
 	withStyles(s)(MyiWorlds),
 	graphql`
-		fragment MyiWorlds_n0deEdge on N0deConnection {
-			edges {
-				node {
-					_id
-					type
-					title
-				}
-			}
-		}
-	`,
+    fragment MyiWorlds_n0deEdge on N0deConnection {
+      edges {
+        node {
+          _id
+          ...ComponentMapperLevel1_n0de
+        }
+      }
+    }
+  `,
 );

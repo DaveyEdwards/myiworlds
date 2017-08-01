@@ -10,23 +10,27 @@
 import React from 'react';
 import { graphql } from 'relay-runtime';
 import MyiWorlds from './MyiWorlds';
-// import ContentMapper from '../../containers/ContentMapper';
 
 export default {
 	path: '/myiworlds',
 
 	async action({ api }) {
+		// KOISTYA QUESTION - How can I get this pulling from the url
 		const data = await api.fetchQuery(graphql`
 			query myiWorldsQuery {
-				n0deEdge {
-					...MyiWorlds_n0deEdge
+				n0deByPath (path: "home") {
+					id
+					type
+					n0deEdge {
+						...MyiWorlds_n0deEdge
+					}
 				}
 			}
 		`);
-		// if (!data.news) thrownew Error('Failed to load the news feed.');
+
 		return {
-			title: 'MyiWorlds Content Mapper',
-			component: <MyiWorlds n0deEdge={data.n0deEdge} />,
+			title: 'MyiWorlds',
+			component: <MyiWorlds n0deEdge={data.n0deByPath.n0deEdge} />,
 		};
 	},
 };
