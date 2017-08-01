@@ -1,4 +1,4 @@
-#Current status: 
+## Current status: 
 barley working frontend to show a base.  Backend structure was main focus of last few days
 
 Frontend showing a few components n0des are giving data to
