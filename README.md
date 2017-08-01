@@ -2,7 +2,8 @@
 barley working frontend to show a base.  Backend structure was main focus of last few days
 
 Frontend showing a few components n0des are giving data to
-![2017-07-31_18-05-32](https://user-images.githubusercontent.com/15203899/28805272-a7e28686-761d-11e7-85f5-c336117de775.gif)
+![2017-08-01_12-59-45](https://user-images.githubusercontent.com/15203899/28844430-6e064ec4-76b9-11e7-9041-ac8a31c9ceb8.gif)
+
 A look at the GraphQL side of what the n0des look like
 ![2017-07-31_18-07-05](https://user-images.githubusercontent.com/15203899/28805275-ab6f92f8-761d-11e7-9187-009390ddb749.gif)
 
