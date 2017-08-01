@@ -15,4 +15,4 @@ yarn-error.log
 .idea
 
 # Google Cloud account info
-src/config/GoogleCloudPlatform/google_api_service_key.json
+src/data/GoogleCloudPlatform/config/gcp_datastore_service_key.json

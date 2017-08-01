@@ -84,6 +84,36 @@ const n0des = [
 		value: 'https://i.stack.imgur.com/7A9aA.png',
 	},
 	{
+		_id: 'image0000100000000000000000000000002',
+		type: 'IMAGE',
+		title: 'What the n0des will soon look like ',
+		value: 'http://www.sailing.cs.cmu.edu/main/tvnviewer/GeneDescriptorhighl.png',
+	},
+	{
+		_id: 'image0000100000000000000000000000003',
+		type: 'IMAGE',
+		title: 'What the n0des will soon look like ',
+		value: 'https://camo.githubusercontent.com/d998e0565b9457f8f0a9da33776d8ca5b0549359/68747470733a2f2f7261772e6769746875622e636f6d2f61726a756e676d656e6f6e2f44697374726962757465642d47726170682d416c676f726974686d732f6d61737465722f4d696e696d756d2d5370616e6e696e672d547265652f696d672f31303030656467652d3130306e6f64652d67726170682e706e67',
+	},
+	{
+		_id: 'image0000100000000000000000000000004',
+		type: 'IMAGE',
+		title: 'What the n0des will soon look like ',
+		value: 'http://rich-iannone.github.io/DiagrammeR/img/deleting-nodes-or-edges-using-a-selection-1.png',
+	},
+	{
+		_id: 'image0000100000000000000000000000005',
+		type: 'IMAGE',
+		title: 'What the n0des will soon look like ',
+		value: 'https://www.webhostingplanguide.com/wp-content/uploads/2014/01/HTML-Graph.jpg',
+	},
+	{
+		_id: 'image0000100000000000000000000000006',
+		type: 'IMAGE',
+		title: 'What the n0des will soon look like ',
+		value: 'http://www.jzy3d.org/images/graphs/graph7.png',
+	},
+	{
 		_id: 'card00001000000000000000000000000001',
 		type: 'CARD',
 		path: 'page1',
@@ -95,7 +125,7 @@ const n0des = [
 		_id: 'card00001000000000000000000000000002',
 		type: 'CARD',
 		path: 'page2',
-		media: 'image0000100000000000000000000000001',
+		media: 'image0000100000000000000000000000002',
 		title: 'Title2',
 		description: 'A description of the card',
 	},
@@ -103,7 +133,7 @@ const n0des = [
 		_id: 'card00001000000000000000000000000003',
 		type: 'CARD',
 		path: 'page3',
-		media: 'image0000100000000000000000000000001',
+		media: 'image0000100000000000000000000000003',
 		title: 'Title3',
 		description: 'A description of the card',
 	},
@@ -111,7 +141,7 @@ const n0des = [
 		_id: 'card00001000000000000000000000000004',
 		type: 'CARD',
 		path: 'page4',
-		media: 'image0000100000000000000000000000001',
+		media: 'image0000100000000000000000000000004',
 		title: 'Title4',
 		description: 'A description of the card',
 	},
@@ -119,7 +149,7 @@ const n0des = [
 		_id: 'card00001000000000000000000000000005',
 		type: 'CARD',
 		path: 'page5',
-		media: 'image0000100000000000000000000000001',
+		media: 'image0000100000000000000000000000005',
 		title: 'Title5',
 		description: 'A description of the card',
 	},
@@ -127,7 +157,7 @@ const n0des = [
 		_id: 'card00001000000000000000000000000006',
 		type: 'CARD',
 		path: 'page6',
-		media: 'image0000100000000000000000000000001',
+		media: 'image0000100000000000000000000000006',
 		title: 'Title6',
 		description: 'A description of the card',
 	},
@@ -136,6 +166,6 @@ const n0des = [
 // TODO: Make export Default
 export async function generateN0des() {
 	n0des.map(n0de =>
-		createN0de(n0de).then(console.log('\n', '__N0DE__', '\n', n0de)), // eslint-disable-line no-console,
+		createN0de(n0de).then(console.log('\n', '__N0DE__', '\n', '\n', n0de)), // eslint-disable-line no-console,
 	);
 }

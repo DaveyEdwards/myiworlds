@@ -41,7 +41,7 @@ const app = express();
 // -----------------------------------------------------------------------------
 const datastore = require('@google-cloud/datastore')({
 	projectId: GCPConfig.project_id,
-	keyFilename: GCPConfig.gcpApiServiceKeyPathFromRoot,
+	keyFilename: GCPConfig.gcpDatastoreApiServiceKeyPathFromRoot,
 });
 
 gstore.connect(datastore);

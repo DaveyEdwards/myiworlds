@@ -43,7 +43,7 @@ class MediaImage extends React.Component {
 	render() {
 		const { height, background, width, style, position } = this.props;
 		const src = this.props.n0de.value;
-		const mode = 'cover';
+		const mode = 'fill';
 
 		const modes = {
 			fill: 'cover',

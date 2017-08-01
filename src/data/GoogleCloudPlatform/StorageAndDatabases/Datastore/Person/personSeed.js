@@ -16,6 +16,6 @@ const persons = [
 // TODO: Make export Default
 export async function generatePersons() {
 	persons.map(person =>
-		createPerson(person).then(console.log('\n', '__PERSON__', '\n', person)), // eslint-disable-line no-console,
+		createPerson(person).then(console.log('\n', '__PERSON__', '\n', '\n', person)), // eslint-disable-line no-console,
 	);
 }

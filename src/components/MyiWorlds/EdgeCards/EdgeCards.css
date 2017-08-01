@@ -11,19 +11,24 @@
 
  /* @global-import 'normalize.css' ; */
 
- .root {
+.root {
 	 margin: 48px 72px 96px 72px;
- }
+}
+
 .header {
 	text-align: center;
 	margin-top: 24px;
 	margin-bottom: 24px;
 }
 
-	.hero {
-		max-height: 150px;
-		overflow: hidden;
-	}
+.imgContainer {
+	max-height: 150px;
+	overflow: hidden;
+}
+
+.hero {
+	max-width: 100%;
+}
 
 .grid {
 	padding: 0px 24px 42px 24px;

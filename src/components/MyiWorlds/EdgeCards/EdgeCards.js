@@ -42,8 +42,8 @@ class EdgeCards extends React.Component {
 					{this.props.n0de.n0deEdge.edges.map(({ node }) =>
 						<Grid item sm={4} key={node._id}>
 							<Card>
-								<CardMedia className={s.hero}>
-									<img src={node.media.value} alt={node.media.title} />
+								<CardMedia className={s.imgContainer}>
+									<img className={s.hero} src={node.media.value} alt={node.media.title} />
 								</CardMedia>
 
 								<CardContent>
