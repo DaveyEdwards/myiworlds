@@ -1,3 +1,11 @@
+#Current status: 
+barley working frontend to show a base.  Backend structure was main focus of last few days
+
+Frontend showing a few components n0des are giving data to
+![2017-07-31_18-05-32](https://user-images.githubusercontent.com/15203899/28805272-a7e28686-761d-11e7-85f5-c336117de775.gif)
+A look at the GraphQL side of what the n0des look like
+![2017-07-31_18-07-05](https://user-images.githubusercontent.com/15203899/28805275-ab6f92f8-761d-11e7-9187-009390ddb749.gif)
+
 ## React Starter Kit — "[isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)" web app boilerplate &nbsp; <a href="https://github.com/kriasoft/react-starter-kit/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-starter-kit.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactStarter"><img src="https://img.shields.io/twitter/follow/ReactStarter.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
 
 [React Starter Kit](https://www.reactstarterkit.com) is an opinionated boilerplate for web
