@@ -34,3 +34,27 @@ export default {
 		};
 	},
 };
+
+
+// path: '/myiworlds/:path',
+
+// 	async action({ api }) {
+// 		const path = await fetch(`${context.path}`);
+// 		const data = await api.fetchQuery(graphql`
+// 			query myiWorldsQuery (path: String) {
+// 				n0deByPath (path: ${context.params.path}) {
+// 					id
+// 					type
+// 					n0deEdge {
+// 						...MyiWorlds_n0deEdge
+// 					}
+// 				}
+// 			}
+// 		`);
+
+// 		return {
+// 			title: 'MyiWorlds',
+// 			queries:
+// 			component: <MyiWorlds n0deEdge={data.n0deByPath.n0deEdge} />,
+// 		};
+// 	},

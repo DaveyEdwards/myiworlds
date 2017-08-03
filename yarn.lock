@@ -103,7 +103,7 @@
     propprop "^0.3.0"
     split-array-stream "^1.0.0"
 
-"@google-cloud/datastore@^1.0.0", "@google-cloud/datastore@^1.0.4":
+"@google-cloud/datastore@^1.0.0":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@google-cloud/datastore/-/datastore-1.0.4.tgz#6f0dfcda77e40fefc98e10709be1eea5967bb3a6"
   dependencies:

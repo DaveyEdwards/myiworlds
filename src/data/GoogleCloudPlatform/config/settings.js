@@ -9,14 +9,11 @@
 
 import settings from './gcp_datastore_service_key.json';
 
-/* eslint-disable max-len */
-
 if (process.env.BROWSER) {
 	throw new Error('Do not import `config.js` from inside the client-side code.');
 }
 
 export default {
-	// Replace project_id with the name of your project in Google Cloud Platform
 	project_id: settings.project_id,
 	gcpDatastoreApiServiceKeyPathFromRoot: './src/data/GoogleCloudPlatform/config/gcp_datastore_service_key.json',
 };

@@ -16,3 +16,7 @@ yarn-error.log
 
 # Google Cloud account info
 src/data/GoogleCloudPlatform/config/gcp_datastore_service_key.json
+
+# Google Cloud Platform service keys.  Except the example key
+src/data/GoogleCloudPlatform/config/serviceKeys/*
+!src/data/GoogleCloudPlatform/config/serviceKeys/dontblockme.json
