@@ -7,7 +7,9 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-@import '../../variables.css';
+@import '../../components/variables.css';
 
-@global-import 'normalize.css' ;
-
+.card {
+  margin: 24px;
+  padding: 24px;
+}

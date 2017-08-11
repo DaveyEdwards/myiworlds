@@ -14,9 +14,7 @@ yarn-error.log
 # Editors and IDEs
 .idea
 
-# Google Cloud account info
-src/data/GoogleCloudPlatform/config/gcp_datastore_service_key.json
-
-# Google Cloud Platform service keys.  Except the example key
+# Google Cloud Platform service keys.  Except the example key and README
 src/data/GoogleCloudPlatform/config/serviceKeys/*
-!src/data/GoogleCloudPlatform/config/serviceKeys/dontblockme.json
+!src/data/GoogleCloudPlatform/config/serviceKeys/gcp-CLOUDPRODUCTNAME-PERMISSIONLEVEL-service-key.json
+!src/data/GoogleCloudPlatform/config/serviceKeys/README.md

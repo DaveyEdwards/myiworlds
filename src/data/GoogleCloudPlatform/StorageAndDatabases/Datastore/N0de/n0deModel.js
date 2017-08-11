@@ -30,10 +30,6 @@ const n0deSchema = new Schema({
 		type: 'array',
 		optional: true,
 	},
-	categories: {
-		type: 'array',
-		optional: true,
-	},
 	order: {
 		type: 'int',
 		default: 9999,
@@ -122,7 +118,7 @@ const n0deSchema = new Schema({
 
 const listSettings = {
 	limit: 50,
-	order: { property: '_id' },
+	order: { property: 'order', descending: false },
 };
 
 n0deSchema.queries('list', listSettings);

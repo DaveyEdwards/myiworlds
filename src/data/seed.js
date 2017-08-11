@@ -7,7 +7,7 @@ import { generatePersons } from './GoogleCloudPlatform/StorageAndDatabases/Datas
 // This shouldn't have to be here and should be able to be in a file the server calls.
 const datastore = require('@google-cloud/datastore')({
 	projectId: GCPConfig.project_id,
-	keyFilename: GCPConfig.gcpDatastoreApiServiceKeyPathFromRoot,
+	keyFilename: GCPConfig.datastore.gcpDatastoreOwnerServiceKeyPath,
 });
 
 gstore.connect(datastore);

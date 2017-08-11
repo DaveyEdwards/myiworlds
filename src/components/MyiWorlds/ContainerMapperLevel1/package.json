@@ -1,0 +1,6 @@
+{
+	"name": "ContainerMapperLevel1",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./ContainerMapperLevel1.js"
+}

@@ -1,7 +1,11 @@
 {
-	"javascript.validate.enable": false,
-	"search.exclude": {
-		"**/build": true,
-		"**/node_modules": true
-	}
+  "editor.formatOnSave": true,
+  "flow.useNPMPackagedFlow": true,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "prettier.eslintIntegration": true,
+  "search.exclude": {
+    "**/build": true,
+    "**/node_modules": true
+  }
 }

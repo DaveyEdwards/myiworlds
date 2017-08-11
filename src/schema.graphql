@@ -14,8 +14,23 @@ type NewsItem {
 type Query {
   me: User
   news: [NewsItem]
-  n0deEdge (after: String, first: Int, before: String, last: Int): N0deConnection
-	n0deByPath (path: String): N0de
+  viewer: Person
+  n0deEdge(after: String, first: Int, before: String, last: Int): N0deConnection
+}
+
+input createN0deInput {
+  type: String!
+  clientMutationId: String
+}
+
+type createN0dePayload {
+  createdN0de: N0de
+  viewer: Person
+  clientMutationId: String
+}
+
+type Mutation {
+  createN0de(input: createN0deInput!): createN0dePayload
 }
 
 type User {
@@ -25,39 +40,40 @@ type User {
 
 type N0de implements Node {
   id: ID!
-  _id: ID!
+  _id: ID
   title: String
-	path: String
-	type: String
-	public: Boolean
-	viewers: [Person]
-	styles: N0de
-	tags (after: String, first: Int, before: String, last: Int): N0deConnection
-	categories (after: String, first: Int, before: String, last: Int): N0deConnection
-	order: Int
-	subtitle: String
-	description: String
-	media: N0de
-	creator: Person
-	editors: [Person]
-	created: String
-	lastUpdated: String
-	value: String
-	blob: String
-	boolean: Boolean
-	n0de: N0de
-	n0deList: [N0de]
-	n0deEdge (after: String, first: Int, before: String, last: Int): N0deConnection
+  path: String
+  type: String
+  public: Boolean
+  viewers: [Person]
+  styles: N0de
+  tags(after: String, first: Int, before: String, last: Int): N0deConnection
+  order: Int
+  subtitle: String
+  description: String
+  media: N0de
+  creator: Person
+  editors: [Person]
+  created: String
+  lastUpdated: String
+  value: String
+  blob: String
+  number: Int
+  boolean: Boolean
+  n0de: N0de
+  n0deList: [N0de]
+  n0deEdge(after: String, first: Int, before: String, last: Int): N0deConnection
 }
 
 type Person implements Node {
-	id: ID!
-	_id: ID!
-	username: String!
-	email: String!
-	emailConfirmed: String
-	styles: [N0de]
-	home: N0de
+  id: ID!
+  _id: ID!
+  username: String!
+  email: String!
+  emailConfirmed: String
+  styles: [N0de]
+  home: N0de
+  n0deByPath(path: String): N0de
 }
 
 # A connection to a list of items.

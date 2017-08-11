@@ -10,7 +10,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { graphql, createFragmentContainer } from 'react-relay';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
@@ -19,70 +18,46 @@ import Button from 'material-ui/Button';
 import s from './EdgeCards.css';
 
 class EdgeCards extends React.Component {
-	static propTypes = {
-		// eslint-disable-next-line react/forbid-prop-types
-		n0de: PropTypes.object,
-		title: PropTypes.string,
-	};
+  static propTypes = {
+    title: PropTypes.string,
+  };
 
-	static defaultProps = {
-		n0de: null,
-		title: null,
-	};
+  static defaultProps = {
+    title: '',
+  };
 
-	render() {
-		return (
-			<Card className={s.root}>
-				<div className={s.header}>
-					<Typography type="display1" gutterBottom >{this.props.n0de.title}</Typography>
-				</div>
-				<Divider light style={{ marginBottom: '72px' }} />
+  render() {
+    return (
+      <Grid item sm={4} key={this.props._id}>
+        <Card>
+          {this.props.media
+            ? <CardMedia className={s.imgContainer}>
+              <img className={s.hero} src={this.props.media.value} alt={this.props.media.title} />
+            </CardMedia>
+            : null}
 
-				<Grid className={s.grid} container gutter={24}>
-					{this.props.n0de.n0deEdge.edges.map(({ node }) =>
-						<Grid item sm={4} key={node._id}>
-							<Card>
-								<CardMedia className={s.imgContainer}>
-									<img className={s.hero} src={node.media.value} alt={node.media.title} />
-								</CardMedia>
+          <CardContent>
+            {this.props.title
+              ? <Typography type="headline" component="h2">
+                {this.props.title}
+              </Typography>
+              : null}
+            {this.props.description
+              ? <Typography component="p">
+                {this.props.description}
+              </Typography>
+              : null}
+          </CardContent>
 
-								<CardContent>
-									<Typography type="headline" component="h2">{node.title}</Typography>
-									<Typography component="p">{node.description}</Typography>
-								</CardContent>
-
-								<CardActions>
-									<Button dense color="primary">
-										VIEW PAGE
-									</Button>
-								</CardActions>
-
-							</Card>
-						</Grid>,
-					)}
-				</Grid>
-				<Divider light />
-			</Card>
-		);
-	}
+          <CardActions>
+            <Button dense color="primary">
+              VIEW PAGE
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    );
+  }
 }
 
-export default createFragmentContainer(withStyles(s)(EdgeCards), graphql`
-  fragment EdgeCards_n0de on N0de {
-		title
-		n0deEdge {
-			edges {
-				node {
-					_id
-					media {
-						value
-					}
-					title
-					type
-					description
-					path
-				}
-			}
-		}
-  }
-`);
+export default withStyles(s)(EdgeCards);

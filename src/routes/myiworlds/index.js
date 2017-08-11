@@ -9,52 +9,33 @@
 
 import React from 'react';
 import { graphql } from 'relay-runtime';
-import MyiWorlds from './MyiWorlds';
+import ContainerMapperLevel1 from '../../components/MyiWorlds/ContainerMapperLevel1/ContainerMapperLevel1';
 
 export default {
-	path: '/myiworlds',
+  path: '/myiworlds/:path',
 
-	async action({ api }) {
-		// KOISTYA QUESTION - How can I get this pulling from the url
-		const data = await api.fetchQuery(graphql`
-			query myiWorldsQuery {
-				n0deByPath (path: "home") {
-					id
-					type
-					n0deEdge {
-						...MyiWorlds_n0deEdge
-					}
-				}
-			}
-		`);
-
-		return {
-			title: 'MyiWorlds',
-			component: <MyiWorlds n0deEdge={data.n0deByPath.n0deEdge} />,
-		};
-	},
+  async action({ api }, context) {
+    const data = await api.fetchQuery(
+      graphql`
+        query myiWorldsQuery($path: String) {
+          viewer {
+            id
+            username
+            n0deByPath(path: $path) {
+              ...ContainerMapperLevel1_n0deByPath
+            }
+          }
+        }
+      `,
+      {
+        path: context.path,
+      },
+    );
+    return {
+      title: 'MyiWorlds',
+      component: (
+        <ContainerMapperLevel1 viewer={data.viewer.username} n0deByPath={data.viewer.n0deByPath} />
+      ),
+    };
+  },
 };
-
-
-// path: '/myiworlds/:path',
-
-// 	async action({ api }) {
-// 		const path = await fetch(`${context.path}`);
-// 		const data = await api.fetchQuery(graphql`
-// 			query myiWorldsQuery (path: String) {
-// 				n0deByPath (path: ${context.params.path}) {
-// 					id
-// 					type
-// 					n0deEdge {
-// 						...MyiWorlds_n0deEdge
-// 					}
-// 				}
-// 			}
-// 		`);
-
-// 		return {
-// 			title: 'MyiWorlds',
-// 			queries:
-// 			component: <MyiWorlds n0deEdge={data.n0deByPath.n0deEdge} />,
-// 		};
-// 	},

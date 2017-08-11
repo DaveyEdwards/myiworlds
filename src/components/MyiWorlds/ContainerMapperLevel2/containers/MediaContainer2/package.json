@@ -1,0 +1,6 @@
+{
+  "name": "MediaContainer2",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MediaContainer2.js"
+}

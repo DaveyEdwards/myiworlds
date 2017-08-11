@@ -7,12 +7,13 @@ export async function deleteN0deBy_id(_id) {
 	try {
 		response = await N0de.delete(_id).then((res) => {
 			if (!res.success) {
-				console.log('No entity deleted. There is no N0de Entity with the _id provided');
+				// eslint-disable-next-line no-console
+				console.log('\n', '\n', 'I could not delete that n0de for you, the n0des "_id" did not match anything inside Google Datastore.', '\n', '\n');
 			}
 			return res;
 		});
 	} catch (err) {
-		console.info('deleteN0deBy_id err', err);
+		console.info('\n', '\n', 'Help me, I have a ERROR. It is in Google Datastores "deleteN0deBy_id" database queries.', '\n', err, '\n');
 	}
-	return console.log(response);
+	return response;
 }

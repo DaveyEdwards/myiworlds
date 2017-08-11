@@ -1,16 +1,28 @@
-https://cloud.google.com/
+# Setting up Google Cloud Platform
 
-# Google Cloud Platform api service key setup
+## Create A Google Cloud Platform account
 
-To get this to work you need to create a Google Cloud Platform account (dont worry this is not enough data to get charged, unless you literally spam seed/query your db).
-
- - Google follows the Moore's Law pricing model, as tech increases prices come down and storage increases
-
-## GCP Datastore Pricing model
-__(as of 7/17/17)__
-![image](https://user-images.githubusercontent.com/15203899/28280269-0cf86974-6ad8-11e7-84b9-bd0d53e32e1c.png)
-https://cloud.google.com/datastore/
+1. Go to [https://cloud.google.com/] and click "TRY IT FREE" in the top right corner.
+2. Fill out the few questions. (It is a VERY simple form)
 
 
-# MAKING VIDEO SHOWING SETUP - Will be added with better instructions soon..
-If this is your first time you will also have to install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/) to your computer. Then create a Datastore project, go to your IAM & Admin section, then on the left side of the tabs go to "Service accounts" find the project you made and click the 3 dots on the right side of that line and select "Create key" then select json.  This file you want to keep secure.  Make a duplicate of the google_api_service_key_EXAMPLE.json inside the [src](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/tree/master/src) folder and delete the underscore and EXAMPLE.json part (this file will is hidden from your pushes to Github inside your [.gitignore](https://github.com/DaveyEdwards/react-starter-kit-relay-modern-GCP-Datastore/blob/master/.gitignore) file)
+## Create a Project (the app your working on) in Google Cloud Platform
+_You will most likely make many different apps inside Google Cloud Platform so you want to keep them all serperate.  Not every project will be using the same services, or will they..._
+
+
+## Activate Services
+
+### Activate Google Datastore
+
+1. Log into your Google Cloud console.
+2. On the left menu select Datastore.
+3. Click "Create Entity".
+4. Select a region to have the data saved.
+5. Press "Next".
+
+Once it finishes loading, you are now done and can move onto creating your Service Keys.[https://github.com/DaveyEdwards/myiworlds/edit/master/src/data/GoogleCloudPlatform/config/README.MD]
+
+#### Resources
+
+To see what free things you get with Google Cloud Platform [https://cloud.google.com/free/]
+
