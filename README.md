@@ -8,25 +8,25 @@ Just like those Graphs you remember from Elementary School
 
 A few things that I think are required on each Node(Circle) to make it something us mere humans can use are:
 
-* _id: A unique id, a way for the computer to find it as fast as possible amoungst trillions of other nodes(_ is because we don't want to confuse it with Relay's id)
-* path: A URL, that we can memorize and find something as fast as possible.
-* type: The type of data this node is holding, it allows the frontend to choose the perfect component to show you.
-* public: Are you ok if this node is open to the public?
-* viewers: Who is allowed to see this node?
-* order: If this node is in a list and you want it sorted in a specific spot in that list.
-* title: When you find that thing you will need something to jog your memory, the shortest way to see if this is exactly what it is you are looking for.
-* media: A image/video/file/icon/sound.  A way to pair a memory in the mind with another sense, allowing for deeper connections in the brain to be made.
-* subtitle: A medium size bit of text to help you remember.
-* description: A large size bit of text to help you remember. (Limited character length still)
-* tags: Tags will help you find something when your not exactly sure what your looking for.
-* created: A date to help filter this from your older stuff.
-* lastUpdated: The last time this node was updated (note by updated in this immutable system means it copied another node and then added the edits to the copy).
-* creator: The viewer who created this node.
-* editors: The people who can edit this node.  (Note edits only create new nodes, databases should be immutable to enable stronger Artificial Intelligence features in the future).
-* value: A string value, it has a limit to the amount of characters it can hold, but used to hold text, urls to Storage buckets, or any text.
-* line: When you want to point to another node in the graph, this is just a interface for it.  Think of if you wanted to copy something, but not all of it, just the picture.
-* lines: A smallish list that does not need pagination (think when you look at youtube and there is 10+ pages of results, you dont want to have to load 100 results right away when the user may only look  at the first 3)
-* linesMany: When you have larger lists of items and require pagination, you can also sort these lists by certain values of the nodes
+* __\_id:__ A unique id, a way for the computer to find it as fast as possible amoungst trillions of other nodes (_ is because we don't want to confuse it with Relay's id)
+* __path:__ A URL, that we can memorize and find something as fast as possible.
+* __type:__ The type of data this node is holding, it allows the frontend to choose the perfect component to show you.
+* __public:__ Are you ok if this node is open to the public?
+* __viewers:__ Who is allowed to see this node?
+* __order:__ If this node is in a list and you want it sorted in a specific spot in that list.
+* __title:__ When you find that thing you will need something to jog your memory, the shortest way to see if this is exactly what it is you are looking for.
+* __media:__ A image/video/file/icon/sound.  A way to pair a memory in the mind with another sense, allowing for deeper connections in the brain to be made.
+* __subtitle:__ A medium size bit of text to help you remember.
+* __description:__ A large size bit of text to help you remember. (Limited character length still)
+* __tags:__ Tags will help you find something when your not exactly sure what your looking for.
+* __created:__ A date to help filter this from your older stuff.
+* __lastUpdated:__ The last time this node was updated (note by updated in this immutable system means it copied another node and then added the edits to the copy).
+* __creator:__ The viewer who created this node.
+* __editors:__ The people who can edit this node.  (Note edits only create new nodes, databases should be immutable to enable stronger Artificial Intelligence features in the future).
+* __value:__ A string value, it has a limit to the amount of characters it can hold, but used to hold text, urls to Storage buckets, or any text.
+* __line:__ When you want to point to another node in the graph, this is just a interface for it.  Think of if you wanted to copy something, but not all of it, just the picture.
+* __lines:__ A smallish list that does not need pagination (think when you look at youtube and there is 10+ pages of results, you dont want to have to load 100 results right away when the user may only look  at the first 3)
+* __linesMany:__ When you have larger lists of items and require pagination, you can also sort these lists by certain values of the nodes
 
 
 ### Side notes
