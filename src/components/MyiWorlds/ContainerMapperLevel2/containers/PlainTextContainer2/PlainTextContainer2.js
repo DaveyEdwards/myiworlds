@@ -17,7 +17,7 @@ import s from './PlainTextContainer2.css';
 class PlainTextContainer2 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-    n0de: PropTypes.object,
+    circle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -30,10 +30,10 @@ class PlainTextContainer2 extends React.Component {
   render() {
     return (
       <PlainText
-        title={this.props.n0de.title}
-        subtitle={this.props.n0de.subtitle}
-        description={this.props.n0de.description}
-        value={this.props.n0de.value}
+        title={this.props.circle.title}
+        subtitle={this.props.circle.subtitle}
+        description={this.props.circle.description}
+        value={this.props.circle.value}
       />
     );
   }
@@ -42,7 +42,7 @@ class PlainTextContainer2 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(PlainTextContainer2),
   graphql`
-    fragment PlainTextContainer2_n0de on N0de {
+    fragment PlainTextContainer2_circle on Circle {
       title
       subtitle
       description

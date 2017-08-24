@@ -17,7 +17,7 @@ import Button from 'material-ui/Button';
 import { FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 import s from './Create.css';
-import CreateN0deMutation from './CreateN0deMutation';
+import CreateCircleMutation from './CreateCircleMutation';
 
 class Create extends React.Component {
   static propTypes = {
@@ -62,15 +62,15 @@ class Create extends React.Component {
     // Simple MD Inputtype
     boolean: '',
     // Module
-    n0de: '',
+    circle: '',
     // Selector module. Card list (can change card view)
-    n0deList: [''],
+    lines: [''],
     // Selector module. Card list (can change card view)
-    n0deEdge: [''],
+    linesMany: [''],
   };
 
-  createN0de = () => {
-    CreateN0deMutation.commit(
+  createCircle = () => {
+    CreateCircleMutation.commit(
       this.props.relay.environment,
       {
         type: this.state.type,
@@ -79,11 +79,11 @@ class Create extends React.Component {
       },
       this.props.viewer.id,
     );
-  }
+  };
 
   handleInputChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
-  }
+  };
 
   toggleBooleanChange = name => (event, checked) => {
     this.setState({ [name]: checked });
@@ -102,28 +102,28 @@ class Create extends React.Component {
             />
           }
           label="Public"
-        /> <br />
+        />{' '}
+        <br />
         <TextField
           id="title"
           label="Title"
           value={this.state.title}
           onChange={this.handleInputChange}
           margin="normal"
-        /><br />
+        />
+        <br />
         <TextField
           id="type"
           label="Type"
           value={this.state.type}
           onChange={this.handleInputChange}
           margin="normal"
-        /><br />
+        />
+        <br />
         <CardActions>
-          <Button >Cancel</Button>
-          <Button
-            onClick={this.createN0de}
-          >Create</Button>
+          <Button>Cancel</Button>
+          <Button onClick={this.createCircle}>Create</Button>
         </CardActions>
-
       </Card>
     );
   }
@@ -132,9 +132,9 @@ class Create extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(Create),
   graphql`
-  fragment Create_viewer on Person {
-    id
-    username
-  }
-`,
+    fragment Create_viewer on Viewer {
+      id
+      username
+    }
+  `,
 );

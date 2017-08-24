@@ -21,12 +21,12 @@ import s from './EdgeCardsContainer2.css';
 class EdgeCardsContainer2 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    n0de: PropTypes.object,
+    circle: PropTypes.object,
     title: PropTypes.string,
   };
 
   static defaultProps = {
-    n0de: null,
+    circle: null,
     title: '',
   };
 
@@ -35,13 +35,13 @@ class EdgeCardsContainer2 extends React.Component {
       <Card className={s.root}>
         <div className={s.header}>
           <Typography type="display1" gutterBottom>
-            {this.props.n0de.title}
+            {this.props.circle.title}
           </Typography>
         </div>
         <Divider light style={{ marginBottom: '72px' }} />
 
         <Grid className={s.grid} container gutter={24}>
-          {this.props.n0de.n0deEdge.edges.map(({ node }) =>
+          {this.props.circle.linesMany.edges.map(({ node }) =>
             <Grid item sm={4} key={node._id}>
               <Card>
                 {node.media
@@ -81,9 +81,9 @@ class EdgeCardsContainer2 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(EdgeCardsContainer2),
   graphql`
-    fragment EdgeCardsContainer2_n0de on N0de {
+    fragment EdgeCardsContainer2_circle on Circle {
       title
-      n0deEdge {
+      linesMany {
         edges {
           node {
             _id

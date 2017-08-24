@@ -12,8 +12,8 @@ import User from './User';
 import UserLogin from './UserLogin';
 import UserClaim from './UserClaim';
 import UserProfile from './UserProfile';
-import N0de from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/n0deModel';
-import Person from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Person/personModel';
+import Circle from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/circleModel';
+import Viewer from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Viewer/viewerModel';
 
 User.hasMany(UserLogin, {
 	foreignKey: 'userId',
@@ -46,6 +46,6 @@ export {
 	UserLogin,
 	UserClaim,
 	UserProfile,
-	N0de,
-	Person,
+	Circle,
+	Viewer,
 };

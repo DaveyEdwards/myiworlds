@@ -8,7 +8,7 @@
 4. Below the top blue bar there is blue text that says "+ CREATE SERVICE ACCOUNT", click that and a dialog box will pop up.
 
 We will be creating 3 Service accounts (explained below)
-7. I prefer to name the Service accounts something that allows me to know everything about it just from the name.  NameOfPerson LevelOfControl Capabilities. So I create my account that only can view my whole application: Davey Project Viewer
+7. I prefer to name the Service accounts something that allows me to know everything about it just from the name.  NameOfViewer LevelOfControl Capabilities. So I create my account that only can view my whole application: Davey Project Viewer
   7. Then select the role this key is for, and select Project > Viewer.
   7. Select "Furnish a new private key".
   7. Select JSON
@@ -29,7 +29,7 @@ We will be creating 3 Service accounts (explained below)
 	  11. gcp-project-viewer-service-key.json
 		  11. This is referenced in the settings to get the project's id for connecting to Google Cloud Platform
 	  11. gcp-datastore-owner-service-key.json
-		  11. This is referenced in your seed files inside GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/n0deSeed.js
+		  11. This is referenced in your seed files inside GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/circleSeed.js
 	  11. gcp-datastore-user-service-key.json
 		  11. This is referenced in your server.js file for your application to make reads/writes.
 

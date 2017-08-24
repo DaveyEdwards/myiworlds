@@ -1,13 +1,12 @@
-import n0deLoader from './N0deLoader';
-import personLoader from './PersonLoader';
-
+import circleLoader from './CircleLoader';
+import viewerLoader from './ViewerLoader';
 
 // All your dataloaders
 const allLoaders = {
-	...n0deLoader,
-	...personLoader,
+  ...circleLoader,
+  ...viewerLoader,
 };
 
 export default function loaders() {
-	return allLoaders;
+  return allLoaders;
 }

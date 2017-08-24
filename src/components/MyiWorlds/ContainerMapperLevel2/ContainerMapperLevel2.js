@@ -20,32 +20,32 @@ import EdgeCardsContainer2 from './containers/EdgeCardsContainer2/EdgeCardsConta
 class ContainerMapperLevel2 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    n0deEdge: PropTypes.object,
+    linesMany: PropTypes.object,
     type: PropTypes.string,
   };
 
   static defaultProps = {
-    n0deEdge: null,
+    linesMany: null,
     type: 'default',
   };
 
   render() {
     return (
       <div>
-        {this.props.n0deEdge.edges.map(({ node: n0de }, index) =>
-          <div key={n0de.id + index}>
+        {this.props.linesMany.edges.map(({ node: circle }, index) =>
+          <div key={circle.id + index}>
             {(() => {
-              switch (n0de.type) {
+              switch (circle.type) {
                 case 'HEADER':
-                  return <HeaderContainer2 n0de={n0de} />;
+                  return <HeaderContainer2 circle={circle} />;
                 case 'IMAGE':
-                  return <MediaContainer2 n0de={n0de} />;
+                  return <MediaContainer2 circle={circle} />;
                 case 'PLAIN_TEXT':
-                  return <PlainTextContainer2 n0de={n0de} />;
+                  return <PlainTextContainer2 circle={circle} />;
                 case 'EDGE_CARDS':
-                  return <EdgeCardsContainer2 n0de={n0de} />;
+                  return <EdgeCardsContainer2 circle={circle} />;
                 default:
-                  return `Page Component got: ${n0de.type}`;
+                  return `Page Component got: ${circle.type}`;
               }
             })()}
           </div>,
@@ -58,15 +58,15 @@ class ContainerMapperLevel2 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(ContainerMapperLevel2),
   graphql`
-    fragment ContainerMapperLevel2_n0deEdge on N0deConnection {
+    fragment ContainerMapperLevel2_linesMany on CircleConnection {
       edges {
         node {
           id
           type
-          ...HeaderContainer2_n0de
-          ...MediaContainer2_n0de
-          ...PlainTextContainer2_n0de
-          ...EdgeCardsContainer2_n0de
+          ...HeaderContainer2_circle
+          ...MediaContainer2_circle
+          ...PlainTextContainer2_circle
+          ...EdgeCardsContainer2_circle
         }
       }
     }

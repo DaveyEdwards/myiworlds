@@ -17,14 +17,14 @@ import s from './MediaContainer1.css';
 class MediaContainer1 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    n0deByPath: PropTypes.object,
+    circleByPath: PropTypes.object,
     title: PropTypes.string,
     subtitle: PropTypes.string,
     description: PropTypes.string,
   };
 
   static defaultProps = {
-    n0deByPath: null,
+    circleByPath: null,
     title: null,
     subtitle: null,
     description: null,
@@ -34,9 +34,9 @@ class MediaContainer1 extends React.Component {
     return (
       <div>
         {(() => {
-          switch (this.props.n0deByPath.type) {
+          switch (this.props.circleByPath.type) {
             case 'MEDIA_IMAGE':
-              return <MediaImage n0deByPath={this.props.n0deByPath} />;
+              return <MediaImage circleByPath={this.props.circleByPath} />;
             case 'MEDIA_GIF':
               return 'MediaContainer1 received: EDGE_GIF. This still needs to be configured.';
             case 'MEDIA_VIDEO':
@@ -44,7 +44,7 @@ class MediaContainer1 extends React.Component {
             case 'EDGE_FILE':
               return 'MediaContainer1 received: EDGE_FILE. This still needs to be configured.';
             default:
-              return `MediaContainer1 received: ${this.props.n0deByPath.type}`;
+              return `MediaContainer1 received: ${this.props.circleByPath.type}`;
           }
         })()}
       </div>
@@ -55,7 +55,7 @@ class MediaContainer1 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(MediaContainer1),
   graphql`
-    fragment MediaContainer1_n0deByPath on N0de {
+    fragment MediaContainer1_circleByPath on Circle {
       title
       subtitle
       description

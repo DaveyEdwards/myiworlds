@@ -1,10 +1,10 @@
 import { GraphQLObjectType as ObjectType } from 'graphql';
 import { connectionArgs, connectionFromArray } from 'graphql-relay';
 import { nodeField } from './nodeInterface';
-import PersonType from './PersonType';
-import { getN0deList } from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/N0de/Queries';
-import { getViewer } from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Person/Queries'; // eslint-disable-line camelcase
-import N0deConnection from './connections/N0deConnection';
+import ViewerType from './ViewerType';
+import { getLines } from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/Queries';
+import { getViewer } from '../GoogleCloudPlatform/StorageAndDatabases/Datastore/Viewer/Queries'; // eslint-disable-line camelcase
+import CircleConnection from './connections/CircleConnection';
 import me from '../queries/me';
 import news from '../queries/news';
 
@@ -15,23 +15,23 @@ const QueryType = new ObjectType({
     news,
 
     viewer: {
-      type: PersonType,
+      type: ViewerType,
       resolve: () => getViewer(),
     },
 
     // Just for testing, should never be used
-    n0deEdge: {
-      type: N0deConnection,
+    linesMany: {
+      type: CircleConnection,
       args: connectionArgs,
       resolve: async (obj, args) => {
         const response = [];
         try {
-          const n0deEdge = await getN0deList();
-          const connection = connectionFromArray(n0deEdge, args);
+          const linesMany = await getLines();
+          const connection = connectionFromArray(linesMany, args);
           return connection;
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.log('n0deEdge err', err);
+          console.log('linesMany err', err);
         }
         return response;
       },

@@ -5,8 +5,8 @@
 // import { ConnectionHandler } from 'relay-runtime';
 
 // const mutation = graphql`
-//   mutation CreateN0deMutation($input: CreateN0deInput!) {
-//     createN0de(input:$input) {
+//   mutation CreateCircleMutation($input: CreateCircleInput!) {
+//     createCircle(input:$input) {
 //       _id
 //       path
 //       type
@@ -44,7 +44,7 @@
 // 				},
 // 			},
 // 			updater: (store) => {
-// 				const payload = store.getRootField('createN0de');
+// 				const payload = store.getRootField('createCircle');
 // 				const newEdge = payload.getLinkedRecord('todoEdge');
 // 				sharedUpdater(store, user, newEdge);
 // 			},

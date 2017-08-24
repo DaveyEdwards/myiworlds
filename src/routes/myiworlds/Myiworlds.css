@@ -20,3 +20,9 @@ body {
   width: 100%;
   background: #fafafa;
 }
+
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+}

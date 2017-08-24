@@ -16,18 +16,17 @@ import s from './ContainerMapperLevel1.css';
 import HeaderContainer1 from './containers/HeaderContainer1/HeaderContainer1';
 import MediaContainer1 from './containers/MediaContainer1/MediaContainer1';
 import PlainTextContainer1 from './containers/PlainTextContainer1/PlainTextContainer1';
-import EdgeCards from '../EdgeCards/EdgeCards';
 import ContainerMapperLevel2 from '../ContainerMapperLevel2/ContainerMapperLevel2';
 
 class ContainerMapperLevel1 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    n0deByPath: PropTypes.object,
+    circleByPath: PropTypes.object,
     type: PropTypes.string,
   };
 
   static defaultProps = {
-    n0deByPath: null,
+    circleByPath: null,
     type: 'default',
   };
 
@@ -35,24 +34,22 @@ class ContainerMapperLevel1 extends React.Component {
     return (
       <Paper className={s.page} elevation={4}>
         {(() => {
-          switch (this.props.n0deByPath.type) {
+          switch (this.props.circleByPath.type) {
             case 'HEADER':
-              return <HeaderContainer1 n0deByPath={this.props.n0deByPath} />;
+              return <HeaderContainer1 circleByPath={this.props.circleByPath} />;
             case 'IMAGE':
-              return <MediaContainer1 n0deByPath={this.props.n0deByPath} />;
+              return <MediaContainer1 circleByPath={this.props.circleByPath} />;
             case 'PLAIN_TEXT':
-              return <PlainTextContainer1 n0deByPath={this.props.n0deByPath} />;
-            case 'EDGE_CARDS':
-              return <EdgeCards n0deByPath={this.props.n0deByPath} />;
+              return <PlainTextContainer1 circleByPath={this.props.circleByPath} />;
             case 'PAGE':
               return (
                 <ContainerMapperLevel2
-                  styles={this.props.n0deByPath.styles}
-                  n0deEdge={this.props.n0deByPath.n0deEdge}
+                  styles={this.props.circleByPath.styles}
+                  linesMany={this.props.circleByPath.linesMany}
                 />
               );
             default:
-              return `Page Component got: ${this.props.n0deByPath.type}`;
+              return `Page Component got: ${this.props.circleByPath.type}`;
           }
         })()}
       </Paper>
@@ -63,17 +60,16 @@ class ContainerMapperLevel1 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(ContainerMapperLevel1),
   graphql`
-    fragment ContainerMapperLevel1_n0deByPath on N0de {
+    fragment ContainerMapperLevel1_circleByPath on Circle {
       type
-      ...HeaderContainer1_n0deByPath
-      ...MediaContainer1_n0deByPath
-      ...PlainTextContainer1_n0deByPath
-      ...EdgeCards_n0deByPath
+      ...HeaderContainer1_circleByPath
+      ...MediaContainer1_circleByPath
+      ...PlainTextContainer1_circleByPath
       styles {
         value
       }
-      n0deEdge {
-        ...ContainerMapperLevel2_n0deEdge
+      linesMany {
+        ...ContainerMapperLevel2_linesMany
       }
     }
   `,

@@ -17,14 +17,14 @@ import s from './MediaContainer2.css';
 class MediaContainer2 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    n0de: PropTypes.object,
+    circle: PropTypes.object,
     title: PropTypes.string,
     subtitle: PropTypes.string,
     description: PropTypes.string,
   };
 
   static defaultProps = {
-    n0de: null,
+    circle: null,
     title: null,
     subtitle: null,
     description: null,
@@ -34,15 +34,15 @@ class MediaContainer2 extends React.Component {
     return (
       <div>
         {(() => {
-          switch (this.props.n0de.type) {
+          switch (this.props.circle.type) {
             case 'GIF':
             case 'IMAGE':
               return (
                 <MediaImage
-                  title={this.props.n0de.title}
-                  subtitle={this.props.n0de.subtitle}
-                  description={this.props.n0de.description}
-                  value={this.props.n0de.value}
+                  title={this.props.circle.title}
+                  subtitle={this.props.circle.subtitle}
+                  description={this.props.circle.description}
+                  value={this.props.circle.value}
                 />
               );
             case 'VIDEO':
@@ -50,7 +50,7 @@ class MediaContainer2 extends React.Component {
             case 'FILE':
               return 'MediaContainer2 received: EDGE_FILE. This still needs to be configured.';
             default:
-              return `MediaContainer2 received: ${this.props.n0de.type}`;
+              return `MediaContainer2 received: ${this.props.circle.type}`;
           }
         })()}
       </div>
@@ -61,7 +61,7 @@ class MediaContainer2 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(MediaContainer2),
   graphql`
-    fragment MediaContainer2_n0de on N0de {
+    fragment MediaContainer2_circle on Circle {
       type
       title
       subtitle

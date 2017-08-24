@@ -1,12 +1,12 @@
 ## Current status:
 Still under heavy development, barley working frontend to show a base.  Backend is working.
 
-The idea behind the database is to resemble nodes in a graph.  With a node structure you could potentially build anything in the universe, just keep connecting and building things from only what is needed.
+The idea behind the database is to resemble nodes in a graph (Circles with lines connecting them at the most basic level).  With this structure you could potentially build anything you can imagine in the digital world, just keep connecting and building things.
 Just like those Graphs you remember from Elementary School
 ![image](https://user-images.githubusercontent.com/15203899/28952061-ba1d6a7e-7883-11e7-8f03-f3492d6d29a6.png)
 
 
-A few things that I think are required on each Node to make it something us mere humans can use, those are:
+A few things that I think are required on each Node(Circle) to make it something us mere humans can use are:
 
 * _id: A unique id, a way for the computer to find it as fast as possible amoungst trillions of other nodes(_ is because we don't want to confuse it with Relay's id)
 * path: A URL, that we can memorize and find something as fast as possible.
@@ -21,12 +21,12 @@ A few things that I think are required on each Node to make it something us mere
 * tags: Tags will help you find something when your not exactly sure what your looking for.
 * created: A date to help filter this from your older stuff.
 * lastUpdated: The last time this node was updated (note by updated in this immutable system means it copied another node and then added the edits to the copy).
-* creator: The person who created this node.
+* creator: The viewer who created this node.
 * editors: The people who can edit this node.  (Note edits only create new nodes, databases should be immutable to enable stronger Artificial Intelligence features in the future).
 * value: A string value, it has a limit to the amount of characters it can hold, but used to hold text, urls to Storage buckets, or any text.
-* n0de: When you want to point to another node in the graph, this is just a interface for it.  Think of if you wanted to copy something, but not all of it, just the picture.
-* n0deList: A smallish list that does not need pagination (think when you look at youtube and there is 10+ pages of results, you dont want to have to load 100 results right away when the user may only look  at the first 3)
-* n0deEdge: When you have larger lists of items and require pagination, you can also sort these lists by certain values of the nodes
+* line: When you want to point to another node in the graph, this is just a interface for it.  Think of if you wanted to copy something, but not all of it, just the picture.
+* lines: A smallish list that does not need pagination (think when you look at youtube and there is 10+ pages of results, you dont want to have to load 100 results right away when the user may only look  at the first 3)
+* linesMany: When you have larger lists of items and require pagination, you can also sort these lists by certain values of the nodes
 
 
 ### Side notes
@@ -39,13 +39,13 @@ Something to think about when creating anything that collects data today is to N
 [https://youtu.be/rI8tNMsozo0]
 _Or if you want to get deeper topics to research are: Deep Learning, Machine Learning, Artificial Intelligence, Google Cloud Platform AI, TensorFlow_
 
-Frontend showing a few components n0des are giving data to
+Frontend showing a few components circles are giving data to
 ![2017-08-01_12-59-45](https://user-images.githubusercontent.com/15203899/28844430-6e064ec4-76b9-11e7-9041-ac8a31c9ceb8.gif)
 
-A look at the GraphQL side of what the n0des look like
+A look at the GraphQL side of what the circles look like
 ![2017-07-31_18-07-05](https://user-images.githubusercontent.com/15203899/28805275-ab6f92f8-761d-11e7-9187-009390ddb749.gif)
 
-Example of what a N0de looks like that gets entered into the Database (Google Datastore)
+Example of what a Circle looks like that gets entered into the Database (Google Datastore)
 _A benefit Datastore has is that empty values are not added to a individual entity (model/row)_
 ![image](https://user-images.githubusercontent.com/15203899/28951449-de6e863c-787f-11e7-8569-0bc64f216a1a.png)
 
@@ -57,10 +57,10 @@ clone
 	git clone https://github.com/DaveyEdwards/myiworlds.git
 ```
 
+In the following examples I use yarn instead of npm.  Example yarn install or yarn run seed.datastore will be npm install or npm run seed.datastore.  If you havn't tried out yarn, it is where people who use this stack are moving towards.  To find more about it click (HERE)[https://yarnpkg.com/lang/en/]
+
 Install
 ```
-	npm install
-	// or
 	yarn install
 ```
 
@@ -70,22 +70,16 @@ Create account and setup Google Cloud Platform
 
 You can now seed your database with the following command in the console
 ```
-	npm run seed.datastore
-	// or
 	yarn run seed.datastore
 ```
 
 You are all done with setting up your backend, and can run your application with:
 ```
-	npm start
-	// or
 	yarn start
 ```
 
 Start your relay compiler (requires [Watchman](https://facebook.github.io/watchman/) to be installed globally to your machine)
 ```
-	npm run relay -- --watch
-	// or
 	yarn run relay -- --watch
 ```
 

@@ -14,23 +14,28 @@ type NewsItem {
 type Query {
   me: User
   news: [NewsItem]
-  viewer: Person
-  n0deEdge(after: String, first: Int, before: String, last: Int): N0deConnection
+  viewer: Viewer
+  linesMany(
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): CircleConnection
 }
 
-input createN0deInput {
+input createCircleInput {
   type: String!
   clientMutationId: String
 }
 
-type createN0dePayload {
-  createdN0de: N0de
-  viewer: Person
+type createCirclePayload {
+  createdCircle: Circle
+  viewer: Viewer
   clientMutationId: String
 }
 
 type Mutation {
-  createN0de(input: createN0deInput!): createN0dePayload
+  createCircle(input: createCircleInput!): createCirclePayload
 }
 
 type User {
@@ -38,56 +43,61 @@ type User {
   email: String
 }
 
-type N0de implements Node {
+type Circle implements Node {
   id: ID!
   _id: ID
   title: String
   path: String
   type: String
   public: Boolean
-  viewers: [Person]
-  styles: N0de
-  tags(after: String, first: Int, before: String, last: Int): N0deConnection
+  viewers: [Viewer]
+  styles: Circle
+  tags(after: String, first: Int, before: String, last: Int): CircleConnection
   order: Int
   subtitle: String
   description: String
-  media: N0de
-  creator: Person
-  editors: [Person]
+  media: Circle
+  creator: Viewer
+  editors: [Viewer]
   created: String
   lastUpdated: String
   value: String
   blob: String
   number: Int
   boolean: Boolean
-  n0de: N0de
-  n0deList: [N0de]
-  n0deEdge(after: String, first: Int, before: String, last: Int): N0deConnection
+  line: Circle
+  lines: [Circle]
+  linesMany(
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): CircleConnection
 }
 
-type Person implements Node {
+type Viewer implements Node {
   id: ID!
   _id: ID!
   username: String!
   email: String!
   emailConfirmed: String
-  styles: [N0de]
-  home: N0de
-  n0deByPath(path: String): N0de
+  styles: [Circle]
+  home: Circle
+  circleByPath(path: String): Circle
 }
 
 # A connection to a list of items.
-type N0deConnection {
+type CircleConnection {
   # Information to aid in pagination.
   pageInfo: PageInfo!
   # A list of edges.
-  edges: [N0deEdge]
+  edges: [LinesMany]
 }
 
 # An edge in a connection.
-type N0deEdge {
+type LinesMany {
   # The item at the end of the edge
-  node: N0de
+  node: Circle
   # A cursor for use in pagination
   cursor: String!
 }
