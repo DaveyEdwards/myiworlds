@@ -7,10 +7,10 @@ import {
   GraphQLList as List,
 } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
-// eslint-disable-next-line camelcase
+
 import {
   createCircle,
-  getCircleBy_id,
+  getCircleBy_id, // eslint-disable-line camelcase
 } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/Queries';
 // eslint-disable-next-line camelcase
 import { getViewerBy_id } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/Viewer/Queries';
@@ -20,7 +20,8 @@ import ViewerType from '../../types/ViewerType';
 const CreateCircleDataMutation = mutationWithClientMutationId({
   name: 'createCircle',
   inputFields: {
-    path: { type: StringType },
+    pathFull: { type: StringType },
+    pathName: { type: StringType },
     public: { type: BooleanType },
     viewers: { type: new List(StringType) },
     type: { type: new NonNull(StringType) },
@@ -60,7 +61,7 @@ const CreateCircleDataMutation = mutationWithClientMutationId({
     console.log(
       '\n',
       '\n',
-      'I successfully saved the "circle" you gave me in my mind, it has increased my power level.',
+      'Relay Mutation here, I will try and send your request to the database and get back to you.',
       '\n',
       '\n',
     );

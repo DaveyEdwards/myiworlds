@@ -47,7 +47,8 @@ type Circle implements Node {
   id: ID!
   _id: ID
   title: String
-  path: String
+  pathFull: String
+  pathName: String
   type: String
   public: Boolean
   viewers: [Viewer]
@@ -83,7 +84,7 @@ type Viewer implements Node {
   emailConfirmed: String
   styles: [Circle]
   home: Circle
-  circleByPath(path: String): Circle
+  getCircleByPath(pathFull: String): Circle
 }
 
 # A connection to a list of items.

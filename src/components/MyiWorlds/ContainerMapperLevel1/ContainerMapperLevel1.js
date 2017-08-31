@@ -21,12 +21,12 @@ import ContainerMapperLevel2 from '../ContainerMapperLevel2/ContainerMapperLevel
 class ContainerMapperLevel1 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    circleByPath: PropTypes.object,
+    getCircleByPath: PropTypes.object,
     type: PropTypes.string,
   };
 
   static defaultProps = {
-    circleByPath: null,
+    getCircleByPath: null,
     type: 'default',
   };
 
@@ -34,22 +34,22 @@ class ContainerMapperLevel1 extends React.Component {
     return (
       <Paper className={s.page} elevation={4}>
         {(() => {
-          switch (this.props.circleByPath.type) {
+          switch (this.props.getCircleByPath.type) {
             case 'HEADER':
-              return <HeaderContainer1 circleByPath={this.props.circleByPath} />;
+              return <HeaderContainer1 getCircleByPath={this.props.getCircleByPath} />;
             case 'IMAGE':
-              return <MediaContainer1 circleByPath={this.props.circleByPath} />;
+              return <MediaContainer1 getCircleByPath={this.props.getCircleByPath} />;
             case 'PLAIN_TEXT':
-              return <PlainTextContainer1 circleByPath={this.props.circleByPath} />;
+              return <PlainTextContainer1 getCircleByPath={this.props.getCircleByPath} />;
             case 'PAGE':
               return (
                 <ContainerMapperLevel2
-                  styles={this.props.circleByPath.styles}
-                  linesMany={this.props.circleByPath.linesMany}
+                  styles={this.props.getCircleByPath.styles}
+                  linesMany={this.props.getCircleByPath.linesMany}
                 />
               );
             default:
-              return `Page Component got: ${this.props.circleByPath.type}`;
+              return `Page Component got: ${this.props.getCircleByPath.type}`;
           }
         })()}
       </Paper>
@@ -60,11 +60,11 @@ class ContainerMapperLevel1 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(ContainerMapperLevel1),
   graphql`
-    fragment ContainerMapperLevel1_circleByPath on Circle {
+    fragment ContainerMapperLevel1_getCircleByPath on Circle {
       type
-      ...HeaderContainer1_circleByPath
-      ...MediaContainer1_circleByPath
-      ...PlainTextContainer1_circleByPath
+      ...HeaderContainer1_getCircleByPath
+      ...MediaContainer1_getCircleByPath
+      ...PlainTextContainer1_getCircleByPath
       styles {
         value
       }

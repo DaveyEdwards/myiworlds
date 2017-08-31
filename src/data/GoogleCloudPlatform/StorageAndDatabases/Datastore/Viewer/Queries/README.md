@@ -96,7 +96,7 @@ getCircleByPath('examples/project/default' );
 ```js
 { id: 'project00001000000000000000000000001',
   type: 'project',
-  path: 'examples/project/default',
+  pathFull: 'examples/project/default',
   created: 2017-06-11T15:26:40.267Z,
   _id: 'project00001000000000000000000000001',
   lastUpdated: 2017-06-11T15:26:40.267Z,

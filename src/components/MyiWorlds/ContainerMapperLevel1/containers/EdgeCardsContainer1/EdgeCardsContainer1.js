@@ -93,7 +93,7 @@ export default createFragmentContainer(
             title
             type
             description
-            path
+            pathFull
           }
         }
       }

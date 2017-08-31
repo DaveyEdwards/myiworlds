@@ -71,7 +71,6 @@
 
 // export default { commit };
 
-
 // // import Relay from 'react-relay';
 
 // // class CreatePageMutation extends Relay.Mutation {

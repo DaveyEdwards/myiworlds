@@ -58,7 +58,7 @@ Take note of how Datastore returns an object
     namespace: undefined,
     name: 'TVSTvnflist0000100000000000000000001',
     kind: 'Circle',
-    path: [Getter]
+    pathFull: [Getter]
   },
   success: true
 }
@@ -85,7 +85,7 @@ getCircleBy_id('form_text_email000010000000000000001' );
 
 
 ## getCircleByPath
-This Query is will find a specific Entity inside a Google Datastore Kind's list by a indexed field.  This means a property on your model you want Datastore to memorize to find in the stack of billions.  Only works on indexed property.  Example for using "path" is think of the URL path to a specific website page if you wanted it to be readable text myiworlds.com/DaveysWorlds/Tutorials/Queries (note that this path has to be unique as well)
+This Query is will find a specific Entity inside a Google Datastore Kind's list by a indexed field.  This means a property on your model you want Datastore to memorize to find in the stack of billions.  Only works on indexed property.  Example for using "pathFull" is think of the URL path to a specific website page if you wanted it to be readable text myiworlds.com/DaveysWorlds/Tutorials/Queries (note that this path has to be unique as well)
 
 ### Example use
 ```js
@@ -96,7 +96,7 @@ getCircleByPath('examples/project/default' );
 ```js
 { id: 'project00001000000000000000000000001',
   type: 'project',
-  path: 'examples/project/default',
+  pathFull: 'examples/project/default',
   created: 2017-06-11T15:26:40.267Z,
   _id: 'project00001000000000000000000000001',
   lastUpdated: 2017-06-11T15:26:40.267Z,

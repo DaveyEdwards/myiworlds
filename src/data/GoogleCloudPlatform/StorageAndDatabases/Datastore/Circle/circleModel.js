@@ -7,7 +7,11 @@ const circleSchema = new Schema({
     type: 'string',
     required: true,
   },
-  path: {
+  pathFull: {
+    type: 'string',
+    optional: true,
+  },
+  pathName: {
     type: 'string',
     optional: true,
   },

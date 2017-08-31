@@ -17,7 +17,7 @@ import s from './PlainTextContainer1.css';
 class PlainTextContainer1 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-    circleByPath: PropTypes.object,
+    getCircleByPath: PropTypes.object,
   };
 
   static defaultProps = {
@@ -30,10 +30,10 @@ class PlainTextContainer1 extends React.Component {
   render() {
     return (
       <PlainText
-        title={this.props.circleByPath.title}
-        subtitle={this.props.circleByPath.subtitle}
-        description={this.props.circleByPath.description}
-        value={this.props.circleByPath.value}
+        title={this.props.getCircleByPath.title}
+        subtitle={this.props.getCircleByPath.subtitle}
+        description={this.props.getCircleByPath.description}
+        value={this.props.getCircleByPath.value}
       />
     );
   }
@@ -42,7 +42,7 @@ class PlainTextContainer1 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(PlainTextContainer1),
   graphql`
-    fragment PlainTextContainer1_circleByPath on Circle {
+    fragment PlainTextContainer1_getCircleByPath on Circle {
       title
       subtitle
       description

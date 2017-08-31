@@ -17,7 +17,8 @@ const UpdateCircleDataMutation = mutationWithClientMutationId({
   name: 'updateCircle',
   inputFields: {
     _id: { type: new NonNull(StringType) },
-    path: { type: StringType },
+    pathFull: { type: StringType },
+    pathName: { type: StringType },
     public: { type: BooleanType },
     viewers: { type: new List(StringType) },
     type: { type: StringType },

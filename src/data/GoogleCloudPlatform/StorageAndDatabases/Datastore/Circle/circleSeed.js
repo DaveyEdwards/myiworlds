@@ -1,6 +1,31 @@
 import { createCircle } from './Queries/';
 
 const circles = [
+  // {
+  //   _id: 'type00010000000000000000000000000001',
+  //   value: 'TYPE',
+  //   title: 'A type of data that is stored',
+  //   description: 'Everything is a type of something',
+  //   // line: 'Info_Page_About_This_Type',
+  // },
+  // {
+  //   _id: 'types0000100000000000000000000000001',
+  //   pathFull: 'types',
+  //   type: 'types-lines-many00010000000000000001',
+  //   linesMany: ['types-lines-many00010000000000000001', 'types-lines0001000000000000000000001'],
+  // },
+  // {
+  //   _id: 'types-lines-many00010000000000000001',
+  //   pathFull: 'types/lines-many',
+  //   type: 'type00010000000000000000000000000001',
+  //   value: 'LINESMANY',
+  // },
+  // {
+  //   _id: 'types-lines0001000000000000000000001',
+  //   pathFull: 'types/lines',
+  //   type: 'type00010000000000000000000000000001',
+  //   value: 'LINES',
+  // },
   {
     _id: 'interface000010000000000000000000001',
     type: 'INTERFACE',
@@ -23,7 +48,8 @@ const circles = [
   },
   {
     _id: 'page00001000000000000000000000000001',
-    path: 'home',
+    pathFull: 'home',
+    pathName: 'home',
     type: 'PAGE',
     order: 1,
     linesMany: [
@@ -114,7 +140,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000001',
     type: 'CARD',
-    path: 'page1',
+    pathFull: 'myiworlds/page1',
+    pathName: 'page1',
     media: 'image0000100000000000000000000000001',
     title: 'Title1',
     description: 'A description of the card',
@@ -122,7 +149,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000002',
     type: 'CARD',
-    path: 'page2',
+    pathFull: 'myiworlds/page2',
+    pathName: 'page2',
     media: 'image0000100000000000000000000000002',
     title: 'Title2',
     description: 'A description of the card',
@@ -130,7 +158,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000003',
     type: 'CARD',
-    path: 'page3',
+    pathFull: 'myiworlds/page3',
+    pathName: 'page3',
     media: 'image0000100000000000000000000000003',
     title: 'Title3',
     description: 'A description of the card',
@@ -138,7 +167,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000004',
     type: 'CARD',
-    path: 'page4',
+    pathFull: 'myiworlds/page4',
+    pathName: 'page4',
     media: 'image0000100000000000000000000000004',
     title: 'Title4',
     description: 'A description of the card',
@@ -146,7 +176,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000005',
     type: 'CARD',
-    path: 'page5',
+    pathFull: 'myiworlds/page5',
+    pathName: 'page5',
     media: 'image0000100000000000000000000000005',
     title: 'Title5',
     description: 'A description of the card',
@@ -154,7 +185,8 @@ const circles = [
   {
     _id: 'card00001000000000000000000000000006',
     type: 'CARD',
-    path: 'page6',
+    pathFull: 'myiworlds/page6',
+    pathName: 'page6',
     media: 'image0000100000000000000000000000006',
     title: 'Title6',
     description: 'A description of the card',
@@ -162,7 +194,7 @@ const circles = [
   {
     _id: 'notfound0000100000000000000000000006',
     type: 'PAGE',
-    path: 'not-found',
+    pathFull: 'not-found',
     title: 'Page not found',
     description:
       'I am terribly sorry human, that page does not exist.  Do you know anything about the topic? Why not create a page here to help other like minded individuals, by clicking the + sign in the bottom right you can!',

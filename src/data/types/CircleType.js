@@ -27,12 +27,17 @@ const CircleType = new ObjectType({
   fields: () => ({
     id: globalIdField('Circle', circle => circle._id),
     _id: {
-      type: ID,
       description: 'A unique id used to instantly locate this circle inside the database',
+      type: ID,
     },
-    path: {
+    pathFull: {
+      description: 'The full path (after domain name) to this piece of content',
       type: StringType,
-      description: 'A direct path (url) to this circle',
+    },
+    pathName: {
+      type: StringType,
+      description:
+        'The name of this path without creator.  This allows shared viewers to edit the title, but not the root path.',
     },
     public: {
       description: 'Is this circle visable to the public?',
@@ -53,6 +58,7 @@ const CircleType = new ObjectType({
       type: new NonNull(StringType),
     },
     styles: {
+      description: 'The styles of this piece of content.',
       type: CircleType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.styles) {
@@ -61,8 +67,8 @@ const CircleType = new ObjectType({
       },
     },
     tags: {
-      type: require('./connections/CircleConnection').default,
       description: 'All tags related to this circle',
+      type: require('./connections/CircleConnection').default,
       args: connectionArgs,
       resolve: async (circle, { ...args }, { loaders }) => {
         if (circle.tags) {
@@ -73,13 +79,14 @@ const CircleType = new ObjectType({
       },
     },
     order: {
-      type: NumberType,
       description: 'The order number this is to display in a list',
+      type: NumberType,
     },
     title: { type: StringType },
     subtitle: { type: StringType },
     description: { type: StringType },
     media: {
+      description: 'A piece of media (image/gif/video) that helps identify this piece of content.',
       type: CircleType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.media) {
@@ -88,6 +95,7 @@ const CircleType = new ObjectType({
       },
     },
     creator: {
+      description: 'The viewer who created this piece of content',
       type: ViewerType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.creator) {
@@ -106,11 +114,25 @@ const CircleType = new ObjectType({
     },
     created: { type: StringType },
     lastUpdated: { type: StringType },
-    value: { type: StringType },
-    blob: { type: GraphQLJSON },
-    number: { type: NumberType },
-    boolean: { type: BooleanType },
+    value: {
+      description: 'A string value you wish to store. (Any character)',
+      type: StringType,
+    },
+    blob: {
+      description: 'A JSON blob, allowing you to create complex pieces of content.',
+      type: GraphQLJSON,
+    },
+    number: {
+      description: 'A number type to store on this piece of content',
+      type: NumberType,
+    },
+    boolean: {
+      description: 'A boolean type to store on this piece of content',
+      type: BooleanType,
+    },
     line: {
+      description:
+        'When you want to point to a single circle type.  Normally used for changing a node but without actually changing it.',
       type: CircleType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.line) {
@@ -119,6 +141,8 @@ const CircleType = new ObjectType({
       },
     },
     lines: {
+      description:
+        "When you want to connect lots of Circles, but don't need pagination (used for TONS of results) ",
       type: new List(CircleType),
       resolve: async (circle, args, { loaders }) => {
         if (circle.lines) {
@@ -127,7 +151,9 @@ const CircleType = new ObjectType({
       },
     },
     linesMany: {
-      type: require('./connections/CircleConnection').default,
+      description:
+        'When you need to connect lots of Circles together, but you only want to show a certain amount at a time',
+      type: require('./connections/CircleConnection').default, // eslint-disable-line global-require
       args: connectionArgs,
       resolve: async (circle, { ...args }, { loaders }) => {
         if (circle.linesMany) {

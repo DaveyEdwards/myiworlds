@@ -1,0 +1,44 @@
+/**
+ * React Starter Kit (https://www.reactstarterkit.com/)
+ *
+ * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
+@import '../../components/variables.css';
+
+.card {
+  margin: 24px;
+  max-width: 600px;
+}
+
+.cardHeader {
+  padding: 12px 24px 12px 24px;
+  background: #fbfbfb;
+}
+
+.cardContent {
+  max-height: 400px;
+  overflow: auto;
+  padding: 24px 24px 64px 24px;
+}
+
+.cardActions {
+  padding: 12px 24px 12px 24px;
+  background: #fbfbfb;
+}
+
+.flexGrow {
+  flex: 1 1 auto;
+}
+
+.line {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}

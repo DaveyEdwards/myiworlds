@@ -9,22 +9,22 @@
 
 import React from 'react';
 import { graphql } from 'relay-runtime';
-import Create from './Create';
+import CreateCircle from './CreateCircle';
 
 export default {
-  path: '/create',
+  path: '/createCircle',
 
   async action({ api }) {
     const data = await api.fetchQuery(graphql`
-      query createQuery {
+      query createCircleQuery {
         viewer {
-          ...Create_viewer
+          ...CreateCircle_viewer
         }
       }
     `);
     return {
-      title: 'Create',
-      component: <Create viewer={data.viewer} />,
+      title: 'CreateCircle',
+      component: <CreateCircle viewer={data.viewer} />,
     };
   },
 };

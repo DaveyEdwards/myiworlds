@@ -17,14 +17,14 @@ import s from './HeaderContainer1.css';
 class HeaderContainer1 extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
-    circleByPath: PropTypes.object,
+    getCircleByPath: PropTypes.object,
     title: PropTypes.string,
     subtitle: PropTypes.string,
     description: PropTypes.string,
   };
 
   static defaultProps = {
-    circleByPath: null,
+    getCircleByPath: null,
     title: null,
     subtitle: null,
     description: null,
@@ -33,9 +33,9 @@ class HeaderContainer1 extends React.Component {
   render() {
     return (
       <Header
-        title={this.props.circleByPath.title}
-        subtitle={this.props.circleByPath.subtitle}
-        description={this.props.circleByPath.description}
+        title={this.props.getCircleByPath.title}
+        subtitle={this.props.getCircleByPath.subtitle}
+        description={this.props.getCircleByPath.description}
       />
     );
   }
@@ -44,7 +44,7 @@ class HeaderContainer1 extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(HeaderContainer1),
   graphql`
-    fragment HeaderContainer1_circleByPath on Circle {
+    fragment HeaderContainer1_getCircleByPath on Circle {
       title
       subtitle
       description

@@ -50,12 +50,12 @@ const ViewerType = new ObjectType({
         }
       },
     },
-    circleByPath: {
+    getCircleByPath: {
       type: CircleType,
       args: {
-        path: { type: StringType },
+        pathFull: { type: StringType },
       },
-      resolve: (query, { path }) => getCircleByPath(path),
+      resolve: (query, { pathFull }) => getCircleByPath(pathFull),
     },
     // circlesCreated: {
     // 	type: CircleType,

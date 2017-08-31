@@ -57,6 +57,13 @@ clone
 	git clone https://github.com/DaveyEdwards/myiworlds.git
 ```
 
+## What you need on your computer to run the project:
+__watchman__ https://facebook.github.io/watchman/docs/install.html
+__flow__ https://flow.org/en/docs/install/
+__yarn__ https://yarnpkg.com/lang/en/docs/install/
+
+
+
 In the following examples I use yarn instead of npm.  Example yarn install or yarn run seed.datastore will be npm install or npm run seed.datastore.  If you havn't tried out yarn, it is where people who use this stack are moving towards.  To find more about it click (HERE)[https://yarnpkg.com/lang/en/]
 
 Install

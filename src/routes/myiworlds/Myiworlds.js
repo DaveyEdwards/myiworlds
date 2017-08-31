@@ -16,25 +16,28 @@ import AddIcon from 'material-ui-icons/Add';
 import s from './MyiWorlds.css';
 import ContainerMapperLevel1 from '../../components/MyiWorlds/ContainerMapperLevel1/ContainerMapperLevel1';
 import AppBar from '../../components/AppBar/AppBar';
+import Link from '../../components/Link';
 
 class MyiWorlds extends React.Component {
   static propTypes = {
-    circleByPath: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    getCircleByPath: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   };
 
   static defaultProps = {
-    circleByPath: null,
+    getCircleByPath: null,
   };
 
   render() {
     return (
       <div>
         <AppBar viewer={this.props.viewer} />
-        <ContainerMapperLevel1 circleByPath={this.props.circleByPath} />
+        <ContainerMapperLevel1 getCircleByPath={this.props.getCircleByPath} />
         <div className={s.fab}>
-          <Button fab color="primary" aria-label="add">
-            <AddIcon />
-          </Button>
+          <Link to="/createCircle">
+            <Button fab color="primary" aria-label="add">
+              <AddIcon />
+            </Button>
+          </Link>
         </div>
       </div>
     );
@@ -48,8 +51,8 @@ export default createFragmentContainer(
       ...AppBar_viewer
     }
 
-    fragment MyiWorlds_circleByPath on Circle {
-      ...ContainerMapperLevel1_circleByPath
+    fragment MyiWorlds_getCircleByPath on Circle {
+      ...ContainerMapperLevel1_getCircleByPath
     }
   `,
 );

@@ -12,29 +12,29 @@ import { graphql } from 'relay-runtime';
 import MyiWorlds from './MyiWorlds';
 
 export default {
-  path: '/MyiWorlds/:path',
+  path: '/MyiWorlds/:pathFull',
 
   async action({ api }, context) {
     const data = await api.fetchQuery(
       graphql`
-        query myiworldsQuery($path: String) {
+        query myiworldsQuery($pathFull: String) {
           viewer {
             ...MyiWorlds_viewer
             id
             username
-            circleByPath(path: $path) {
-              ...MyiWorlds_circleByPath
+            getCircleByPath(pathFull: $pathFull) {
+              ...MyiWorlds_getCircleByPath
             }
           }
         }
       `,
       {
-        path: context.path,
+        pathFull: context.pathFull,
       },
     );
     return {
       title: 'MyiWorlds',
-      component: <MyiWorlds viewer={data.viewer} circleByPath={data.viewer.circleByPath} />,
+      component: <MyiWorlds viewer={data.viewer} getCircleByPath={data.viewer.getCircleByPath} />,
     };
   },
 };

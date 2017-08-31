@@ -7,45 +7,6 @@ const mutation = graphql`
       createdCircle {
         __typename
         id
-        public
-        viewers {
-          id
-        }
-        type
-        styles {
-          id
-        }
-        tags {
-          edges {
-            node {
-              id
-            }
-          }
-        }
-        order
-        title
-        subtitle
-        description
-        media {
-          id
-        }
-        value
-        blob
-        number
-        boolean
-        line {
-          id
-        }
-        lines {
-          id
-        }
-        linesMany {
-          edges {
-            node {
-              id
-            }
-          }
-        }
       }
     }
   }
@@ -65,10 +26,10 @@ function getConfigs(viewerId) {
   ];
 }
 
-function getOptimisticResponse(optomisticCircleObject, viewerId) {
+function getOptimisticResponse(optimisticCircleObject, viewerId) {
   return {
     createCircle: {
-      createdCircle: optomisticCircleObject,
+      createdCircle: optimisticCircleObject,
       viewer: {
         id: viewerId,
       },
@@ -86,3 +47,44 @@ function commit(environment: Environment, data: Object, viewerId: number) {
 }
 
 export default { commit };
+
+// public
+// viewers {
+//   _id
+//   username
+// }
+// type
+// styles {
+//   id
+// }
+// tags {
+//   edges {
+//     node {
+//       id
+//     }
+//   }
+// }
+// order
+// title
+// subtitle
+// description
+// media {
+//   id
+// }
+// value
+// blob
+// number
+// boolean
+// line {
+//   id
+// }
+// lines {
+//   id
+// }
+// linesMany {
+//   edges {
+//     node {
+//       id
+//     }
+//   }
+// }
