@@ -21,8 +21,8 @@
   margin-bottom: 24px;
 }
 
-.imgContainer {
-  max-height: 150px;
+.cardMedia {
+  height: 150px;
   overflow: hidden;
 }
 

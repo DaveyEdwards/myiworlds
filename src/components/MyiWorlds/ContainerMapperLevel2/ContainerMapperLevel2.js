@@ -11,7 +11,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { graphql, createFragmentContainer } from 'react-relay';
-import s from './ContainerMapperLevel2.css';
 import HeaderContainer2 from './containers/HeaderContainer2/HeaderContainer2';
 import MediaContainer2 from './containers/MediaContainer2/MediaContainer2';
 import PlainTextContainer2 from './containers/PlainTextContainer2/PlainTextContainer2';
@@ -32,8 +31,8 @@ class ContainerMapperLevel2 extends React.Component {
   render() {
     return (
       <div>
-        {this.props.linesMany.edges.map(({ node: circle }, index) =>
-          <div key={circle.id + index}>
+        {this.props.linesMany.edges.map(({ node: circle }) =>
+          <div key={circle.id}>
             {(() => {
               switch (circle.type) {
                 case 'HEADER':
@@ -44,6 +43,8 @@ class ContainerMapperLevel2 extends React.Component {
                   return <PlainTextContainer2 circle={circle} />;
                 case 'EDGE_CARDS':
                   return <EdgeCardsContainer2 circle={circle} />;
+                case 'CARD':
+                  return 'ContainerMapperLevel2 got a card';
                 default:
                   return `Page Component got: ${circle.type}`;
               }
@@ -56,7 +57,7 @@ class ContainerMapperLevel2 extends React.Component {
 }
 
 export default createFragmentContainer(
-  withStyles(s)(ContainerMapperLevel2),
+  ContainerMapperLevel2,
   graphql`
     fragment ContainerMapperLevel2_linesMany on CircleConnection {
       edges {

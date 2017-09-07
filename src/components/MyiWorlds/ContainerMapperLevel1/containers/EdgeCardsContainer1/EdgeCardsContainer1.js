@@ -44,10 +44,12 @@ class EdgeCardsContainer1 extends React.Component {
           {this.props.circle.linesMany.edges.map(({ node }) =>
             <Grid item sm={4} key={node._id}>
               <Card>
-                {node.media
-                  ? <CardMedia className={s.imgContainer}>
-                    <img className={s.hero} src={node.media.value} alt={node.media.title} />
-                  </CardMedia>
+                {node.media.value
+                  ? <CardMedia
+                    className={s.cardMedia}
+                    image={node.media.value}
+                    title={node.media.title}
+                  />
                   : null}
 
                 <CardContent>
@@ -89,6 +91,7 @@ export default createFragmentContainer(
             _id
             media {
               value
+              title
             }
             title
             type

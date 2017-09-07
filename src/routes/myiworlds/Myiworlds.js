@@ -15,7 +15,6 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import s from './MyiWorlds.css';
 import ContainerMapperLevel1 from '../../components/MyiWorlds/ContainerMapperLevel1/ContainerMapperLevel1';
-import AppBar from '../../components/AppBar/AppBar';
 import Link from '../../components/Link';
 
 class MyiWorlds extends React.Component {
@@ -30,7 +29,6 @@ class MyiWorlds extends React.Component {
   render() {
     return (
       <div>
-        <AppBar viewer={this.props.viewer} />
         <ContainerMapperLevel1 getCircleByPath={this.props.getCircleByPath} />
         <div className={s.fab}>
           <Link to="/createCircle">
@@ -47,10 +45,6 @@ class MyiWorlds extends React.Component {
 export default createFragmentContainer(
   withStyles(s)(MyiWorlds),
   graphql`
-    fragment MyiWorlds_viewer on Viewer {
-      ...AppBar_viewer
-    }
-
     fragment MyiWorlds_getCircleByPath on Circle {
       ...ContainerMapperLevel1_getCircleByPath
     }

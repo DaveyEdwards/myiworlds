@@ -10,16 +10,17 @@
 import React from 'react';
 import { graphql } from 'relay-runtime';
 import MyiWorlds from './MyiWorlds';
+import AppBar from '../../components/MyiWorlds/AppBar/AppBar';
 
 export default {
-  path: '/MyiWorlds/:pathFull',
+  path: '/MyiWorlds/:pathFull(.*)',
 
   async action({ api }, context) {
     const data = await api.fetchQuery(
       graphql`
         query myiworldsQuery($pathFull: String) {
           viewer {
-            ...MyiWorlds_viewer
+            ...AppBar_viewer
             id
             username
             getCircleByPath(pathFull: $pathFull) {
@@ -34,7 +35,12 @@ export default {
     );
     return {
       title: 'MyiWorlds',
-      component: <MyiWorlds viewer={data.viewer} getCircleByPath={data.viewer.getCircleByPath} />,
+      component: (
+        <div>
+          <AppBar viewer={data.viewer} title="MyiWorlds" />
+          <MyiWorlds getCircleByPath={data.viewer.getCircleByPath} />
+        </div>
+      ),
     };
   },
 };

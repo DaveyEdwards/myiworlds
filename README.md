@@ -1,6 +1,10 @@
 ## Current status:
 Still under heavy development, barley working frontend to show a base.  Backend is working.
 
+**Quick video walkthrough of UI**
+[![Quick video walkthrough of UI](https://user-images.githubusercontent.com/15203899/30141751-24425c0c-9332-11e7-861e-a541b81f9d6e.png)](https://photos.app.goo.gl/YGTPDOIK9bY6Udsh1)
+
+
 The idea behind the database is to resemble nodes in a graph (Circles with lines connecting them at the most basic level).  With this structure you could potentially build anything you can imagine in the digital world, just keep connecting and building things.
 Just like those Graphs you remember from Elementary School
 ![image](https://user-images.githubusercontent.com/15203899/28952061-ba1d6a7e-7883-11e7-8f03-f3492d6d29a6.png)

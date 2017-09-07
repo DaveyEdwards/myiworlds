@@ -16,18 +16,13 @@
 }
 
 .header {
-  text-align: center;
-  margin-top: 24px;
-  margin-bottom: 24px;
+  padding: 24px 24px 0px 24px;
+  margin: 24px;
 }
 
-.imgContainer {
-  max-height: 150px;
+.cardMedia {
+  height: 200px;
   overflow: hidden;
-}
-
-.hero {
-  max-width: 100%;
 }
 
 .grid {

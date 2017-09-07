@@ -1,5 +1,6 @@
 // @flow
 import { graphql, commitMutation, Environment } from 'react-relay';
+import history from '../../history';
 
 const mutation = graphql`
   mutation CreateCircleMutation($input: createCircleInput!) {
@@ -7,6 +8,12 @@ const mutation = graphql`
       createdCircle {
         __typename
         id
+        _id
+        pathFull
+        title
+        viewers {
+          id
+        }
       }
     }
   }
@@ -41,50 +48,17 @@ function commit(environment: Environment, data: Object, viewerId: number) {
   commitMutation(environment, {
     mutation,
     variables: { input: data },
+    onCompleted: (store) => {
+      if (store.createCircle.createdCircle.pathFull != null) {
+        history.push(`/MyiWorlds/${store.createCircle.createdCircle.pathFull}`);
+      } else {
+        return { status: 'Circle was not created' };
+      }
+    },
+    onError: err => console.error('CreateCircleMutation onError: ', err),
     optimisticResponse: getOptimisticResponse(data, viewerId),
     configs: getConfigs(viewerId),
   });
 }
 
 export default { commit };
-
-// public
-// viewers {
-//   _id
-//   username
-// }
-// type
-// styles {
-//   id
-// }
-// tags {
-//   edges {
-//     node {
-//       id
-//     }
-//   }
-// }
-// order
-// title
-// subtitle
-// description
-// media {
-//   id
-// }
-// value
-// blob
-// number
-// boolean
-// line {
-//   id
-// }
-// lines {
-//   id
-// }
-// linesMany {
-//   edges {
-//     node {
-//       id
-//     }
-//   }
-// }

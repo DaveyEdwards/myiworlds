@@ -19,15 +19,11 @@ class MediaContainer2 extends React.Component {
     // eslint-disable-next-line react/forbid-prop-types
     circle: PropTypes.object,
     title: PropTypes.string,
-    subtitle: PropTypes.string,
-    description: PropTypes.string,
   };
 
   static defaultProps = {
     circle: null,
     title: null,
-    subtitle: null,
-    description: null,
   };
 
   render() {
@@ -37,14 +33,7 @@ class MediaContainer2 extends React.Component {
           switch (this.props.circle.type) {
             case 'GIF':
             case 'IMAGE':
-              return (
-                <MediaImage
-                  title={this.props.circle.title}
-                  subtitle={this.props.circle.subtitle}
-                  description={this.props.circle.description}
-                  value={this.props.circle.value}
-                />
-              );
+              return <MediaImage title={this.props.circle.title} value={this.props.circle.value} />;
             case 'VIDEO':
               return 'MediaContainer2 received: EDGE_VIDEO. This still needs to be configured.';
             case 'FILE':
@@ -64,8 +53,6 @@ export default createFragmentContainer(
     fragment MediaContainer2_circle on Circle {
       type
       title
-      subtitle
-      description
       value
     }
   `,

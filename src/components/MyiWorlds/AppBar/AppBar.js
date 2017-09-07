@@ -14,7 +14,6 @@ import { graphql, createFragmentContainer } from 'react-relay';
 import MUIAppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import s from './AppBar.css';
@@ -30,9 +29,8 @@ class AppBar extends React.Component {
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={s.flex}>
-            Title
+            MyiWorlds
           </Typography>
-          <Button color="contrast">Login</Button>
         </Toolbar>
       </MUIAppBar>
     );

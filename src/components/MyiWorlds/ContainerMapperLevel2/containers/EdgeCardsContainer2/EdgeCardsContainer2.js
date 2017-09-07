@@ -17,6 +17,7 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import s from './EdgeCardsContainer2.css';
+import Link from '../../../../Link';
 
 class EdgeCardsContainer2 extends React.Component {
   static propTypes = {
@@ -40,14 +41,16 @@ class EdgeCardsContainer2 extends React.Component {
         </div>
         <Divider light style={{ marginBottom: '72px' }} />
 
-        <Grid className={s.grid} container gutter={24}>
+        <Grid className={s.grid} container>
           {this.props.circle.linesMany.edges.map(({ node }) =>
             <Grid item sm={4} key={node._id}>
               <Card>
-                {node.media
-                  ? <CardMedia className={s.imgContainer}>
-                    <img className={s.hero} src={node.media.value} alt={node.media.title} />
-                  </CardMedia>
+                {node.media.value
+                  ? <CardMedia
+                    className={s.cardMedia}
+                    image={node.media.value}
+                    title={node.media.title}
+                  />
                   : null}
 
                 <CardContent>
@@ -64,9 +67,11 @@ class EdgeCardsContainer2 extends React.Component {
                 </CardContent>
 
                 <CardActions>
-                  <Button dense color="primary">
-                    VIEW PAGE
-                  </Button>
+                  <Link to={node.pathFull} style={{ textDecoration: 'none' }}>
+                    <Button dense color="primary">
+                      VIEW PAGE
+                    </Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>,
@@ -88,6 +93,7 @@ export default createFragmentContainer(
           node {
             _id
             media {
+              title
               value
             }
             title

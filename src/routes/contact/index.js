@@ -15,17 +15,23 @@ import Contact from './Contact';
 const title = 'Contact Us';
 
 export default {
+  path: '/contact',
 
-	path: '/contact',
-
-	async action({ api }) {
-		const data = await api.fetchQuery(graphql`query contactQuery {
-      me { ...Layout_me }
-    }`);
-		return {
-			title,
-			component: <Layout me={data.me}><Contact title={title} /></Layout>,
-		};
-	},
-
+  async action({ api }) {
+    const data = await api.fetchQuery(graphql`
+      query contactQuery {
+        me {
+          ...Layout_me
+        }
+      }
+    `);
+    return {
+      title,
+      component: (
+        <Layout me={data.me}>
+          <Contact title={title} />
+        </Layout>
+      ),
+    };
+  },
 };

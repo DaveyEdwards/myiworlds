@@ -35,14 +35,17 @@ class MediaContainer1 extends React.Component {
       <div>
         {(() => {
           switch (this.props.getCircleByPath.type) {
-            case 'MEDIA_IMAGE':
-              return <MediaImage getCircleByPath={this.props.getCircleByPath} />;
-            case 'MEDIA_GIF':
+            case 'IMAGE':
+              return (
+                <MediaImage
+                  title={this.props.getCircleByPath.title}
+                  value={this.props.getCircleByPath.value}
+                />
+              );
+            case 'GIF':
               return 'MediaContainer1 received: EDGE_GIF. This still needs to be configured.';
-            case 'MEDIA_VIDEO':
+            case 'VIDEO':
               return 'MediaContainer1 received: EDGE_VIDEO. This still needs to be configured.';
-            case 'EDGE_FILE':
-              return 'MediaContainer1 received: EDGE_FILE. This still needs to be configured.';
             default:
               return `MediaContainer1 received: ${this.props.getCircleByPath.type}`;
           }
@@ -56,9 +59,9 @@ export default createFragmentContainer(
   withStyles(s)(MediaContainer1),
   graphql`
     fragment MediaContainer1_getCircleByPath on Circle {
+      type
       title
-      subtitle
-      description
+      value
     }
   `,
 );

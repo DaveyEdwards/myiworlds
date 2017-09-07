@@ -13,14 +13,6 @@ body {
   margin: 0;
 }
 
-.root {
-  box-sizing: border-box;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  background: #fafafa;
-}
-
 .fab {
   position: fixed;
   bottom: 24px;

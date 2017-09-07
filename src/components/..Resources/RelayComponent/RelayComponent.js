@@ -17,26 +17,22 @@ import Feedback from '../Feedback';
 import Footer from '../Footer';
 
 class RelayComponent extends React.Component {
-	static propTypes = {
-		// eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-		me: PropTypes.object,
-		children: PropTypes.node.isRequired,
-	};
+  static propTypes = {
+    // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
+    getCircleByPath: PropTypes.object,
+  };
 
-	render() {
-		return (
-			<div>
-				<Header me={this.props.me} />
-				{this.props.children}
-				<Feedback />
-				<Footer />
-			</div>
-		);
-	}
+  render() {
+    return <div>Relay Component</div>;
+  }
 }
 
-export default createFragmentContainer(withStyles(s)(RelayComponent), graphql`
-  fragment RelayComponent_me on User {
-    ...Header_me
-  }
-`);
+export default createFragmentContainer(
+  withStyles(s)(RelayComponent),
+  graphql`
+    fragment RelayComponent_getCircleByPath on Circle {
+      id
+      title
+    }
+  `,
+);

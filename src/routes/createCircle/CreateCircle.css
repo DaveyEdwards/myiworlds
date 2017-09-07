@@ -10,35 +10,69 @@
 @import '../../components/variables.css';
 
 .card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
   margin: 24px;
   max-width: 600px;
+  overflow: hidden;
+  height: 580px;
+  transition: height cubic-bezier(0.62, 0.28, 0.23, 0.99) 0.5s;
 }
 
 .cardHeader {
   padding: 12px 24px 12px 24px;
   background: #fbfbfb;
+  display: flex;
+  flex: 0 0 auto;
+  z-index: 999;
+}
+
+.cardContentContainer {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 0;
 }
 
 .cardContent {
-  max-height: 400px;
-  overflow: auto;
-  padding: 24px 24px 64px 24px;
+  padding: 12px 24px 64px 24px;
+  margin-bottom: 42px;
+  /* background: red;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%; */
 }
 
-.cardActions {
-  padding: 12px 24px 12px 24px;
+.cardFooter {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  bottom: 0;
   background: #fbfbfb;
+  z-index: 99;
+  padding: 12px 20px 12px 0px;
 }
 
 .flexGrow {
   flex: 1 1 auto;
 }
 
-.line {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
+.headerTitle {
+  flex: 1;
+  padding-top: 8px;
+  overflow: hidden;
+  margin-right: 8px;
+}
+
+.headerButtons {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.headerButton {
+  flex: 1;
 }

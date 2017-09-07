@@ -49,7 +49,7 @@ class ContainerMapperLevel1 extends React.Component {
                 />
               );
             default:
-              return `Page Component got: ${this.props.getCircleByPath.type}`;
+              return <HeaderContainer1 getCircleByPath={this.props.getCircleByPath} />;
           }
         })()}
       </Paper>

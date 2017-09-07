@@ -7,12 +7,6 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-// THINK ABOUT: Redoing this into the page component
-// having edit components where you see the components
-// These modules pop up when you want to edit that piece of the page
-// Pages would also be able to have hidden from view things
-// Example styles: hidden behind a settings tab or more options.
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid/v1';
@@ -28,6 +22,21 @@ import Checkbox from 'material-ui/Checkbox';
 import Typography from 'material-ui/Typography';
 import Snackbar from 'material-ui/Snackbar';
 import Divider from 'material-ui/Divider';
+import PanTool from 'material-ui-icons/PanTool';
+import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp';
+import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
+import Grid from 'material-ui/Grid';
+import List, {
+  ListItem,
+  ListItemAvatar,
+  ListItemSecondaryAction,
+  ListItemText,
+} from 'material-ui/List';
+import FolderIcon from 'material-ui-icons/Folder';
+import DragHandle from 'material-ui-icons/DragHandle';
+import Avatar from 'material-ui/Avatar';
+import Draggable from 'react-draggable';
+import IconButton from 'material-ui/IconButton';
 import s from './CreateCircle.css';
 import CreateCircleMutation from './CreateCircleMutation';
 
@@ -40,25 +49,18 @@ class CreateCircle extends React.Component {
   };
 
   static defaultProps = {};
-
-  // Default selection is everything showing until you change the type (first thing)
-  // It can then suggest content types as you go down the fields.  Making it look like AI
-  // TODO: ALL types hidden that are not defaults on those specific types
-  // But you can click + property and add any of our options.
-  // (Need to get datastore queries working without schema).
-  // But I need it for querying (so extension of current one with ability to keep going)
   state = {
+    contentShowing: true,
     snackbarOpen: false,
+
     pathFull: '',
     pathName: '',
-    pathError: false,
     public: false,
     viewers: [],
     creator: this.props.viewer.id,
     type: 'TEST',
     styles: '',
-    tags: [''],
-    order: 9999,
+    tags: [],
     title: '',
     subtitle: '',
     description: '',
@@ -66,10 +68,14 @@ class CreateCircle extends React.Component {
     value: '',
     blob: '',
     number: 0,
-    boolean: true,
+    boolean: false,
     line: '',
-    lines: [''],
-    linesMany: [''],
+    lines: [],
+    linesMany: [],
+  };
+
+  handleBooleanToggle = (stateName) => {
+    this.setState({ [stateName]: !this.state[stateName] });
   };
 
   requiresTypeSnackbar = () => {
@@ -80,31 +86,20 @@ class CreateCircle extends React.Component {
     this.setState({ snackbarOpen: false });
   };
 
-  selectStylesCirlce = () => {
-    // Open module inside this module to select from a list
-    // Can create new Styles circle inside.  Creating a new one opens a module to type in css
+  handleInputChange = (action) => {
+    this.setState({ [action.target.id]: action.target.value });
   };
 
-  handleInputChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-
-  handlePathChange = (e) => {
-    const pathWithoutSpaces = e.target.value.replace(' ', '-');
-
+  handlePathChange = (action) => {
+    const pathWithoutSpaces = action.target.value.replace(' ', '-').toLowerCase();
     this.setState({
       pathName: pathWithoutSpaces,
     });
   };
 
-  toggleBooleanChange = name => (event, checked) => {
-    this.setState({ [name]: checked });
-  };
-
   cancelCreateCircle = () => {
-    // eslint-disable-next-line no-console
-    console.log('Canceling Create Circle');
     this.resetState();
+    window.history.back();
   };
 
   resetState = () => {
@@ -116,7 +111,6 @@ class CreateCircle extends React.Component {
       type: '',
       styles: '',
       tags: [''],
-      order: '',
       title: '',
       subtitle: '',
       description: '',
@@ -154,7 +148,6 @@ class CreateCircle extends React.Component {
         viewers: this.state.viewers,
         creator: this.state.creator,
         type: this.state.type,
-        order: this.state.order,
         title: this.state.title,
         subtitle: this.state.subtitle,
         description: this.state.description,
@@ -168,198 +161,317 @@ class CreateCircle extends React.Component {
 
   render() {
     return (
-      <Card className={s.card}>
-        <div className={s.cardHeader}>
-          <Typography type="headline" gutterBottom>
-            Create Circle
-          </Typography>
-        </div>
-        <Divider light />
-        <br />
-        <div className={s.cardContent}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="public"
-                checked={this.state.public}
-                onChange={this.toggleBooleanChange('public')}
-                value="Public"
+      <Draggable handle="draggablesHandle">
+        <Card
+          className={s.card}
+          style={this.state.contentShowing ? { height: '600px' } : { height: '74px' }}
+        >
+          <div className={s.cardHeader}>
+            <div className={s.headerTitle}>
+              <draggablesHandle>
+                <Typography type="headline" align="justify" noWrap gutterBottom>
+                  Create Circle
+                </Typography>
+              </draggablesHandle>
+            </div>
+
+            <div className={s.headerButtons}>
+              <draggablesHandle className={s.headerButton} style={{ marginRight: '8px' }}>
+                <IconButton>
+                  <PanTool />
+                </IconButton>
+              </draggablesHandle>
+              {this.state.contentShowing
+                ? <div className={s.headerButton}>
+                  <IconButton onClick={() => this.handleBooleanToggle('contentShowing')}>
+                    <KeyboardArrowUp />
+                  </IconButton>
+                </div>
+                : <div className={s.headerButton}>
+                  <IconButton onClick={() => this.handleBooleanToggle('contentShowing')}>
+                    <KeyboardArrowDown />
+                  </IconButton>
+                </div>}
+            </div>
+          </div>
+
+          <Divider light />
+
+          <div className={s.cardContentContainer}>
+            <div className={s.cardContent}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="public"
+                    checked={this.state.public}
+                    onChange={() => this.handleBooleanToggle('public')}
+                    value="Public"
+                  />
+                }
+                label="Public"
               />
-            }
-            label="Public"
-          />
-          <br />
+              <br />
 
-          <FormControl>
-            <TextField
-              id="pathFull"
-              label="URL path to this"
-              value={this.state.pathName}
-              onChange={this.handlePathChange}
-              maxLength="5"
-              margin="normal"
-            />
-            <FormHelperText>
-              www.MyiWorlds.com/{this.props.viewer.username}/{this.state.pathName}
-            </FormHelperText>
-          </FormControl>
-          <br />
-          <br />
-
-          <TextField
-            id="type"
-            label="Type"
-            value={this.state.type}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <br />
-          <Button onClick={this.selectStyleCircle}>Styles</Button>
-          <Typography type="body1" gutterBottom>
-            this.circle.styles.title
-          </Typography>
-          <Typography type="body1" gutterBottom>
-            this.circle.styles.blob (Hidden from view unless expanded. Hidden and can be fetched by
-            Relay)
-          </Typography>
-          <br />
-
-          <TextField
-            id="order"
-            label="Order"
-            value={this.state.order}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <TextField
-            id="title"
-            label="Title"
-            value={this.state.title}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <TextField
-            id="subtitle"
-            label="Subtitle"
-            value={this.state.subtitle}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <TextField
-            id="description"
-            label="Description"
-            value={this.state.description}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <br />
-          <Button onClick={this.selectMedia}>Media</Button>
-          <Typography type="body1" gutterBottom>
-            this.circle.media.title
-          </Typography>
-          <Typography type="body1" gutterBottom>
-            (Depends on what type) this.circle.media.value
-          </Typography>
-          <br />
-
-          <TextField
-            id="value"
-            label="Value"
-            value={this.state.value}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <TextField
-            id="blob"
-            label="Blob"
-            value={this.state.blob}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <TextField
-            id="number"
-            label="Number"
-            value={this.state.number}
-            onChange={this.handleInputChange}
-            margin="normal"
-          />
-          <br />
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                id="boolean"
-                checked={this.state.boolean}
-                onChange={this.toggleBooleanChange('boolean')}
-                value="Boolean"
+              <TextField
+                id="type"
+                label="Type"
+                value={this.state.type}
+                onChange={this.handleInputChange}
+                margin="normal"
               />
-            }
-            label="Boolean"
+              <br />
+
+              <FormControl>
+                <TextField
+                  id="pathFull"
+                  label="URL path to this circle"
+                  value={this.state.pathName}
+                  onChange={this.handlePathChange}
+                  maxLength="5"
+                  margin="normal"
+                />
+                <FormHelperText>
+                  www.MyiWorlds.com/{this.props.viewer.username}/{this.state.pathName}
+                </FormHelperText>
+              </FormControl>
+              <br />
+              <br />
+
+              <br />
+              <Button onClick={this.selectStyleCircle}>Styles</Button>
+              <br />
+
+              <TextField
+                id="title"
+                label="Title"
+                value={this.state.title}
+                onChange={this.handleInputChange}
+                margin="normal"
+                fullWidth
+              />
+              <br />
+
+              <TextField
+                id="subtitle"
+                label="Subtitle"
+                value={this.state.subtitle}
+                onChange={this.handleInputChange}
+                margin="normal"
+                fullWidth
+              />
+              <br />
+
+              <TextField
+                id="description"
+                label="Description"
+                value={this.state.description}
+                onChange={this.handleInputChange}
+                margin="normal"
+                fullWidth
+                multiline
+              />
+              <br />
+
+              <br />
+              <Button onClick={this.selectMedia}>Media</Button>
+              <br />
+
+              <TextField
+                id="value"
+                label="Value"
+                value={this.state.value}
+                onChange={this.handleInputChange}
+                margin="normal"
+                fullWidth
+                multiline
+              />
+              <br />
+
+              <TextField
+                id="blob"
+                label="Blob"
+                value={this.state.blob}
+                onChange={this.handleInputChange}
+                margin="normal"
+                fullWidth
+                multiline
+              />
+              <br />
+
+              <TextField
+                id="number"
+                label="Number"
+                value={this.state.number}
+                onChange={this.handleInputChange}
+                margin="normal"
+              />
+              <br />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="boolean"
+                    checked={this.state.boolean}
+                    onChange={() => this.handleBooleanToggle('boolean')}
+                    value="Boolean"
+                  />
+                }
+                label="Boolean"
+              />
+              <br />
+
+              <br />
+              <Typography type="title" noWrap gutterBottom>
+                Connected Circle
+              </Typography>
+              <ListItem button style={{ width: '400px' }}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FolderIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+              </ListItem>
+              <br />
+
+              <br />
+              <Typography type="title" noWrap gutterBottom>
+                Connected Circles
+              </Typography>
+              <Grid item xs={12} md={12}>
+                <div>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                </div>
+              </Grid>
+              <br />
+
+              <br />
+              <Typography type="title" noWrap gutterBottom>
+                Many Connected Circles
+              </Typography>
+              <Grid item xs={12} md={12}>
+                <div>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                  <List>
+                    <ListItem button style={{ width: '400px' }}>
+                      <ListItemAvatar>
+                        <Avatar>
+                          <FolderIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Single-line item" secondary={'Secondary text'} />
+                      <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DragHandle />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                </div>
+              </Grid>
+              <br />
+            </div>
+          </div>
+
+          <Divider light />
+          <div className={s.cardFooter}>
+            <CardActions>
+              <div className={s.flexGrow} />
+              <Button onClick={this.cancelCreateCircle}>Cancel</Button>
+              <Button raised onClick={this.createCircle} color="primary">
+                Create
+              </Button>
+            </CardActions>
+          </div>
+
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={this.state.snackbarOpen}
+            autoHideDuration={4e3}
+            onRequestClose={this.handleCloseTypeSnackbar}
+            SnackbarContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">Please select a content Type</span>}
           />
-          <br />
-
-          <br />
-          <Button onClick={this.selectCircle}>Circle</Button>
-          <Typography type="body1" gutterBottom>
-            this.circle.line.title
-          </Typography>
-          <Button>View Circle</Button>
-          <br />
-
-          <br />
-          <Button onClick={this.selectCircles}>Circles</Button>
-          <Typography type="body1" gutterBottom>
-            this.circle.lines.map - title (displays maybe 5)
-          </Typography>
-          <br />
-
-          <br />
-          <Button onClick={this.selectCirclesMany}>Circles Many</Button>
-          <Typography type="body1" gutterBottom>
-            this.circle.linesMany.map - title (displays maybe 5)
-          </Typography>
-          <br />
-        </div>
-
-        <Divider light />
-        <div className={s.cardActions}>
-          <CardActions>
-            <div className={s.flexGrow} />
-            <Button onClick={this.cancelCreateCircle}>Cancel</Button>
-            <Button raised onClick={this.createCircle} color="primary">
-              Create
-            </Button>
-          </CardActions>
-        </div>
-
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={this.state.snackbarOpen}
-          autoHideDuration={4e3}
-          onRequestClose={this.handleCloseTypeSnackbar}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">Please select a content Type</span>}
-        />
-      </Card>
+        </Card>
+      </Draggable>
     );
   }
 }

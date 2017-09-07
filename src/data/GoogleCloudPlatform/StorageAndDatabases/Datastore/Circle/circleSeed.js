@@ -103,7 +103,7 @@ const circles = [
     _id: 'image0000100000000000000000000000001',
     type: 'IMAGE',
     title: 'What the circles will soon look like ',
-    value: 'https://i.stack.imgur.com/7A9aA.png',
+    value: 'https://www.webhostingplanguide.com/wp-content/uploads/2014/01/HTML-Graph.jpg',
   },
   {
     _id: 'image0000100000000000000000000000002',
@@ -193,7 +193,7 @@ const circles = [
   },
   {
     _id: 'notfound0000100000000000000000000006',
-    type: 'PAGE',
+    type: 'HEADER',
     pathFull: 'not-found',
     title: 'Page not found',
     description:

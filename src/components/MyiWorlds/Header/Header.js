@@ -31,7 +31,7 @@ class Header extends React.Component {
     return (
       <div>
         <div className={s.root}>
-          <Typography type="display4" gutterBottom>
+          <Typography type="display3" gutterBottom>
             {this.props.title}
           </Typography>
           <Typography type="subheading" gutterBottom>

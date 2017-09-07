@@ -19,38 +19,38 @@ let lastFetchTask;
 let lastFetchTime = new Date(1970, 0, 1);
 
 const news = {
-	type: new List(NewsItemType),
-	resolve() {
-		if (lastFetchTask) {
-			return lastFetchTask;
-		}
+  type: new List(NewsItemType),
+  resolve() {
+    if (lastFetchTask) {
+      return lastFetchTask;
+    }
 
-		if (new Date() - lastFetchTime > 1000 * 60 * 10 /* 10 mins */) {
-			lastFetchTime = new Date();
-			lastFetchTask = fetch(url)
-				.then((response) => response.json())
-				.then((data) => {
-					if (data.status === 'ok') {
-						items = data.items;
-					}
+    if (new Date() - lastFetchTime > 1000 * 60 * 10 /* 10 mins */) {
+      lastFetchTime = new Date();
+      lastFetchTask = fetch(url)
+        .then(response => response.json())
+        .then((data) => {
+          if (data.status === 'ok') {
+            items = data.items;
+          }
 
-					lastFetchTask = null;
-					return items;
-				})
-				.catch((err) => {
-					lastFetchTask = null;
-					throw err;
-				});
+          lastFetchTask = null;
+          return items;
+        })
+        .catch((err) => {
+          lastFetchTask = null;
+          throw err;
+        });
 
-			if (items.length) {
-				return items;
-			}
+      if (items.length) {
+        return items;
+      }
 
-			return lastFetchTask;
-		}
+      return lastFetchTask;
+    }
 
-		return items;
-	}
+    return items;
+  },
 };
 
 export default news;
