@@ -1,7 +1,7 @@
 ## Current status:
 Still under heavy development, barley working frontend to show a base.  Backend is working.
 
-**Quick video walkthrough of UI**
+**Quick video walkthrough of UI** (Click the image below to open the video)
 [![Quick video walkthrough of UI](https://user-images.githubusercontent.com/15203899/30141751-24425c0c-9332-11e7-861e-a541b81f9d6e.png)](https://photos.app.goo.gl/YGTPDOIK9bY6Udsh1)
 
 
