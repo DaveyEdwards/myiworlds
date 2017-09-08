@@ -1,6 +1,9 @@
 ## Current status:
 Still under heavy development, barley working frontend to show a base.  Backend is working.
 
+Short gif of creating header/image types
+![2017-09-07_17-48-35](https://user-images.githubusercontent.com/15203899/30191341-1afb1436-93f5-11e7-98b7-6e6b8b7b4108.gif)
+
 **Quick video walkthrough of UI** (Click the image below to open the video)
 [![Quick video walkthrough of UI](https://user-images.githubusercontent.com/15203899/30141751-24425c0c-9332-11e7-861e-a541b81f9d6e.png)](https://photos.app.goo.gl/YGTPDOIK9bY6Udsh1)
 
