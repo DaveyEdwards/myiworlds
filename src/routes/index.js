@@ -15,6 +15,7 @@ export default {
 
   // Keep in mind, routes are evaluated in order
   children: [
+    // require('./hidden').default,
     require('./home').default,
     require('./contact').default,
     require('./login').default,

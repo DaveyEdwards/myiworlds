@@ -57,6 +57,15 @@ const CircleType = new ObjectType({
         'The type of data this node is holding, it allows the frontend to choose the perfect component to show you.',
       type: new NonNull(StringType),
     },
+    rating: {
+      description: 'A piece of media (image/gif/video) that helps identify this piece of content.',
+      type: CircleType,
+      resolve: async (circle, args, { loaders }) => {
+        if (circle.rating) {
+          return await loaders.circleLoader.load(circle.media);
+        }
+      },
+    },
     styles: {
       description: 'The styles of this piece of content.',
       type: CircleType,

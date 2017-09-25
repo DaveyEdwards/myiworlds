@@ -61,7 +61,7 @@ const CreateCircleDataMutation = mutationWithClientMutationId({
     console.log(
       '\n',
       '\n',
-      'Relay Mutation here, I will try and send your request to the database and get back to you.',
+      'GraphQL Mutation here, I will try and send your request to the database and get back to you.',
       '\n',
       '\n',
     );
