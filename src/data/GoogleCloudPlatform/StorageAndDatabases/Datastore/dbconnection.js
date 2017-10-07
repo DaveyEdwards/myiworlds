@@ -1,5 +1,5 @@
 import { datastore } from 'google-cloud';
-import GCPConfig from '../../../config/settings';
+import GCPConfig from '../../config/settings';
 
 const datastoreClient = datastore({
   projectId: GCPConfig.project_id,

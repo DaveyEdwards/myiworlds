@@ -1,7 +1,7 @@
 import datastoreClient from './dbconnection';
 
 /* eslint-disable camelcase */
-export default async function getEntitiesByKey(kind, _ids, viewerId) {
+export default async function getEntitiesByKeys(kind, _ids, viewerId) {
   console.time('getEntitiesByKey TTC: ');
   let response = [];
 
@@ -18,18 +18,25 @@ export default async function getEntitiesByKey(kind, _ids, viewerId) {
       getEntities = sorted.filter(Boolean);
 
       getEntities.forEach((entity) => {
-        if (entity.public === true) {
-          response.push(entity);
-        }
-        if (viewerId === entity.creator || entity.editors.includes(viewerId)) {
+        if (
+          entity.public === true ||
+          viewerId === entity.creator ||
+          (entity.viewers && entity.viewers.includes(viewerId)) ||
+          entity._id === viewerId
+        ) {
           response.push(entity);
         }
       });
     }
   } catch (error) {
-    response = { message: 'getEntitiesByKey had an error.', error };
+    response = {
+      type: 'ERROR',
+      title: 'getEntitiesByKey error',
+      page: 'slug-to-redirect-page',
+      array: [error, kind, _ids, viewerId],
+    };
   }
 
   console.timeEnd('getEntitiesByKey TTC: ');
-  return console.log('rrespons', response);
+  return console.log('response', response);
 }

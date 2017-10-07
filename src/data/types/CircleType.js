@@ -30,14 +30,14 @@ const CircleType = new ObjectType({
       description: 'A unique id used to instantly locate this circle inside the database',
       type: ID,
     },
-    pathFull: {
-      description: 'The full path (after domain name) to this piece of content',
+    slug: {
+      description: 'The full slug (after domain name) to this piece of content',
       type: StringType,
     },
-    pathName: {
+    slugName: {
       type: StringType,
       description:
-        'The name of this path without creator.  This allows shared viewers to edit the title, but not the root path.',
+        'The name of this slug without creators name before it. This allows shared viewers to edit the title, but not the root path.  This is stored incase the creators name changes',
     },
     public: {
       description: 'Is this circle visable to the public?',

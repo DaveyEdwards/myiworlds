@@ -5,6 +5,8 @@ import datastoreClient from './dbconnection';
 // Try not to use this as it would need to build a new array of _ids
 // query them and then only insert the ones you can
 export default async function createEntities(items) {
+  console.time('Time to createEntities');
+
   let response = null;
   let dsKey = null;
   let kind = null;
@@ -16,7 +18,6 @@ export default async function createEntities(items) {
           if (entityFeilds.value === '') {
             entityFeilds.value = uuid();
           }
-
           dsKey = entityFeilds.value;
 
           return dsKey;
@@ -34,9 +35,15 @@ export default async function createEntities(items) {
       return { key, data };
     });
 
-    response = await datastoreClient.upsert(entities);
-  } catch (err) {
-    response = { error: 'There was an error creating the entities', actualError: err };
+    response = await datastoreClient.insert(entities);
+  } catch (error) {
+    response = {
+      type: 'ERROR',
+      title: 'createEntities error',
+      page: 'slug-to-redirect-page',
+      array: [error, items],
+    };
   }
+  console.timeEnd('Time to createEntities');
   return response[0];
 }

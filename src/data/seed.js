@@ -3,81 +3,71 @@
 // import { generateCircles } from './GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/circleSeed';
 // import { generateViewers } from './GoogleCloudPlatform/StorageAndDatabases/Datastore/Viewer/viewerSeed';
 
-// // Connect the application to Google Datastore
-// // This shouldn't have to be here and should be able to be in a file the server calls.
-// const datastore = require('@google-cloud/datastore')({
-//   projectId: GCPConfig.project_id,
-//   keyFilename: GCPConfig.datastore.gcpDatastoreOwnerServiceKeyPath,
-// });
-
-// gstore.connect(datastore);
-
 // generateCircles();
 // generateViewers();
 
+// import getEntityByIndexedValue from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByIndexedValue';
 import createEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntity';
-import getEntityBy_id from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityBy_id';
-import getEntityByIndexedValue from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByIndexedValue';
-import getEntitiesByKey from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntitiesByKey';
+import getEntityByKey from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByKey';
+import getEntitiesByKeys from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntitiesByKeys';
 import createEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntities';
 import getEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntities';
 import updateEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/updateEntity';
 import deleteEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/deleteEntity';
-import cloneEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/cloneEntity';
 
-createEntity([
-  {
-    name: '_id',
-    value: 'ca8b1840-a0a9-11e7-9aad-e94a13ec9ee1',
-  },
-  {
-    name: 'kind',
-    value: 'Page',
-    excludeFromIndexes: true,
-  },
-  {
-    name: 'slug',
-    value: 'OVERRIDDEN',
-  },
-  {
-    name: 'slugName',
-    value: '',
-  },
-  {
-    name: 'title',
-    value: 'ZZZZZZZZZZZZZ',
-  },
-  {
-    name: 'dateCreated',
-    value: new Date(),
-  },
-  {
-    name: 'lastUpdated',
-    value: new Date(),
-  },
-  {
-    name: 'creator',
-    value: 'viewer000000000000000000000000000001',
-  },
-  {
-    name: 'viewers',
-    value: [],
-  },
-  {
-    name: 'editors',
-    value: [],
-  },
-  {
-    name: 'string',
-    value: 'A long string goes here',
-    excludeFromIndexes: true,
-  },
-  {
-    name: 'circles',
-    value: ['1', '2', '3', '4'],
-    excludeFromIndexes: true,
-  },
-]);
+// createEntity([
+//   {
+//     name: '_id',
+//     value: 'ca8b1840-a0a9-11e7-9aad-e94a13ec9ee1',
+//   },
+//   {
+//     name: 'kind',
+//     value: 'Page',
+//     excludeFromIndexes: true,
+//   },
+//   {
+//     name: 'slug',
+//     value: 'OVERRIDDEN',
+//   },
+//   {
+//     name: 'slugName',
+//     value: '',
+//   },
+//   {
+//     name: 'title',
+//     value: 'ZZZZZZZZZZZZZ',
+//   },
+//   {
+//     name: 'dateCreated',
+//     value: new Date(),
+//   },
+//   {
+//     name: 'lastUpdated',
+//     value: new Date(),
+//   },
+//   {
+//     name: 'creator',
+//     value: 'viewer000000000000000000000000000001',
+//   },
+//   {
+//     name: 'viewers',
+//     value: [],
+//   },
+//   {
+//     name: 'editors',
+//     value: [],
+//   },
+//   {
+//     name: 'string',
+//     value: 'A long string goes here',
+//     excludeFromIndexes: true,
+//   },
+//   {
+//     name: 'circles',
+//     value: ['1', '2', '3', '4'],
+//     excludeFromIndexes: true,
+//   },
+// ]);
 
 // updateEntity(
 //   [
@@ -88,7 +78,7 @@ createEntity([
 //     },
 //     {
 //       name: '_id',
-//       value: 'test',
+//       value: '12c4d890-a324-11e7-b81b-fd54dc129351',
 //     },
 //     {
 //       name: 'creator',
@@ -128,99 +118,45 @@ createEntity([
 //   'viewer000000000000000000000000000001',
 // );
 
-deleteEntity(
-  'Page',
-  'ca8b1840-a0a9-11e7-9aad-e94a13ec9ee1',
-  'viewer000000000000000000000000000001',
-);
-
-// cloneEntity(
-//   [
-//     {
-//       name: 'kind',
-//       value: 'Page',
-//       excludeFromIndexes: true,
-//     },
-// {
-//   name: 'public',
-//   value: true,
-// }
-//     {
-//       name: '_id',
-//       value: '34985152-9e96-11e7-89a9-935348a58218',
-//     },
-//     {
-//       name: 'slug',
-//       value: 'myiworlds/new-slug777777777',
-//     },
-//     {
-//       name: 'slugName',
-//       value: 'new-slug1411',
-//     },
-//     {
-//       name: 'editors',
-//       value: [
-//         'viewer000000000000000000000000000001',
-//         'viewer000000000000000000000000000002',
-//         'viewer000000000000000000000000000003',
-//       ],
-//       excludeFromIndexes: true,
-//     },
-//     {
-//       name: 'title',
-//       value: 'test11',
-//     },
-//     {
-//       name: 'lastUpdated',
-//       value: new Date(),
-//     },
-//     {
-//       name: 'circles',
-//       value: ['1', '2', '3', '5'],
-//       excludeFromIndexes: true,
-//     },
-//   ],
+// deleteEntity(
+//   'Page',
+//   'ca8b1840-a0a9-11e7-9aad-e94a13ec9ee1',
 //   'viewer000000000000000000000000000001',
 // );
 
-// getEntityBy_id(
+// getEntityByKey(
 //   'Page',
 //   '9da9fd50-a0a9-11e7-8947-0b9f2d00779a',
 //   'viewer000000000000000000000000000001',
 // );
 
-// getEntityByIndexedValue('Page', 'title', 'A title');
-// getEntitiesByKey(
-//   'Page',
-//   [
-//     '6e60c151-a180-11e7-bc16-43ed295aa29d',
-//     '6e60e860-a180-11e7-bc16-43ed295aa29d',
-//     '54d85902-a180-11e7-a4fc-8fa344df8293',
-//     '4',
-//     '5',
-//     '6',
-//     '10',
-//     '11',
-//     '12',
-//   ],
-//   'viewer000000000000000000000000000001',
-// );
+// getEntityByIndexedValue('Page', 'title', 'myiworlds/that-title-was-gettin123');
+getEntitiesByKeys(
+  'Page',
+  [
+    '0518f530-a312-11e7-a327-ada73760e35b',
+    '12c4d890-a324-11e7-b81b-fd54dc129351',
+    '12c4d891-a324-11e7-b81b-fd54dc129351',
+    '12c4d892-a324-11e7-b81b-fd54dc129351',
+    '12c4d893-a324-11e7-b81b-fd54dc129351',
+    '12c4d894-a324-11e7-b81b-fd54dc129351',
+    '25f18302-a180-11e7-abef-79dd1bec1d5e',
+  ],
+  'viewer000000000000000000000000000004',
+);
+
 // getEntities(
 //   'Page',
 //   [
 //     {
-//       property: 'title',
+//       property: 'slug',
 //       condition: '=',
-//       value: 'my Second title',
-//     },
-//     {
-//       property: 'kind',
-//       condition: '=',
-//       value: 'Page',
+//       value: 'A_unique_slug',
 //     },
 //   ],
-//   3,
+//   7,
 //   null,
+//   'viewer000000000000000000000000000008',
 // );
 
 // getEntities(
@@ -254,7 +190,7 @@ deleteEntity(
 //     },
 //     {
 //       name: 'lastName',
-//       value: 'Edwardsss',
+//       value: 'TESTTTTZ123ZZ',
 //       excludeFromIndexes: true,
 //     },
 //     {
@@ -273,7 +209,7 @@ deleteEntity(
 //     },
 //     {
 //       name: '_id',
-//       value: 'f62d9371-a17f-11e7-99cd-fde70085987e',
+//       value: 'fv2d9371-a17f-11e7-99cd-fde70085987e',
 //     },
 //   ],
 //   [
