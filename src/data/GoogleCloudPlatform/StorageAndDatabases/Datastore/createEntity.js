@@ -2,7 +2,10 @@ import datastoreClient from './dbconnection';
 
 export default async function createEntity(entity) {
   console.time('Time to createEntity');
-  let response = null;
+  const response = {
+    message: null,
+    createdEntity: null,
+  };
   let kind = null;
   let dsKey = null;
 
@@ -31,14 +34,11 @@ export default async function createEntity(entity) {
       .insert(newEntity)
       .then(() => datastoreClient.get(key));
 
-    response = createAndGet[0];
+    response.message = 'You successfully created a entity';
+    response.createdEntity = createAndGet[0];
   } catch (error) {
-    response = {
-      type: 'ERROR',
-      title: 'createEntity error',
-      page: 'slug-to-redirect-page',
-      array: [error, entity[0]],
-    };
+    response.message = 'There was a error I did not plan for';
+    console.error([error, entity[0]]);
   }
   console.timeEnd('Time to createEntity');
   return response;

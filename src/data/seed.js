@@ -7,13 +7,31 @@
 // generateViewers();
 
 // import getEntityByIndexedValue from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByIndexedValue';
-import createEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntity';
-import getEntityByKey from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByKey';
-import getEntitiesByKeys from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntitiesByKeys';
-import createEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntities';
-import getEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntities';
-import updateEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/updateEntity';
-import deleteEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/deleteEntity';
+// import createEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntity';
+// import getEntityByKey from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntityByKey';
+// import getEntitiesByKeys from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/getEntitiesByKeys';
+// import createEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/createEntities';
+import getEntities from './GoogleCloudPlatform/StorageAndDatabases/Datastore/getEntities';
+// import updateEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/updateEntity';
+// import deleteEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/queries/deleteEntity';
+
+// GET QUERY WORKING FOR LAST UPDATED
+getEntities('Page-clones', [
+  {
+    property: 'Page_id',
+    condition: '=',
+    value: '290257d0-ad39-11e7-84ec-67a70a1fc14b',
+  },
+  {
+    property: 'dateUpdated',
+    condition: '<',
+    value: '2000-12-31T23:59:59.000Z',
+  },
+],
+200,
+null,
+'viewer000000000000000000000000000001',
+).then(response => console.log('response', response));
 
 // createEntity([
 //   {
@@ -131,19 +149,19 @@ import deleteEntity from './GoogleCloudPlatform/StorageAndDatabases/Datastore/qu
 // );
 
 // getEntityByIndexedValue('Page', 'title', 'myiworlds/that-title-was-gettin123');
-getEntitiesByKeys(
-  'Page',
-  [
-    '0518f530-a312-11e7-a327-ada73760e35b',
-    '12c4d890-a324-11e7-b81b-fd54dc129351',
-    '12c4d891-a324-11e7-b81b-fd54dc129351',
-    '12c4d892-a324-11e7-b81b-fd54dc129351',
-    '12c4d893-a324-11e7-b81b-fd54dc129351',
-    '12c4d894-a324-11e7-b81b-fd54dc129351',
-    '25f18302-a180-11e7-abef-79dd1bec1d5e',
-  ],
-  'viewer000000000000000000000000000004',
-);
+// getEntitiesByKeys(
+//   'Page',
+//   [
+//     '0518f530-a312-11e7-a327-ada73760e35b',
+//     '12c4d890-a324-11e7-b81b-fd54dc129351',
+//     '12c4d891-a324-11e7-b81b-fd54dc129351',
+//     '12c4d892-a324-11e7-b81b-fd54dc129351',
+//     '12c4d893-a324-11e7-b81b-fd54dc129351',
+//     '12c4d894-a324-11e7-b81b-fd54dc129351',
+//     '25f18302-a180-11e7-abef-79dd1bec1d5e',
+//   ],
+//   'viewer000000000000000000000000000004',
+// );
 
 // getEntities(
 //   'Page',

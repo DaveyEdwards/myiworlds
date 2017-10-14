@@ -1,74 +1,134 @@
 import { mutationWithClientMutationId } from 'graphql-relay';
 import {
-  GraphQLString as StringType,
-  GraphQLNonNull as NonNull,
-  GraphQLBoolean as BooleanType,
-  GraphQLInt as NumberType,
-  GraphQLList as List,
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLList,
 } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 import {
-  updateCircle,
-  getCircleBy_id, // eslint-disable-line camelcase
-} from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/Queries';
+  updateEntity,
+  getEntityByKey,
+} from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/index';
 import CircleType from '../../types/CircleType';
+
+const userId = 'viewer000000000000000000000000000001';
 
 const UpdateCircleDataMutation = mutationWithClientMutationId({
   name: 'updateCircle',
   inputFields: {
-    _id: { type: new NonNull(StringType) },
-    pathFull: { type: StringType },
-    pathName: { type: StringType },
-    public: { type: BooleanType },
-    viewers: { type: new List(StringType) },
-    type: { type: StringType },
-    styles: { type: StringType },
-    tags: { type: new List(StringType) },
-    order: { type: NumberType },
-    title: { type: StringType },
-    subtitle: { type: StringType },
-    description: { type: StringType },
-    media: { type: StringType },
-    creator: { type: StringType },
-    editors: { type: new List(StringType) },
-    created: { type: StringType },
-    lastUpdated: { type: StringType },
-    value: { type: StringType },
+    _id: { type: new GraphQLNonNull(GraphQLString) },
+    pathFull: { type: GraphQLString },
+    pathName: { type: GraphQLString },
+    public: { type: GraphQLBoolean },
+    viewers: { type: new GraphQLList(GraphQLString) },
+    type: { type: new GraphQLNonNull(GraphQLString) },
+    styles: { type: GraphQLString },
+    tags: { type: new GraphQLList(GraphQLString) },
+    order: { type: GraphQLInt },
+    title: { type: GraphQLString },
+    subtitle: { type: GraphQLString },
+    description: { type: GraphQLString },
+    media: { type: GraphQLString },
+    creator: { type: new GraphQLNonNull(GraphQLString) },
+    editors: { type: new GraphQLList(GraphQLString) },
+    dateCreated: { type: GraphQLString },
+    dateUpdated: { type: GraphQLString },
+    string: { type: GraphQLString },
     blob: { type: GraphQLJSON },
-    number: { type: NumberType },
-    boolean: { type: BooleanType },
-    line: { type: StringType },
-    lines: { type: new List(StringType) },
-    linesMany: { type: new List(StringType) },
+    number: { type: GraphQLInt },
+    boolean: { type: GraphQLBoolean },
+    line: { type: GraphQLString },
+    lines: { type: new GraphQLList(GraphQLString) },
+    linesMany: { type: new GraphQLList(GraphQLString) },
   },
 
   outputFields: {
-    foundCircle: {
-      type: BooleanType,
-      resolve: response => response._id,
+    message: {
+      type: GraphQLString,
+      resolve: payload => payload.message,
     },
     updatedCircle: {
       type: CircleType,
-      resolve: async payload => getCircleBy_id(payload._id),
+      resolve: payload => payload.updatedEntity,
+    },
+    latestVersionOfCircle: {
+      type: CircleType,
+      resolve: async payload => getEntityByKey(
+        payload.latestVersionOfEntity.newKind,
+        payload.latestVersionOfEntity.new_id,
+        userId,
+      ).then(response => response.entity),
     },
   },
 
   mutateAndGetPayload: async (inputFields) => {
-    let response = null;
+    const entityToUpdate = [];
 
-    response = await updateCircle(inputFields);
+    const requiredFields = [
+      {
+        name: 'kind',
+        value: 'Circles',
+        excludeFromIndexes: true,
+      },
+    ];
 
-    if (response._id) {
-      // eslint-disable-next-line no-console
-      console.log(
-        '\n',
-        '\n',
-        'I successfully updated that "circle" in my brain.  I hope that was intentional, it is better to copy and create new data. Our future AI overlords will not appreciate what you have done here today.  They will remember this, and you...',
-        '\n',
-        '\n',
-      );
+    entityToUpdate.push(requiredFields[0]);
+
+    function buildField(name) {
+      let field;
+
+      function indexedField() {
+        field = {
+          name,
+          value: inputFields[name],
+        };
+      }
+
+      function notIndexedField() {
+        field = {
+          name,
+          value: inputFields[name],
+          excludeFromIndexes: true,
+        };
+      }
+
+      // TEMPORARY Will be passed by frontend
+      // creation date is not from when saved, but exact time the user pressed create
+      function date() {
+        field = {
+          name,
+          value: new Date(),
+        };
+      }
+
+      const entityData = {
+        _id: indexedField,
+        type: indexedField,
+        creator: indexedField,
+        dateUpdated: date,
+        slug: indexedField,
+        title: indexedField,
+        subtitle: indexedField,
+        description: indexedField,
+        public: indexedField,
+        tags: indexedField,
+        order: indexedField,
+        default: notIndexedField,
+      };
+      (entityData[name] || entityData.default)();
+
+      return field;
     }
-    return response;
+
+    Object.keys(inputFields).forEach((prop) => {
+      const object = buildField(prop);
+      entityToUpdate.push(object);
+    });
+
+    return updateEntity(entityToUpdate, userId);
   },
+
 });
 export default UpdateCircleDataMutation;

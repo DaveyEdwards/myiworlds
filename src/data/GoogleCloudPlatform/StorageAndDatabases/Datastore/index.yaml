@@ -1,0 +1,22 @@
+indexes:
+
+- kind: Circles-clones
+  ancestor: no
+  properties:
+  - name: Circle_id
+  - name: dateUpdated
+    direction: desc
+
+- kind: Circles
+  ancestor: no
+  properties:
+  - name: _id
+  - name: dateUpdated
+    direction: desc
+
+- kind: Circles
+  ancestor: no
+  properties:
+  - name: _id
+  - name: dateUpdated
+    direction: asc

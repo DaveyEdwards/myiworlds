@@ -1,10 +1,10 @@
 import { mutationWithClientMutationId } from 'graphql-relay';
 import {
-  GraphQLString as StringType,
-  GraphQLNonNull as NonNull,
-  GraphQLBoolean as BooleanType,
-  GraphQLInt as NumberType,
-  GraphQLList as List,
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLList,
 } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 import uuid from 'uuid/v1';
@@ -12,102 +12,118 @@ import {
   createEntity,
   getEntityByKey,
 } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/index';
-// eslint-disable-next-line camelcase
-import { getViewerBy_id } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/Viewer/Queries';
 import CircleType from '../../types/CircleType';
-import ViewerType from '../../types/ViewerType';
+
+const userId = 'viewer000000000000000000000000000001';
 
 const CreateCircleDataMutation = mutationWithClientMutationId({
   name: 'createCircle',
   inputFields: {
-    pathFull: { type: StringType },
-    pathName: { type: StringType },
-    public: { type: BooleanType },
-    viewers: { type: new List(StringType) },
-    type: { type: new NonNull(StringType) },
-    styles: { type: StringType },
-    tags: { type: new List(StringType) },
-    order: { type: NumberType },
-    title: { type: StringType },
-    subtitle: { type: StringType },
-    description: { type: StringType },
-    media: { type: StringType },
-    creator: { type: StringType },
-    editors: { type: new List(StringType) },
-    created: { type: StringType },
-    lastUpdated: { type: StringType },
-    value: { type: StringType },
+    _id: { type: GraphQLString },
+    pathFull: { type: GraphQLString },
+    pathName: { type: GraphQLString },
+    public: { type: GraphQLBoolean },
+    viewers: { type: new GraphQLList(GraphQLString) },
+    type: { type: new GraphQLNonNull(GraphQLString) },
+    styles: { type: new GraphQLList(GraphQLString) },
+    tags: { type: new GraphQLList(GraphQLString) },
+    title: { type: GraphQLString },
+    subtitle: { type: GraphQLString },
+    description: { type: GraphQLString },
+    media: { type: GraphQLString },
+    creator: { type: GraphQLString },
+    editors: { type: new GraphQLList(GraphQLString) },
+    dateCreated: { type: GraphQLString },
+    dateUpdated: { type: GraphQLString },
+    string: { type: GraphQLString },
     blob: { type: GraphQLJSON },
-    number: { type: NumberType },
-    boolean: { type: BooleanType },
-    line: { type: StringType },
-    lines: { type: new List(StringType) },
-    linesMany: { type: new List(StringType) },
+    number: { type: GraphQLInt },
+    boolean: { type: GraphQLBoolean },
+    line: { type: GraphQLString },
+    lines: { type: new GraphQLList(GraphQLString) },
+    linesMany: { type: new GraphQLList(GraphQLString) },
   },
 
   outputFields: {
+    message: {
+      type: GraphQLString,
+      resolve: response => response.message,
+    },
     createdCircle: {
       type: CircleType,
-      resolve: async payload => getEntityByKey(payload.kind, payload._id, payload.creator),
-    },
-    viewer: {
-      type: ViewerType,
-      resolve: async payload => getViewerBy_id(payload.creator),
+      resolve: async payload => payload.createdEntity,
     },
   },
 
   mutateAndGetPayload: async (inputFields) => {
     const entityToCreate = [];
 
-    if (!inputFields._id) {
-      entityToCreate.push({
-        name: '_id',
-        value: uuid(),
-      });
-    }
-
-    entityToCreate.push(
+    const requiredFields = [
       {
         name: 'kind',
-        value: 'Page',
+        value: 'Circles',
         excludeFromIndexes: true,
       },
-      {
-        name: 'dateUpdated',
-        value: new Date(),
-      },
-      {
-        name: 'dateCreated',
-        value: new Date(),
-      },
-    );
+    ];
 
+    entityToCreate.push(requiredFields[0]);
 
     function buildField(name) {
       let field;
-      switch (name) {
-        case 'type':
-        case 'creator':
-        case 'created':
-        case 'slug':
-        case 'title':
-        case 'subtitle':
-        case 'description':
-        case 'public':
-        case 'tags':
-        case 'order':
+
+      function customIdLogic() {
+        if (!inputFields._id || (inputFields._id !== '' || inputFields._id !== null)) {
+          field = {
+            name,
+            value: uuid(),
+          };
+        } else {
           field = {
             name,
             value: inputFields[name],
           };
-          break;
-        default:
-          field = {
-            name,
-            value: inputFields[name],
-            excludeFromIndexes: true,
-          };
+        }
       }
+
+      function indexedField() {
+        field = {
+          name,
+          value: inputFields[name],
+        };
+      }
+
+      function notIndexedField() {
+        field = {
+          name,
+          value: inputFields[name],
+          excludeFromIndexes: true,
+        };
+      }
+
+      // TEMPORARY Will be passed by frontend
+      function date() {
+        field = {
+          name,
+          value: new Date(),
+        };
+      }
+
+      const entityData = {
+        _id: customIdLogic,
+        type: indexedField,
+        creator: indexedField,
+        dateCreated: date,
+        dateUpdated: date,
+        slug: indexedField,
+        title: indexedField,
+        subtitle: indexedField,
+        description: indexedField,
+        public: indexedField,
+        tags: indexedField,
+        default: notIndexedField,
+      };
+      (entityData[name] || entityData.default)();
+
       return field;
     }
 
@@ -122,57 +138,32 @@ const CreateCircleDataMutation = mutationWithClientMutationId({
 
 export default CreateCircleDataMutation;
 
-
-    // Didn't like this as much as switch
-    // function getPropertyValueObject(name) {
+    // function buildField(name) {
     //   let field;
-    //   const entityData = {
-    //     title: () => {
+    //   switch (name) {
+    //     case 'type':
+    //     case 'creator':
+    //     case 'dateCreated':
+    //     case 'dateUpdated':
+    //     case 'slug':
+    //     case 'title':
+    //     case 'subtitle':
+    //     case 'description':
+    //     case 'public':
+    //     case 'tags':
+    //     case 'order':
+    //     // Fields you want to be indexed
     //       field = {
     //         name,
     //         value: inputFields[name],
     //       };
-    //     },
-    //     _id: () => {
-    //       field = {
-    //         name,
-    //         value: inputFields[name],
-    //       };
-    //     },
-    //     type: () => {
-    //       field = {
-    //         name,
-    //         value: inputFields[name],
-    //       };
-    //     },
-    //     creator: () => {
-    //       field = {
-    //         name,
-    //         value: inputFields[name],
-    //         excludeFromIndexes: true,
-    //       };
-    //     },
-    //     created: () => {
-    //       field = {
-    //         name,
-    //         value: inputFields[name],
-    //       };
-    //     },
-    //     pathFull: () => {
-    //       field = {
-    //         name,
-    //         value: inputFields[name],
-    //       };
-    //     },
-    //     default: () => {
+    //       break;
+    //     default:
     //       field = {
     //         name,
     //         value: inputFields[name],
     //         excludeFromIndexes: true,
     //       };
-    //     },
-    //   };
-    //   (entityData[name] || entityData.default)();
-
+    //   }
     //   return field;
     // }

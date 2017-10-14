@@ -4,7 +4,13 @@ import getEntities from './getEntities';
 // Used for right after creation, until maybe after a few hours then it goes to create only.
 export default async function deleteEntity(kind, _id, viewerId) {
   console.time('deleteEntity time to complete');
-  let response = null;
+  const response = {
+    message: '',
+    idToDelete: _id,
+    numberOfClones: 0,
+    clonesDeleted: false,
+    wasDeleted: false,
+  };
   const checkIfExists = await datastoreClient.get(datastoreClient.key([kind, _id]));
 
   try {
@@ -14,7 +20,7 @@ export default async function deleteEntity(kind, _id, viewerId) {
           `${kind}-clones`,
           [
             {
-              property: '_id',
+              property: `${kind}_id`,
               condition: '=',
               value: _id,
             },
@@ -22,46 +28,39 @@ export default async function deleteEntity(kind, _id, viewerId) {
           // Might have to make if there is more after 999999 send another query/delete request
           999999,
           null,
+          viewerId,
         );
 
-        const cloneEntitiesToDelete = [];
-        clones[0][0].forEach(entity => cloneEntitiesToDelete.push(entity[datastoreClient.KEY]));
+        if (clones[0].length > 0) {
+          const cloneEntitiesToDelete = [];
 
-        datastoreClient.delete(cloneEntitiesToDelete);
+          clones[0].forEach(entity => cloneEntitiesToDelete.push(entity[datastoreClient.KEY]));
+
+          await datastoreClient.delete(cloneEntitiesToDelete)
+          .then(() => {
+            response.clonesDeleted = true;
+            response.numberOfClones = clones[0].length;
+          });
+        }
 
         const delEntity = await datastoreClient.delete(datastoreClient.key([kind, _id]));
 
         if (delEntity[0].mutationResults) {
-          response = { success: delEntity[0] };
+          response.message = 'Entity was deleted';
+          response.wasDeleted = true;
         } else {
-          response = {
-            type: 'ERROR',
-            title: 'deleteEntity error',
-            page: 'slug-to-redirect-page',
-          };
+          response.message = 'There was a error';
         }
       } else {
-        response = {
-          type: 'ERROR',
-          title: 'You must be the creator to delete this',
-          page: 'slug-to-redirect-page',
-        };
+        response.message = 'You must be the creator to delete this';
       }
     } else {
-      response = {
-        type: 'ERROR',
-        title: 'The entity you are trying to delete no longer exists',
-        page: 'slug-to-redirect-page',
-      };
+      response.message = 'The entity you are trying to delete no longer exists';
     }
   } catch (error) {
-    response = {
-      type: 'ERROR',
-      title: 'deleteEntity error',
-      page: 'slug-to-redirect-page',
-      array: [error, kind, _id, viewerId],
-    };
+    response.message = 'There was a error I did not plan for';
+    console.error([error, kind, _id, viewerId]);
   }
-  console.time('deleteEntity time to complete');
-  return console.log('deleteEntity: ', response);
+  console.timeEnd('deleteEntity time to complete');
+  return response;
 }

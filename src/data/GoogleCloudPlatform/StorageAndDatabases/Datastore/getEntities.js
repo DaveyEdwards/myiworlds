@@ -12,7 +12,10 @@ it and provide the user with an opaque key. */
 
 export default async function getEntities(kind, filters, numberOfResults, pageCursor, viewerId) {
   console.time('getEntities time to complete');
-  let response = null;
+  let response = {
+    message: '',
+    entities: [],
+  };
 
   try {
     let query = datastoreClient.createQuery(kind).limit(numberOfResults);
@@ -27,29 +30,33 @@ export default async function getEntities(kind, filters, numberOfResults, pageCu
       query = query.start(pageCursor);
     }
 
-    await datastoreClient.runQuery(query).then((results) => {
-      response = [];
-
-      results.forEach((entity) => {
-        if (!entity.moreResults) {
-          if (
-            entity[0].public === true ||
-            viewerId === entity[0].creator ||
-            (entity[0].viewers && entity[0].viewers.includes(viewerId))
-          ) {
-            response.push(entity);
+    await datastoreClient.runQuery(query).then((queryResults) => {
+      response.entities = [];
+      if (queryResults[0]) {
+        queryResults.forEach((entity) => {
+          if (entity[0] !== [] ||
+              (entity[0].public && entity[0].public === true) ||
+              entity[0].public === undefined ||
+              viewerId === entity[0].creator ||
+              (entity[0].viewers && entity[0].viewers.includes(viewerId))
+            ) {
+            response.entities.push(entity);
           }
-        }
-      });
+        }).then(() => (response.messsage = 'I got everything I could'));
+      }
     });
   } catch (error) {
     response = {
-      type: 'ERROR',
-      title: 'getEntities error',
-      page: 'slug-to-redirect-page',
-      array: [error, kind, filters, numberOfResults, pageCursor],
+      message: 'getEntities error',
+      entities: [],
+      error,
+      kind,
+      filters,
+      numberOfResults,
+      pageCursor,
+
     };
   }
   console.time('getEntities time to complete');
-  return console.log('response ', response);
+  return response;
 }

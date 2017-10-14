@@ -27,10 +27,10 @@ const QueryType = new ObjectType({
       type: CircleType,
       resolve: () =>
         getEntityByKey(
-          'Page',
-          '12c4d890-a324-11e7-b81b-fd54dc129351',
+          'Circles',
+          'a207c9f0-b093-11e7-990b-9b8714dbe506',
           'viewer000000000000000000000000000001',
-        ),
+        ).then(response => response.entity),
     },
 
     // Just for testing, should never be used

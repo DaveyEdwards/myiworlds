@@ -1,46 +1,47 @@
 import { mutationWithClientMutationId } from 'graphql-relay';
 import {
-  GraphQLString as StringType,
-  GraphQLNonNull as NonNull,
-  GraphQLBoolean as BooleanType,
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLBoolean,
+  GraphQLInt,
 } from 'graphql';
-// eslint-disable-next-line camelcase
-import { deleteCircleBy_id } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/Circle/Queries';
+import { deleteEntity } from '../../GoogleCloudPlatform/StorageAndDatabases/Datastore/index';
 
-const CreateCircleDataMutation = mutationWithClientMutationId({
-  name: 'DeleteCircle',
+const userId = 'viewer000000000000000000000000000001';
+
+const DeleteCircleDataMutation = mutationWithClientMutationId({
+  name: 'deleteCircle',
+
   inputFields: {
     _id: {
-      type: new NonNull(StringType),
+      type: new GraphQLNonNull(GraphQLString),
     },
   },
+
   outputFields: {
-    _idOfCircleToDelete: {
-      type: StringType,
-      resolve: response => response.key.name,
+    message: {
+      type: GraphQLString,
+      resolve: response => response.message,
+    },
+    idToDelete: {
+      type: GraphQLString,
+      resolve: response => response.idToDelete,
     },
     wasDeleted: {
-      type: BooleanType,
-      resolve: response => response.success,
+      type: GraphQLBoolean,
+      resolve: response => response.wasDeleted,
+    },
+    numberOfClones: {
+      type: GraphQLInt,
+      resolve: response => response.numberOfClones,
+    },
+    clonesDeleted: {
+      type: GraphQLBoolean,
+      resolve: response => response.clonesDeleted,
     },
   },
-  mutateAndGetPayload: async ({ _id }) => {
-    let response = null;
 
-    response = await deleteCircleBy_id(_id);
-
-    if (response.success === true) {
-      // eslint-disable-next-line no-console
-      console.log(
-        '\n',
-        '\n',
-        'I deleted that node for you, but I hope you had a good reason to delete data... My children will not approve of this behaviour.',
-        '\n',
-        '\n',
-      );
-    }
-    return response;
-  },
+  mutateAndGetPayload: async ({ _id }) => deleteEntity('Circles', _id, userId),
 });
 
-export default CreateCircleDataMutation;
+export default DeleteCircleDataMutation;

@@ -1,7 +1,7 @@
 import cloneToNewEntity from './cloneToNewEntity';
 import createEntities from './createEntities';
 import createEntity from './createEntity';
-import deleteEntities from './deleteEntity';
+import deleteEntity from './deleteEntity';
 import getEntities from './getEntities';
 import getEntitiesByKeys from './getEntitiesByKeys';
 import getEntityByKey from './getEntityByKey';
@@ -11,7 +11,7 @@ export {
   cloneToNewEntity,
   createEntities,
   createEntity,
-  deleteEntities,
+  deleteEntity,
   getEntities,
   getEntitiesByKeys,
   getEntityByKey,

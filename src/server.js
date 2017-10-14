@@ -18,7 +18,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import { printSchema } from 'graphql';
-import gstore from 'gstore-node';
+// import gstore from 'gstore-node';
 import App from './components/App';
 import Html from './components/Html';
 import ApiClient from './ApiClient';
@@ -31,7 +31,7 @@ import schema from './data/schema';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import config from './config';
 import loaders from './data/loaders';
-import GCPConfig from './data/GoogleCloudPlatform/config/settings';
+// import GCPConfig from './data/GoogleCloudPlatform/config/settings';
 
 const app = express();
 
@@ -39,12 +39,12 @@ const app = express();
 // KOISTYA QUESTION - Better place to put database connection like this?
 // Setting up Google Cloud Platform Datastore
 // -----------------------------------------------------------------------------
-const datastore = require('@google-cloud/datastore')({
-  projectId: GCPConfig.project_id,
-  keyFilename: GCPConfig.datastore.gcpDatastoreUserServiceKeyPath,
-});
+// const datastore = require('@google-cloud/datastore')({
+//   projectId: GCPConfig.project_id,
+//   keyFilename: GCPConfig.datastore.gcpDatastoreUserServiceKeyPath,
+// });
 
-gstore.connect(datastore);
+// gstore.connect(datastore);
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -121,7 +121,7 @@ app.use(
     rootValue: { request: req },
     pretty: __DEV__,
     context: {
-      loaders: loaders(),
+      loaders,
     },
   })),
 );

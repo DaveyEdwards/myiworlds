@@ -3,18 +3,18 @@ import cloneToNewEntity from './cloneToNewEntity';
 
 export default async function updateEntity(entityToUpdate, viewerId) {
   console.time('updateEntity time to complete');
-  let response = null;
+  const response = {
+    message: '',
+    updatedCircle: null,
+    latestVersionOfEntity: null,
+  };
   let kind = null;
   let dsKey = null;
 
   entityToUpdate.map((entityFeilds) => {
     if (entityFeilds.name === '_id') {
       if (!entityFeilds.value) {
-        return (response = {
-          type: 'ERROR',
-          title: "You can't edit that anymore",
-          page: 'slug-to-redirect-page',
-        });
+        return (response.message = 'You cannot edit that anymore');
       }
       dsKey = entityFeilds.value;
       return dsKey;
@@ -35,23 +35,20 @@ export default async function updateEntity(entityToUpdate, viewerId) {
 
   try {
     await datastoreClient.get(key).then(async (entity) => {
-      if (viewerId === entity[0].creator || entity[0].editors.includes(viewerId)) {
-        response = await cloneToNewEntity(entity[0]).then(() => datastoreClient.update(newEntity));
+      if ((viewerId === entity[0].creator) || (entity[0].editors.includes(viewerId))) {
+        const createdCloneEntity = await cloneToNewEntity(entity[0]);
+        const updatedEntity = await datastoreClient.update(newEntity)
+          .then(() => datastoreClient.get(key));
+
+        response.latestVersionOfEntity = createdCloneEntity;
+        response.updatedEntity = updatedEntity[0];
       } else {
-        response = {
-          type: 'ERROR',
-          title: 'You do not have the required permissions to view this',
-          page: 'slug-to-redirect-page',
-        };
+        response.message = 'You do not have the required permissions to view this';
       }
     });
   } catch (error) {
-    response = {
-      type: 'ERROR',
-      title: 'updateEntity error',
-      page: 'slug-to-redirect-page',
-      array: [error, entityToUpdate, viewerId],
-    };
+    response.message = 'Sorry, that entity no longer exists';
+    console.error([error, entityToUpdate, viewerId]);
   }
   console.timeEnd('updateEntity time to complete');
   return response;

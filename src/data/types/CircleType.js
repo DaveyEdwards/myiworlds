@@ -21,14 +21,28 @@ import GraphQLJSON from 'graphql-type-json';
 import { nodeInterface } from './nodeInterface';
 import ViewerType from './ViewerType';
 
+const userId = 'viewer000000000000000000000000000001';
+
 const CircleType = new ObjectType({
   name: 'Circle',
   description: 'Everycircle you see can be placed inside a circle.',
+  interfaces: [nodeInterface],
+
   fields: () => ({
     id: globalIdField('Circle', circle => circle._id),
     _id: {
       description: 'A unique id used to instantly locate this circle inside the database',
       type: ID,
+    },
+    ui: {
+      description: 'If a user interface is not set.',
+      type: CircleType,
+      resolve: async (circle, args, { loaders }) => {
+        if (circle.rating) {
+          return loaders.pageLoader.load(circle.ui);
+        }
+        return null;
+      },
     },
     slug: {
       description: 'The full slug (after domain name) to this piece of content',
@@ -46,11 +60,9 @@ const CircleType = new ObjectType({
     viewers: {
       description: 'Who is allowed to see this node?',
       type: new List(ViewerType),
-      resolve: async (circle, args, { loaders }) => {
-        if (circle.viewers) {
-          return await loaders.viewerLoader.loadMany(circle.viewers);
-        }
-      },
+      resolve: (circle, args, { loaders }) => loaders.pageLoader.loadMany(
+        circle.viewers,
+      ),
     },
     type: {
       description:
@@ -58,38 +70,21 @@ const CircleType = new ObjectType({
       type: new NonNull(StringType),
     },
     rating: {
-      description: 'A piece of media (image/gif/video) that helps identify this piece of content.',
       type: CircleType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.rating) {
-          return await loaders.circleLoader.load(circle.media);
+          return loaders.pageLoader.load(circle.rating);
         }
+        return null;
       },
     },
     styles: {
-      description: 'The styles of this piece of content.',
-      type: CircleType,
-      resolve: async (circle, args, { loaders }) => {
-        if (circle.styles) {
-          return await loaders.circleLoader.load(circle.styles);
-        }
-      },
+      type: new List(CircleType),
+      resolve: (circle, args, { loaders }) => loaders.pageLoader.loadMany(circle.styles),
     },
     tags: {
-      description: 'All tags related to this circle',
-      type: require('./connections/CircleConnection').default,
-      args: connectionArgs,
-      resolve: async (circle, { ...args }, { loaders }) => {
-        if (circle.tags) {
-          const tags = await loaders.circleLoader.loadMany(circle.tags);
-          const connection = connectionFromArray(tags, args);
-          return connection;
-        }
-      },
-    },
-    order: {
-      description: 'The order number this is to display in a list',
-      type: NumberType,
+      type: new List(CircleType),
+      resolve: (circle, args, { loaders }) => loaders.pageLoader.loadMany(circle.tags),
     },
     title: { type: StringType },
     subtitle: { type: StringType },
@@ -99,64 +94,52 @@ const CircleType = new ObjectType({
       type: CircleType,
       resolve: async (circle, args, { loaders }) => {
         if (circle.media) {
-          return await loaders.circleLoader.load(circle.media);
+          return loaders.pageLoader.load(circle.media);
         }
+        return null;
       },
     },
     creator: {
       description: 'The viewer who created this piece of content',
       type: ViewerType,
-      resolve: async (circle, args, { loaders }) => {
-        if (circle.creator) {
-          return await loaders.circleLoader.load(circle.creator);
-        }
-      },
+      resolve: (circle, args, { loaders }) => loaders.pageLoader.load(circle.creator),
     },
     editors: {
-      description: 'Viewers that can view this circle',
+      description: 'Viewers that can edit this circle',
       type: new List(ViewerType),
       resolve: async (circle, args, { loaders }) => {
-        if (circle.viewers) {
-          return await loaders.viewerLoader.loadMany(circle.viewers);
+        if (circle.editors) {
+          return loaders.viewerLoader.loadMany(circle.editors);
         }
+        return null;
       },
     },
-    created: { type: StringType },
-    lastUpdated: { type: StringType },
-    value: {
-      description: 'A string value you wish to store. (Any character)',
-      type: StringType,
-    },
-    blob: {
-      description: 'A JSON blob, allowing you to create complex pieces of content.',
-      type: GraphQLJSON,
-    },
-    number: {
-      description: 'A number type to store on this piece of content',
-      type: NumberType,
-    },
-    boolean: {
-      description: 'A boolean type to store on this piece of content',
-      type: BooleanType,
-    },
+    dateCreated: { type: StringType },
+    dateUpdated: { type: StringType },
+    string: { type: StringType },
+    blob: { type: GraphQLJSON },
+    number: { type: NumberType },
+    boolean: { type: BooleanType },
     line: {
       description:
         'When you want to point to a single circle type.  Normally used for changing a node but without actually changing it.',
       type: CircleType,
-      resolve: async (circle, args, { loaders }) => {
-        if (circle.line) {
-          return await loaders.circleLoader.load(circle.circle);
+      resolve: (circle, args, { loaders }) => {
+        if (circle.array) {
+          return loaders.pageLoader.load(circle.line);
         }
+        return null;
       },
     },
     lines: {
       description:
         "When you want to connect lots of Circles, but don't need pagination (used for TONS of results) ",
       type: new List(CircleType),
-      resolve: async (circle, args, { loaders }) => {
-        if (circle.lines) {
-          return await loaders.circleLoader.loadMany(circle.lines);
+      resolve: (circle, args, { loaders }) => {
+        if (circle.array) {
+          return loaders.pageLoader.loadMany(circle.lines);
         }
+        return null;
       },
     },
     linesMany: {
@@ -165,15 +148,15 @@ const CircleType = new ObjectType({
       type: require('./connections/CircleConnection').default, // eslint-disable-line global-require
       args: connectionArgs,
       resolve: async (circle, { ...args }, { loaders }) => {
-        if (circle.linesMany) {
-          const linesMany = await loaders.circleLoader.loadMany(circle.linesMany);
+        if (circle.array) {
+          const linesMany = loaders.pageLoader.loadMany(circle.linesMany);
           const connection = connectionFromArray(linesMany, args);
           return connection;
         }
+        return null;
       },
     },
   }),
-  interfaces: [nodeInterface],
 });
 
 export default CircleType;

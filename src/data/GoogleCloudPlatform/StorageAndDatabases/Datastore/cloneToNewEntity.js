@@ -1,29 +1,44 @@
+import uuid from 'uuid/v1';
 import datastoreClient from './dbconnection';
 
+/* eslint-disable camelcase */
 export default async function cloneToNewEntity(entityObject) {
   console.time('cloneToNewEntity time to complete');
   const newKind = `${entityObject.kind}-clones`;
   let response = null;
-  const dsKey = null;
   const entity = [];
   const nameValues = Object.entries(entityObject);
+  const new_id = uuid();
+  const moveOld_id = {
+    name: `${entityObject.kind}_id`,
+    value: entityObject._id,
+  };
+
+  entity.push(moveOld_id);
 
   function buildEntityWithNewIndexes() {
-    nameValues.forEach((pair) => {
-      const name = pair[0];
-      const value = pair[1];
-      const tempObj = {};
+    nameValues.forEach((nameValueArray) => {
+      const name = nameValueArray[0];
+      const value = nameValueArray[1];
+      const builtEntityPropertyObject = {};
 
-      if (pair[0] !== '_id' && pair[0] !== 'lastUpdated') {
-        tempObj.excludeFromIndexes = true;
+      builtEntityPropertyObject.name = name;
+
+      if (nameValueArray[0] !== '_id' && nameValueArray[0] !== 'dateUpdated') {
+        builtEntityPropertyObject.excludeFromIndexes = true;
       }
-      tempObj.name = name;
-      tempObj.value = value;
-      entity.push(tempObj);
+
+      if (nameValueArray[0] === '_id') {
+        builtEntityPropertyObject.value = new_id;
+      } else {
+        builtEntityPropertyObject.value = value;
+      }
+
+      entity.push(builtEntityPropertyObject);
     });
   }
   try {
-    const key = datastoreClient.key([newKind, dsKey]);
+    const key = datastoreClient.key([newKind, new_id]);
     const data = entity;
     const newEntity = {
       key,
@@ -31,7 +46,13 @@ export default async function cloneToNewEntity(entityObject) {
     };
 
     buildEntityWithNewIndexes();
-    response = await datastoreClient.save(newEntity).then(() => datastoreClient.get(key));
+
+    await datastoreClient.save(newEntity);
+
+    response = {
+      new_id,
+      newKind,
+    };
   } catch (error) {
     response = {
       type: 'ERROR',

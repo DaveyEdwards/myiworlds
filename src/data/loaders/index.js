@@ -1,9 +1,9 @@
-import circleLoader from './CircleLoader';
+import pageLoader from './PageLoader';
 import viewerLoader from './ViewerLoader';
 
 // All your dataloaders
 const allLoaders = {
-  ...circleLoader,
+  ...pageLoader,
   ...viewerLoader,
 };
 
